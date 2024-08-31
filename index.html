@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Meowser</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    
+    <body>
+        <div id="tabs">
+            <div class="tab" onclick="addTab()" style="width: 15px;">+</div>
+        </div>
+        <input type="text" id="url-bar" placeholder="Search with Google or enter URL" />
+        <div id="content">
+            <webview id="webview" src="https://www.google.com/" webpreferences="nativeWindowOpen=true" style="display: none;"></webview>
+        </div>
+        
+        <!-- scripts -->
+        <script src="renderer.js"></script>
+    </body>
+</html>
