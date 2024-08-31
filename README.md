@@ -3,7 +3,7 @@
   Meowser
 </h1>
 <div align="center">
-  A work-in-progress browser made with Electron.
+  A work-in-progress catified, privacy-focused browser made with Electron.
 </div>
 
 <br />
