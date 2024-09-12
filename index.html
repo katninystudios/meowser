@@ -16,11 +16,14 @@
          <i class="fa-solid fa-arrow-left" id="back-button" onclick="goBack()"></i>
          <i class="fa-solid fa-arrow-right" id="forward-button" onclick="goForward()"></i>
          <i class="fa-solid fa-rotate-right active" onclick="reload()" id="reloadOrStop"></i>
-         <div type="text" spellcheck="false" contenteditable="true" id="url-bar" placeholder="Search or enter URL"></div>
+         <i class="fa-solid fa-lock active" id="site-security" onclick="siteSecurityInfo()"></i><div type="text" spellcheck="false" contenteditable="true" id="url-bar" placeholder="Search or enter URL"></div>
       </div>
       <div id="content">
          <!--<webview id="webview" src="https://www.google.com/" webpreferences="nativeWindowOpen=true" style="display: none;"></webview>-->
          <div id="link-preview"></div>
+         <div id="site-security-info">
+            <h3 id="site-security-link"><i class="fa-solid fa-lock"></i> You are securely connected to [link]</h3>
+         </div>
       </div>
 
       <!-- settings -->

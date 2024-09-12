@@ -7,6 +7,9 @@ let draggedTab = null; // store
 const currentDir = window.api.dirname();
 const browserVersion = "v0.1_alpha";
 const linkPreview = document.getElementById("link-preview");
+const siteSecurity = document.getElementById("site-security");
+const siteSecurityInfo_container = document.getElementById("site-security-info");
+const siteSecurityInfoDesc = document.getElementById("site-security-link");
 
 // user preferences
 let userDefaultEngine = "N/A";
@@ -111,7 +114,7 @@ function addTab(url) {
    webview.addEventListener("did-navigate", (event) => {
       urlBar.innerHTML = formatURL(event.url);
       addToHistory(event.url);
-      console.log(event);
+      checkSiteSecurity(event.url);
    });
 
    // check if the webview is currently loading
@@ -161,6 +164,7 @@ function switchTab(tab) {
       setTimeout(() => {
          updateNavigationButtons();
          urlBar.innerHTML = formatURL(webview.getURL());
+         checkSiteSecurity(webview.getURL());
       }, 100);
    }
 }
@@ -207,7 +211,7 @@ function changeCurrentTabUrl(newUrl) {
       const staticHtmlPath = `file://${__dirname}/${path}.html`;
       if (currentWebview) {
          currentWebview.src = staticHtmlPath;
-         urlBar.innerHTML = urlBar.innerHTML = formatURL(newUrl);;
+         urlBar.innerHTML = urlBar.innerHTML = formatURL(newUrl);
       }
    } else {
       if (currentWebview) {
@@ -527,3 +531,36 @@ historyPref.addEventListener("change", () => {
          break;
    }
 });
+
+// check site security
+function checkSiteSecurity(url) {
+   if (url.startsWith("https://")) {
+      siteSecurity.classList = "fa-solid fa-lock active";
+      siteSecurity.setAttribute("secure", "true");
+   } else {
+      if (!url.startsWith("file:///")) {
+         siteSecurity.classList = "fa-solid fa-lock-open active";
+         siteSecurity.setAttribute("secure", "false");
+      } else {
+         siteSecurity.classList = "fa-solid fa-file active";
+         siteSecurity.setAttribute("secure", "file");
+      }
+   }
+}
+
+function siteSecurityInfo() {
+   if (siteSecurityInfo_container.style.display === "" || siteSecurityInfo_container.style.display === "none") { // for some reason the display can be "", which im assuming is because there's no style directly on it?
+      if (siteSecurity.getAttribute("secure") === "true") {
+         siteSecurityInfoDesc.innerHTML = `<i class="fa-solid fa-lock"></i> You are securely connected to ${urlBar.innerHTML}`;
+         siteSecurityInfo_container.style.display = "block";
+      } else if (siteSecurity.getAttribute("secure") === "false") {
+         siteSecurityInfoDesc.innerHTML = `<i class="fa-solid fa-lock-open"></i> Insecure connection to ${urlBar.innerHTML}<p style="font-size: smaller;">Your connection to this site is insecure. Information you submit could be viewed by others (passwords, messages, credit cards, etc.)</p>`;
+         siteSecurityInfo_container.style.display = "block";
+      } else if (siteSecurity.getAttribute("secure") === "file") {
+         siteSecurityInfoDesc.innerHTML = `<i class="fa-solid fa-file"></i> This page is stored on your computer.`;
+         siteSecurityInfo_container.style.display = "block";
+      }
+   } else {
+      siteSecurityInfo_container.style.display = "none";
+   }
+}

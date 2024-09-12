@@ -23,3 +23,5 @@ contextBridge.exposeInMainWorld('api', {
       }
    }
 });
+
+console.log(`Platform: ${process.platform} - Arch: ${process.arch}`);

@@ -139,6 +139,7 @@ webview {
 #url-bar {
    width: 50%;
    padding: 5px;
+   padding-left: 35px;
    font-size: 16px;
    border: 1px solid #333;
    overflow-x: auto;
@@ -151,6 +152,7 @@ webview {
    -ms-overflow-style: none;
    outline: none;
    border-radius: 5px;
+   transform: translateX(-35px);
    transition: all 0.1s ease;
 }
 
@@ -224,4 +226,30 @@ dialog::backdrop {
    padding: 5px 10px;
    font-size: 12px;
    display: none;
+}
+
+/* site security */
+#site-security {
+   transform: translateX(8px);
+   z-index: 1;
+}
+
+/* see site security info */
+#site-security-info {
+   position: fixed;
+   top: 80px;
+   left: 0;
+   background-color: #1f1f1f;
+   color: white;
+   padding: 5px 10px;
+   font-size: 12px;
+   width: auto;
+   max-width: 50%;
+   height: auto;
+   max-height: 150px;
+   display: none;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   z-index: 999;
 }
