@@ -14,20 +14,12 @@ contextBridge.exposeInMainWorld('api', {
       if (validChannels.includes(channel)) {
          ipcRenderer.on(channel, (event, ...args) => callback(event, ...args));
       }
-   }
-});
-
-contextBridge.exposeInMainWorld("electronAPI", {
-   sendLinkHover: (url) => ipcRenderer.send("link-hover", url)
-});
-
-const hoverDiv = document.getElementById("link-preview");
-
-ipcRenderer.on("link-hover", (event, url) => {
-   if (url) {
-      hoverDiv.style.display = "block";
-      hoverDiv.innerText = url;
-   } else {
-      hoverDiv.style.display = "none";
+   },
+   receive: (channel, callback) => {
+      const validChannels = ["display-url"];
+      if (validChannels.includes(channel)) {
+         console.log(`valid: ${channel}`);
+         ipcRenderer.on(channel, (event, ...args) => callback(...args));
+      }
    }
 });

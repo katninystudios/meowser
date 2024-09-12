@@ -131,21 +131,6 @@ function addTab(url) {
       reloadOrStop.setAttribute("onclick", "reload()");
    });
 
-   // check for when a link is hovered, so we can show the user the link on the bottom left
-   webview.addEventListener("dom-ready", () => {
-      webview.executeJavaScript(`
-            document.querySelectorAll("a").forEach(link => {
-                link.addEventListener("mouseover", () => {
-                    window.electronAPI.sendLinkHover(link.href);
-                });
-    
-                link.addEventListener("mouseout", () => {
-                    window.electronAPI.sendLinkHover("");
-                });
-            });
-        `);
-   });
-
    contentContainer.appendChild(webview);
 
    // set data-index attribute to keep track of webview and tab index

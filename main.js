@@ -2,6 +2,8 @@ const { app, BrowserWindow, ipcMain, webContents, shell } = require("electron");
 const path = require("path");
 const fs = require("fs");
 
+let mainWindow;
+
 function createWindow() {
    const mainWindow = new BrowserWindow({
       width: 1280,
@@ -39,5 +41,12 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
    if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
+   }
+});
+
+// handle url hovered from the webview's preload script
+ipcMain.on("url-hovered", (event, url) => {
+   if (mainWindow) {
+      mainWindow.webContents.send("display-url", url);
    }
 });
