@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, webContents, shell } = require("electron");
 const path = require("path");
+const fs = require("fs");
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -7,10 +8,12 @@ function createWindow() {
         height: 720,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
-            contextIsolation: true, // enable context isolation
-            nodeIntegration: false, // disable node intergration
-            webviewTag: true, // allow the webview to render
+            contextIsolation: true,
+            nodeIntegration: true,
+            webviewTag: true,
+            devTools: !app.isPackaged, // we no want users doing that during release builds :pensive:
         },
+        autoHideMenuBar: true
     });
 
     mainWindow.loadFile("index.html");
