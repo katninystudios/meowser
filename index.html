@@ -1,97 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Meowser</title>
-        <link rel="stylesheet" href="styles.css">
-        <script src="https://kit.fontawesome.com/8c5204e75c.js" crossorigin="anonymous"></script>
-    </head>
-    
-    <body>
-        <div id="tabs">
-            <div class="tab new-tab" id="new-tab" onclick="addTab()" style="width: 15px;">+</div>
-        </div>
-        <div id="controls">
-            <i class="fa-solid fa-arrow-left" id="back-button" onclick="goBack()"></i> 
-            <i class="fa-solid fa-arrow-right" id="forward-button" onclick="goForward()"></i> 
-            <i class="fa-solid fa-rotate-right active" onclick="reload()" id="reloadOrStop"></i>
-            <div type="text" spellcheck="false" contenteditable="true" id="url-bar" placeholder="Search or enter URL"></div>
-        </div>
-        <div id="content">
-            <!--<webview id="webview" src="https://www.google.com/" webpreferences="nativeWindowOpen=true" style="display: none;"></webview>-->
-            <div id="link-preview"></div>
-        </div>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Meowser</title>
+      <link rel="stylesheet" href="styles.css">
+      <script src="https://kit.fontawesome.com/8c5204e75c.js" crossorigin="anonymous"></script>
+   </head>
 
-        <!-- settings -->
-        <dialog id="settings">
-            <!-- info -->
-            <h1>Meowser Settings</h1>
-            <p class="info">Modify your Meowser settings to suit your preferences, such as changing your search engine.</p>
+   <body>
+      <div id="tabs">
+         <div class="tab new-tab" id="new-tab" onclick="addTab()" style="width: 15px;">+</div>
+      </div>
+      <div id="controls">
+         <i class="fa-solid fa-arrow-left" id="back-button" onclick="goBack()"></i>
+         <i class="fa-solid fa-arrow-right" id="forward-button" onclick="goForward()"></i>
+         <i class="fa-solid fa-rotate-right active" onclick="reload()" id="reloadOrStop"></i>
+         <div type="text" spellcheck="false" contenteditable="true" id="url-bar" placeholder="Search or enter URL"></div>
+      </div>
+      <div id="content">
+         <!--<webview id="webview" src="https://www.google.com/" webpreferences="nativeWindowOpen=true" style="display: none;"></webview>-->
+         <div id="link-preview"></div>
+      </div>
 
-            <br />
+      <!-- settings -->
+      <dialog id="settings">
+         <!-- info -->
+         <h1>Meowser Settings</h1>
+         <p class="info">Modify your Meowser settings to suit your preferences, such as changing your search engine.</p>
 
-            <!-- settings itself -->
-            <label for="search-engine">Default Search Engine: </label>
-            <select id="search-engine">
-                <option value="startpage">Startpage</option>
-                <option value="qwant">Qwant</option>
-                <option value="google">Google</option>
-                <option value="bing">Bing</option>
-                <option value="yahoo">Yahoo</option>
-            </select>
-            <small>This will also be the page Meowser starts on. <a href="javascript:void(0);" onclick="addTab('https://link.com/faq#search-engine-start-page');">Learn more</a>.</small>
+         <br />
 
-            <br />
+         <!-- settings itself -->
+         <label for="search-engine">Default Search Engine: </label>
+         <select id="search-engine">
+            <option value="startpage">Startpage</option>
+            <option value="qwant">Qwant</option>
+            <option value="google">Google</option>
+            <option value="bing">Bing</option>
+            <option value="yahoo">Yahoo</option>
+         </select>
+         <small>This will also be the page Meowser starts on. <a href="javascript:void(0);"
+               onclick="addTab('https://link.com/faq#search-engine-start-page');">Learn more</a>.</small>
 
-            <label for="history-pref">Meowser will</label>
-            <select id="history-pref">
-                <option value="remember-history">Remember history</option>
-                <option value="never-remember-history">Never remember history</option>
-            </select>
+         <br />
 
-            <!-- version -->
-            <br />
-            <br />
+         <label for="history-pref">Meowser will</label>
+         <select id="history-pref">
+            <option value="remember-history">Remember history</option>
+            <option value="never-remember-history">Never remember history</option>
+         </select>
 
-            <p><small><span id="browser-version">Meowser vVERSION_CYCLE</span> - Check for updates with meow://updates. Meowser can automatically update.</small></p>
-            <p><small>Please note that Meowser is in alpha, and will be constantly improved with more features, settings, and more.</small></p>
-        </dialog>
+         <!-- version -->
+         <br />
+         <br />
 
-        <!-- history -->
-        <dialog id="history">
-            <!-- info -->
-            <h1>History</h1>
-            <p class="info">The pages you've visited on Meowser.</p>
-            <a href="javascript:void(0);"></a> <!-- this just ensures the user doesnt get prompted to delete their history immediately -->
-            <button onclick="document.getElementById('delete-history').showModal()">Delete History</button>
+         <p><small><span id="browser-version">Meowser vVERSION_CYCLE</span> - Check for updates with meow://updates.
+               Meowser can automatically update.</small></p>
+         <p><small>Please note that Meowser is in alpha, and will be constantly improved with more features, settings, and
+               more.</small></p>
+      </dialog>
 
-            <br />
-            <br />
+      <!-- history -->
+      <dialog id="history">
+         <!-- info -->
+         <h1>History</h1>
+         <p class="info">The pages you've visited on Meowser.</p>
+         <a href="javascript:void(0);"></a>
+         <!-- this just ensures the user doesnt get prompted to delete their history immediately -->
+         <button onclick="document.getElementById('delete-history').showModal()">Delete History</button>
 
-            <!-- where history is displayed -->
-            <div id="display-history" style="display: flex; flex-direction: column-reverse;"></div>
+         <br />
+         <br />
 
-            <br />
-            
-            <p><small>Please note that Meowser is in alpha, and will be constantly improved with more features, settings, and more.</small></p>
-        </dialog>
+         <!-- where history is displayed -->
+         <div id="display-history" style="display: flex; flex-direction: column-reverse;"></div>
 
-        <dialog id="delete-history">
-            <!-- info -->
-            <h1>Delete history?</h1>
-            <p class="info">Are you sure you want to delete your Meowser history?</p>
+         <br />
 
-            <br />
-            
-            <button onclick="deleteHistory()">Yes, delete</button> <button onclick="document.getElementById('delete-history').close()">Nevermind, don't delete</button>
-            <p><small>Please note that Meowser is in alpha, and will be constantly improved with more features, settings, and more.</small></p>
-        </dialog>
-        
-        <!-- scripts -->
-        <!-- <script>
-            document.getElementById("settings").showModal();
-        </script> -->
-        <script src="renderer.js"></script>
-    </body>
+         <p><small>Please note that Meowser is in alpha, and will be constantly improved with more features, settings, and
+               more.</small></p>
+      </dialog>
+
+      <dialog id="delete-history">
+         <!-- info -->
+         <h1>Delete history?</h1>
+         <p class="info">Are you sure you want to delete your Meowser history?</p>
+
+         <br />
+
+         <button onclick="deleteHistory()">Yes, delete</button> <button
+            onclick="document.getElementById('delete-history').close()">Nevermind, don't delete</button>
+         <p><small>Please note that Meowser is in alpha, and will be constantly improved with more features, settings, and
+               more.</small></p>
+      </dialog>
+
+      <!-- scripts -->
+      <!-- <script>
+               document.getElementById("settings").showModal();
+         </script> -->
+      <script src="renderer.js"></script>
+   </body>
 </html>
