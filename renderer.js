@@ -110,6 +110,8 @@ function addTab(url) {
 
    webview.addEventListener("did-navigate", (event) => {
       urlBar.innerHTML = formatURL(event.url);
+      addToHistory(event.url);
+      console.log(event);
    });
 
    // check if the webview is currently loading
@@ -142,15 +144,6 @@ function addTab(url) {
                 });
             });
         `);
-   });
-
-   ipcRenderer.on("link-hover", (event, url) => {
-      if (url) {
-         hoverDiv.style.display = "block";
-         hoverDiv.innerText = url;
-      } else {
-         hoverDiv.style.display = "none";
-      }
    });
 
    contentContainer.appendChild(webview);
@@ -229,12 +222,12 @@ function changeCurrentTabUrl(newUrl) {
       const staticHtmlPath = `file://${__dirname}/${path}.html`;
       if (currentWebview) {
          currentWebview.src = staticHtmlPath;
-         urlBar.innerHTML = newUrl;
+         urlBar.innerHTML = urlBar.innerHTML = formatURL(newUrl);;
       }
    } else {
       if (currentWebview) {
          currentWebview.src = newUrl;
-         urlBar.innerHTML = newUrl;
+         urlBar.innerHTML = urlBar.innerHTML = formatURL(newUrl);
       }
    }
 }
@@ -257,7 +250,6 @@ urlBar.addEventListener("keydown", (event) => {
          const url = new URL(formattedInput);
 
          // check if the urls protocol is valid
-         console.log(url.protocol);
          if (url.protocol === "http:" || url.protocol === "https:" || url.protocol === "file:" || url.protocol === "meow:") {
             // ensure the URL has a valid hostname
             if (url.hostname && url.hostname.includes(".")) {
@@ -312,6 +304,27 @@ urlBar.addEventListener("keydown", (event) => {
    }
 });
 
+// save history
+function addToHistory(url) {
+   if (historySave === null || historySave === true) {
+      let storedItems = localStorage.getItem("history");
+
+      if (!storedItems) {
+         storedItems = [];
+      } else {
+         storedItems = JSON.parse(storedItems);
+      }
+
+      if (Array.isArray(storedItems)) {
+         storedItems.push(url);
+      } else {
+         console.error("stored history is somehow not an array. pls fix me.");
+      }
+
+      localStorage.setItem("history", JSON.stringify(storedItems));
+   }
+}
+
 // format url bar
 function formatURL(url) {
    try {
@@ -321,7 +334,6 @@ function formatURL(url) {
       const path = parsedURL.pathname + parsedURL.search + parsedURL.hash;
 
       if (!url.startsWith("file:///")) {
-         saveHistory(url);
          return `<span class="non-domain">${protocol}//</span><span class="domain">${domain}</span><span class="non-domain">${path}</span>`;
       } else {
          const fileName = path.split("/").pop().split(".").slice(0, -1).join(".");
@@ -462,27 +474,6 @@ searchEnginePref.addEventListener("change", () => {
    }
 });
 
-// save history
-function saveHistory(url) {
-   if (historySave === null || historySave === true) {
-      let storedItems = localStorage.getItem("history");
-
-      if (!storedItems) {
-         storedItems = [];
-      } else {
-         storedItems = JSON.parse(storedItems);
-      }
-
-      if (Array.isArray(storedItems)) {
-         storedItems.push(url);
-      } else {
-         console.error("stored history is somehow not an array. pls fix me.");
-      }
-
-      localStorage.setItem("history", JSON.stringify(storedItems));
-   }
-}
-
 // delete history
 function deleteHistory() {
    localStorage.removeItem("history"); // removes all the history
@@ -516,11 +507,8 @@ function test() {
 // keyboard shortcuts
 // FIXME: these shortcuts will NOT work when a webview is selected.
 document.addEventListener("keydown", (event) => {
-   console.log(event.key);
-
    // open dev tools
    if (event.ctrlKey && event.shiftKey && event.key === "I") {
-      console.log("test");
       event.preventDefault();
       event.stopPropagation();
       const currentWebview = Array.from(contentContainer.children).find((wv) => wv.style.display === "flex");
