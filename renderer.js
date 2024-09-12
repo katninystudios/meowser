@@ -27,7 +27,7 @@ if (userDefaultEngine === null) {
       document.getElementById("search-engine").selectedIndex = 2;
    } else if (userDefaultEngine === "https://www.bing.com/") {
       document.getElementById("search-engine").selectedIndex = 3;
-   } else if (userDefaultEngine === "https://www.yahoo.com/") {
+   } else if (userDefaultEngine === "https://search.yahoo.com/") {
       document.getElementById("search-engine").selectedIndex = 4;
    }
 }
@@ -464,8 +464,8 @@ searchEnginePref.addEventListener("change", () => {
          userDefaultEngine = "https://www.bing.com/";
          break;
       case "Yahoo":
-         localStorage.setItem("defaultEngine", "https://www.yahoo.com/");
-         userDefaultEngine = "https://www.yahoo.com/";
+         localStorage.setItem("defaultEngine", "https://search.yahoo.com/");
+         userDefaultEngine = "https://search.yahoo.com/";
          break;
       default:
          localStorage.setItem("defaultEngine", "https://www.startpage.com/");
