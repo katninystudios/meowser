@@ -244,12 +244,12 @@ dialog::backdrop {
    padding: 5px 10px;
    font-size: 12px;
    width: auto;
-   max-width: 50%;
+   max-width: 25%;
    height: auto;
    max-height: 150px;
    display: none;
    overflow: hidden;
    text-overflow: ellipsis;
-   white-space: nowrap;
+   white-space: wrap;
    z-index: 999;
 }
