@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, webContents, shell } = require("electron");
+const { app, BrowserWindow, ipcMain, webContents, session } = require("electron");
 const path = require("path");
 const fs = require("fs");
 
@@ -28,6 +28,18 @@ function createWindow() {
          return { action: 'deny' };
       });
    });
+
+   // // set our browser's useragent
+   const filter = {
+      urls: ["*://*/*"]
+   }
+
+   session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
+      // originally wanted it to be "Meowser", but so many websites broke when i did
+      // so now we're just chrome (silently sobs in corner)
+      details.requestHeaders["User-Agent"] = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${process.versions.chrome} Safari/537.36`;
+      callback({ requestHeaders: details.requestHeaders })
+   })
 }
 
 app.on("window-all-closed", () => {
@@ -36,7 +48,7 @@ app.on("window-all-closed", () => {
    }
 });
 
-app.on("activate", () => {
+app.on("ready", () => {
    if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
    }
