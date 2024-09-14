@@ -248,6 +248,8 @@ dialog::backdrop {
    top: 80px;
    left: 0;
    background-color: #1f1f1f;
+   border: 1px solid #3f3f3f;
+   border-radius: 15px;
    color: white;
    padding: 5px 10px;
    font-size: 12px;
@@ -260,4 +262,23 @@ dialog::backdrop {
    text-overflow: ellipsis;
    white-space: wrap;
    z-index: 999;
+   margin-left: 105px;
+   animation: openSecurity 0.1s ease;
+   transition: all 0.1s linear;
+}
+
+@keyframes openSecurity {
+   0% {
+      transform: translateY(-15px);
+      opacity: 0;
+   }
+   100% {
+      transform: translateY(0px);
+      opacity: 1;
+   }
+}
+
+/* content (non-webview) */
+#non-div-content {
+   z-index: 1;
 }
