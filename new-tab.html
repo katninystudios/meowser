@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>New Tab</title>
+   </head>
+   
+   <body style="text-align: center;">
+      <img src="meowser_white_banner.png" alt="Meowser white logo" draggable="false" width="550" />
+      <br />
+
+      <input type="text" style="width: 50%" placeholder="Search ENGINE or enter URL" id="search" />
+   </body>
+
+   <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+      * {
+         margin: 0;
+         padding: 0;
+         font-family: "Roboto", sans-serif;
+      }
+
+      body {
+         background: #1f1f1f;
+         color: #fff;
+      }
+
+      a {
+         color: cyan;
+      }
+
+      a:hover {
+         text-decoration: none;
+         color: #00bbbb;
+      }
+
+      small {
+         color: #bbb;
+      }
+
+      input {
+         background: #4f4f4f;
+         border: 3px solid #4f4f4f;
+         padding: 15px;
+         border-radius: 15px;
+         outline: none;
+         color: #fff;
+         font-size: 16px;
+         transition: all 0.15s ease;
+      }
+
+      input::placeholder {
+         color: #c0c0c0;
+      }
+
+      input:focus {
+         border: 3px solid cyan;
+      }
+   </style>
+
+   <script>
+      let userDefaultEngine = null;
+
+      userDefaultEngine = localStorage.getItem("defaultEngine");
+      if (userDefaultEngine === null) {
+         document.getElementById("search").placeholder = "Search Startpage or enter URL"
+      } else {
+         if (userDefaultEngine === "https://www.startpage.com/") {
+            document.getElementById("search").placeholder = "Search Startpage or enter URL"
+         } else if (userDefaultEngine === "https://www.qwant.com/") {
+            document.getElementById("search").placeholder = "Search Qwant or enter URL"
+         } else if (userDefaultEngine === "https://www.google.com/") {
+            document.getElementById("search").placeholder = "Search Google or enter URL"
+         } else if (userDefaultEngine === "https://www.bing.com/") {
+            document.getElementById("search").placeholder = "Search Bing or enter URL"
+         }
+      }
+
+      document.getElementById("search").addEventListener("keydown", (event) => {
+         if (event.key === "Enter") {
+            const input = document.getElementById("search").value.trim();
+            console.log(input);
+            let formattedInput;
+
+            // check if input starts with a valid protocol
+            if (input.startsWith("http://") || input.startsWith("https://") || input.startsWith("file://") || input.startsWith("meow://")) {
+               formattedInput = input;
+            } else {
+               // add https:// if no protocol is provided
+               formattedInput = `https://${input}`;
+            }
+
+            try {
+               // try creating a new url object to validate the formatted input
+               const url = new URL(formattedInput);
+
+               // check if the urls protocol is valid
+               if (url.protocol === "http:" || url.protocol === "https:" || url.protocol === "file:" || url.protocol === "meow:") {
+                  // ensure the URL has a valid hostname
+                  if (url.hostname && url.hostname.includes(".")) {
+                     console.log(`formattedInput: ${formattedInput}`);
+                     window.location.replace(formattedInput);
+                  } else {
+                     throw new Error("Invalid hostname");
+                  }
+               }
+            } catch (e) {
+               const url = new URL(formattedInput); // we need this again :pensive:
+
+               // if creating a url fails or hostname is invalid, treat input as a search term
+               if (url.protocol !== "meow:") {
+                  if (userDefaultEngine === "https://www.startpage.com/") {
+                     window.location.replace(`https://www.startpage.com/sp/search?q=${encodeURIComponent(input)}`);
+                  } else if (userDefaultEngine === "https://www.qwant.com/") {
+                     window.location.replace(`https://www.qwant.com/?q=${encodeURIComponent(input)}`);
+                  } else if (userDefaultEngine === "https://www.google.com/") {
+                     window.location.replace(`https://www.google.com/search?q=${encodeURIComponent(input)}`);
+                  } else if (userDefaultEngine === "https://www.bing.com/") {
+                     window.location.replace(`https://www.bing.com/search?q=${encodeURIComponent(input)}`);
+                  }
+               } else {
+                  const path = formattedInput.replace("meow://", "");
+
+                  // check if we need a popup or just display a webview.
+                  if (path !== "settings" && path !== "history" && path !== "developer-tools") {
+                     window.location.replace(`file://${currentDir}/${path}.html`);
+                  } else if (path === "settings") {
+                     document.getElementById("settings").showModal();
+                  } else if (path === "history") {
+                     const displayHistory = document.getElementById("display-history");
+                     document.getElementById("history").showModal();
+                     displayHistory.innerHTML = "";
+
+                     // display history
+                     let history = localStorage.getItem("history");
+                     if (history) {
+                        history = JSON.parse(history);
+
+                        history.forEach(item => {
+                           const div = document.createElement("div");
+                           div.innerHTML = `<img src="https://www.google.com/s2/favicons?domain=${item}" draggable="false" /> <a href="javascript:void(0);" onclick="addTab('${item}')">${item}</a>`;
+                           displayHistory.appendChild(div);
+                        })
+                     } else {
+                        displayHistory.innerHTML = "You have no history yet. Start browsing!";
+                     }
+                  } else if (path === "developer-tools") {
+                     const currentWebview = Array.from(contentContainer.children).find((wv) => wv.style.display === "flex");
+
+                     if (currentWebview) {
+                        currentWebview.openDevTools();
+                     }
+                  }
+               }
+            }
+         }
+      });
+   </script>
+</html>

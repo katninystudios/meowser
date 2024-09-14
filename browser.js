@@ -18,9 +18,9 @@ let historySave = null;
 // get user preferences
 userDefaultEngine = localStorage.getItem("defaultEngine");
 if (userDefaultEngine === null) {
-   addTab("https://www.startpage.com/");
+   addTab();
 } else {
-   addTab(userDefaultEngine);
+   addTab();
 
    if (userDefaultEngine === "https://www.startpage.com/") {
       document.getElementById("search-engine").selectedIndex = 0;
@@ -30,8 +30,6 @@ if (userDefaultEngine === null) {
       document.getElementById("search-engine").selectedIndex = 2;
    } else if (userDefaultEngine === "https://www.bing.com/") {
       document.getElementById("search-engine").selectedIndex = 3;
-   } else if (userDefaultEngine === "https://search.yahoo.com/") {
-      document.getElementById("search-engine").selectedIndex = 4;
    }
 }
 
@@ -94,7 +92,7 @@ function addTab(url) {
 
    // create a new webview
    const webview = document.createElement("webview");
-   webview.src = url || userDefaultEngine;
+   webview.src = url || `file:///${currentDir}/new-tab.html`;
    webview.style.display = "none";
    webview.style.width = "100%";
    webview.style.height = "100%";
@@ -253,14 +251,21 @@ urlBar.addEventListener("keydown", (event) => {
 
          // if creating a url fails or hostname is invalid, treat input as a search term
          if (url.protocol !== "meow:") {
-            const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(input)}`;
-            changeCurrentTabUrl(searchUrl);
+            if (userDefaultEngine === "https://www.startpage.com/") {
+               changeCurrentTabUrl(`https://www.startpage.com/sp/search?q=${encodeURIComponent(input)}`);
+            } else if (userDefaultEngine === "https://www.qwant.com/") {
+               changeCurrentTabUrl(`https://www.qwant.com/?q=${encodeURIComponent(input)}`);
+            } else if (userDefaultEngine === "https://www.google.com/") {
+               changeCurrentTabUrl(`https://www.google.com/search?q=${encodeURIComponent(input)}`);
+            } else if (userDefaultEngine === "https://www.bing.com/") {
+               changeCurrentTabUrl(`https://www.bing.com/search?q=${encodeURIComponent(input)}`);
+            }
          } else {
             const path = formattedInput.replace("meow://", "");
 
             // check if we need a popup or just display a webview.
             if (path !== "settings" && path !== "history" && path !== "developer-tools") {
-               addTab(`file://${currentDir}/${path}.html`);
+               changeCurrentTabUrl(`file://${currentDir}/${path}.html`);
             } else if (path === "settings") {
                document.getElementById("settings").showModal();
             } else if (path === "history") {
@@ -487,10 +492,6 @@ searchEnginePref.addEventListener("change", () => {
       case "Bing":
          localStorage.setItem("defaultEngine", "https://www.bing.com/");
          userDefaultEngine = "https://www.bing.com/";
-         break;
-      case "Yahoo":
-         localStorage.setItem("defaultEngine", "https://search.yahoo.com/");
-         userDefaultEngine = "https://search.yahoo.com/";
          break;
       default:
          localStorage.setItem("defaultEngine", "https://www.startpage.com/");
