@@ -168,6 +168,14 @@ webview {
    color: #fff;
 }
 
+#url-bar .non-domain.hidden {
+   display: none;
+}
+
+#url-bar:focus .non-domain.hidden {
+   display: inline;
+}
+
 .url-container::-webkit-scrollbar {
    display: none;
 }

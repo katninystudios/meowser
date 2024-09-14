@@ -322,8 +322,20 @@ function formatURL(url) {
       const domain = parsedURL.hostname;
       const path = parsedURL.pathname + parsedURL.search + parsedURL.hash;
 
+      // check for subdomains
+      const domainParts = domain.split(".");
+      let subdomain = "";
+
+      // check if subdomain is "www"
+      if (domainParts[0] === "www") {
+         subdomain = "www";
+         domainParts.shift();
+      }
+
+      const baseDomain = domainParts.join(".");
+
       if (!url.startsWith("file:///")) {
-         return `<span class="non-domain">${protocol}//</span><span class="domain">${domain}</span><span class="non-domain">${path}</span>`;
+         return `<span class="non-domain hidden">${protocol}//</span>` + (subdomain === "www" ? `<span class="non-domain hidden">www.</span>` : subdomain ? `<span class="domain">${subdomain}.</span>` : "") +  `<span class="domain">${baseDomain}</span><span class="non-domain">${path}</span>`;
       } else {
          const fileName = path.split("/").pop().split(".").slice(0, -1).join(".");
          return `<span class="non-domain">meow://</span><span>${fileName}</span>`;
