@@ -107,6 +107,9 @@ function addTab(url) {
       title.textContent = event.title || new URL(webview.src).hostname || "Fetching...";
       document.title = `${event.title} — Meowser`;
       //favicon.src = `https://www.google.com/s2/favicons?domain=${new URL(webview.src).hostname}`;
+      urlBar.innerHTML = formatURL(webview.src);
+      addToHistory(webview.src);
+      checkSiteSecurity(webview.src);
    });
 
    webview.addEventListener("did-navigate", (event) => {
