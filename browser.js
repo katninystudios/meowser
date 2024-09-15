@@ -604,3 +604,10 @@ function siteSecurityInfo() {
       siteSecurityInfo_container.style.display = "none";
    }
 }
+
+// prevent new lines in the url bar
+urlBar.addEventListener("keydown", (evt) => {
+   if (evt.key === "Enter") {
+      evt.preventDefault();
+   }
+});
