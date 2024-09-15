@@ -267,7 +267,7 @@ urlBar.addEventListener("keydown", (event) => {
             const path = formattedInput.replace("meow://", "");
 
             // check if we need a popup or just display a webview.
-            if (path !== "settings" && path !== "history" && path !== "developer-tools") {
+            if (path !== "history" && path !== "developer-tools") {
                changeCurrentTabUrl(`file://${currentDir}/${path}.html`);
             } else if (path === "settings") {
                document.getElementById("settings").showModal();

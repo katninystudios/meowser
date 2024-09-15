@@ -4,13 +4,13 @@ const path = require("path");
 contextBridge.exposeInMainWorld('api', {
    dirname: () => __dirname,
    send: (channel, data) => {
-      let validChannels = ['hover-link'];
+      let validChannels = ['hover-link', "open-url"];
       if (validChannels.includes(channel)) {
          ipcRenderer.send(channel, data);
       }
    },
    handle: (channel, callback) => {
-      const validChannels = ['hover-link'];
+      const validChannels = ['hover-link', "open-url"];
       if (validChannels.includes(channel)) {
          ipcRenderer.on(channel, (event, ...args) => callback(event, ...args));
       }
