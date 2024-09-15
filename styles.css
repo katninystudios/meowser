@@ -40,6 +40,7 @@ html {
    margin: 0;
    background-color: #2b2b2b;
    border: 1px solid #444;
+   border: 1px solid transparent;
    cursor: pointer;
    position: relative;
    overflow: hidden;
