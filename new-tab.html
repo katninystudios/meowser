@@ -15,7 +15,7 @@
       <br />
       <br />
 
-      <div id="bookmarks">
+      <div id="bookmarks-container">
          <small>When you bookmark a site, it'll appear here.</small>
       </div>
    </body>
@@ -64,6 +64,35 @@
 
       input:focus {
          border: 3px solid cyan;
+      }
+
+      #bookmarks-container {
+         display: flex;
+         justify-content: center;
+         flex-wrap: wrap;
+      }
+
+      .bookmark {
+         margin: 5px;
+         max-width: 100px;
+         cursor: pointer;
+         padding: 10px;
+      }
+
+      .bookmark:hover {
+         background: #2f2f2f;
+         border-radius: 15px;
+      }
+
+      .bookmark p {
+         display: block;
+         max-width: 100px;
+         overflow: hidden;
+         text-overflow: ellipsis;
+         white-space: nowrap;
+         text-align: center;
+         margin-left: auto;
+         margin-right: auto;
       }
    </style>
 
@@ -164,5 +193,27 @@
             }
          }
       });
+
+      let bookmarks = localStorage.getItem("bookmarks");
+      if (bookmarks) {
+         bookmarks = JSON.parse(bookmarks);
+         document.getElementById("bookmarks-container").innerHTML = "";
+
+         if (bookmarks.length > 0) {
+            bookmarks.forEach(item => {
+               const div = document.createElement("div");
+               div.className = "bookmark";
+               div.setAttribute("onclick", `window.location.replace("${item.url}")`);
+               div.innerHTML = `
+                  <img src="https://www.google.com/s2/favicons?domain=${item.url}" draggable="false" />
+                  <p>${item.name}</p>`;
+                  document.getElementById("bookmarks-container").appendChild(div);
+            });
+         } else {
+            document.getElementById("bookmarks-container").innerHTML = "<small>When you bookmark a site, it'll appear here for quick access.</small>";
+         }
+      } else {
+         document.getElementById("bookmarks-container").innerHTML = "<small>When you bookmark a site, it'll appear here for quick access.</small>";
+      }
    </script>
 </html>

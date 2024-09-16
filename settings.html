@@ -13,8 +13,9 @@
       <!-- tabs -->
       <div class="sidenav">
          <div class="nav">
-            <a href="javascript:void(0);" onclick="switchTab('about')" class="active" id="about">About Meowser</a>
+            <a href="javascript:void(0);" onclick="switchTab('about')" id="about">About Meowser</a>
             <a href="javascript:void(1);" onclick="switchTab('search')" id="search">Search Engine</a>
+            <a href="javascript:void(2);" onclick="switchTab('bookmark')" id="bookmark">Bookmarks</a>
          </div>
          
          <br />
@@ -38,22 +39,10 @@
 
             <a class="button" href="https://github.com/katniny/meowser" target="_blank">Report an issue <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
          </div>
-
-         <br />
-         <br />
-
-         <div class="info">
-            <p>Meowser</p>
-            <small>Copyright 2024 Katniny Studios. All Rights Reserved. Code is licensed under CC BY-NC-SA 4.0</small>
-
-            <br />
-
-            <small>Meowser is only possible because of <a href="https://github.com/electron/electron" target="_blank">Electron</a> and other <a href="about.html">open source software</a></small>
-         </div>
       </div>
 
       <!-- search engine -->
-      <div id="search-engine-tab" style="display: none;">
+      <div id="search-engine-tab">
          <br />
 
          <p style="margin-bottom: 3px;">Search Engine</p>
@@ -70,6 +59,37 @@
                <option value="bing">Bing</option>
             </select>
          </div>
+      </div>
+
+      <!-- bookmarks -->
+      <div id="bookmarks-tab"></div>
+         <br />
+
+         <p style="margin-bottom: 3px;">Bookmarks</p>
+         <div class="info">
+            <p>Bookmarks</p>
+            <small>When do you want your bookmarks to show?</small>
+
+            <br />
+            
+            <select id="bookmark-show" style="margin-top: 3px;">
+               <option value="always">Always Show</option>
+               <option value="homepage">Only on New Tab page</option>
+               <option value="never">Never Show</option>
+            </select>
+         </div>
+      </div>
+
+      <br />
+      <br />
+
+      <div class="info">
+         <p>Meowser</p>
+         <small>Copyright 2024 Katniny Studios. All Rights Reserved. Code is licensed under CC BY-NC-SA 4.0</small>
+
+         <br />
+
+         <small>Meowser is only possible because of <a href="https://github.com/electron/electron" target="_blank">Electron</a> and other <a href="about.html">open source software</a></small>
       </div>
    </body>
 
@@ -206,6 +226,17 @@
          }
       }
 
+      let userBookmarks = localStorage.getItem("bookmarksDisplay");
+      if (userBookmarks !== null) {
+         if (userBookmarks === "always") {
+            document.getElementById("bookmark-show").selectedIndex = 0;
+         } else if (userBookmarks === "home") {
+            document.getElementById("bookmark-show").selectedIndex = 1;
+         } else if (userBookmarks === "never") {
+            document.getElementById("bookmark-show").selectedIndex = 2;
+         }
+      }
+
       const searchEnginePref = document.getElementById("search-engine");
       searchEnginePref.addEventListener("change", () => {
          const selectedEngine = searchEnginePref.options[searchEnginePref.selectedIndex].text;
@@ -236,18 +267,51 @@
       });
 
       // switch tab
-      function switchTab(tab) {
-         if (tab === "about") {
-            document.getElementById("about").classList.add("active");
-            document.getElementById("search").classList.remove("active");
-            document.getElementById("about-meowser").style.display = "block";
-            document.getElementById("search-engine-tab").style.display = "none";
-         } else if (tab === "search") {
-            document.getElementById("about").classList.remove("active");
-            document.getElementById("search").classList.add("active");
-            document.getElementById("about-meowser").style.display = "none";
-            document.getElementById("search-engine-tab").style.display = "block";
+      // function switchTab(tab) {
+      //    if (tab === "about") {
+      //       document.getElementById("about").classList.add("active");
+      //       document.getElementById("search").classList.remove("active");
+      //       document.getElementById("about-meowser").style.display = "block";
+      //       document.getElementById("search-engine-tab").style.display = "none";
+      //       document.getElementById("bookmarks-tab").style.display = "none";
+      //       document.getElementById("bookmark").classList.remove("active");
+      //    } else if (tab === "search") {
+      //       document.getElementById("about").classList.remove("active");
+      //       document.getElementById("search").classList.add("active");
+      //       document.getElementById("about-meowser").style.display = "none";
+      //       document.getElementById("search-engine-tab").style.display = "block";
+      //       document.getElementById("bookmarks-tab").style.display = "none";
+      //       document.getElementById("bookmark").classList.remove("active");
+      //    } else if (tab === "bookmark") {
+      //       document.getElementById("about").classList.remove("active");
+      //       document.getElementById("search").classList.remove("active");
+      //       document.getElementById("about-meowser").style.display = "none";
+      //       document.getElementById("search-engine-tab").style.display = "none";
+      //       document.getElementById("bookmarks-tab").style.display = "block";
+      //       document.getElementById("bookmark").classList.add("active");
+      //    }
+      // }
+
+      // change bookmarks
+      const bookmarksPref = document.getElementById("bookmark-show");
+      bookmarksPref.addEventListener("change", () => {
+         const selectedEngine = bookmarksPref.options[bookmarksPref.selectedIndex].text;
+         //console.log(selectedEngine);
+
+         switch (selectedEngine) {
+            case "Always Show":
+               localStorage.setItem("bookmarksDisplay", "always");
+               break;
+            case "Only on New Tab page":
+               localStorage.setItem("bookmarksDisplay", "home");
+               break;
+            case "Never Show":
+               localStorage.setItem("bookmarksDisplay", "never");
+               break;
+            default:
+               localStorage.setItem("bookmarksDisplay", "home");
+               break;
          }
-      }
+      });
    </script>
 </html>

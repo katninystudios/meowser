@@ -10,6 +10,8 @@ const linkPreview = document.getElementById("link-preview");
 const siteSecurity = document.getElementById("site-security");
 const siteSecurityInfo_container = document.getElementById("site-security-info");
 const siteSecurityInfoDesc = document.getElementById("site-security-link");
+const bookmarksBar = document.getElementById("bookmarks-bar");
+const addBookmarkUrl = document.getElementById("bookmark-url");
 
 // user preferences
 let userDefaultEngine = "N/A";
@@ -116,6 +118,7 @@ function addTab(url) {
       urlBar.innerHTML = formatURL(event.url);
       addToHistory(event.url);
       checkSiteSecurity(event.url);
+      addBookmarkUrl.value = event.url;
    });
 
    // check if the webview is currently loading
@@ -165,6 +168,7 @@ function switchTab(tab) {
       setTimeout(() => {
          updateNavigationButtons();
          urlBar.innerHTML = formatURL(webview.getURL());
+         addBookmarkUrl.value = webview.getURL();
          checkSiteSecurity(webview.getURL());
       }, 100);
    }
@@ -611,3 +615,92 @@ urlBar.addEventListener("keydown", (evt) => {
       evt.preventDefault();
    }
 });
+
+// allow users to have their own bookmarks
+function loadBookmarks() {
+   let bookmarks = localStorage.getItem("bookmarks");
+   if (bookmarks) {
+      bookmarks = JSON.parse(bookmarks);
+      bookmarksBar.innerHTML = "";
+
+      if (bookmarks.length > 0) {
+         bookmarks.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "bookmark";
+            div.innerHTML = `
+               <img src="https://www.google.com/s2/favicons?domain=${item.url}" draggable="false" />
+               <a href="javascript:void(0);" onclick="changeCurrentTabUrl('${item.url}')">${item.name}</a>`;
+            bookmarksBar.appendChild(div);
+         });
+      } else {
+         bookmarksBar.innerHTML = "<small>Bookmarks will appear here.</small>";
+      }
+   } else {
+      bookmarksBar.innerHTML = "<small>Bookmarks will appear here.</small>";
+   }
+}
+
+function addBookmark() {
+   if (document.getElementById("add-bookmark-info").style.display === "none" || document.getElementById("add-bookmark-info").style.display === "") {
+      document.getElementById("add-bookmark-info").style.display = "block";
+   } else {
+      document.getElementById("add-bookmark-info").style.display = "none";
+   }
+}
+
+function addBookmark_finalize(name, url) {
+   if (url && name) {
+      let bookmarks = localStorage.getItem("bookmarks");
+      if (!bookmarks) {
+         bookmarks = [];
+      } else {
+         bookmarks = JSON.parse(bookmarks);
+      }
+
+      bookmarks.push({ name: name, url: url });
+      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+
+      loadBookmarks(); // reload it
+      document.getElementById("add-bookmark-info").style.display = "none";
+   } else {
+      alert("Both the URL and name are required to add a bookmark.");
+   }
+}
+
+function checkBookmarkDisplayPref() {
+   let bookmarkBarDisplay = localStorage.getItem("bookmarksDisplay");
+
+   // pls ignore me nesting ifs... 😇
+   if (bookmarkBarDisplay) {
+      if (bookmarkBarDisplay === "always") {
+         bookmarksBar.style.display = "block";
+      } else if (bookmarkBarDisplay === "home") {
+         if (urlBar.textContent === "meow://new-tab") {
+            bookmarksBar.style.display = "block";
+         } else {
+            bookmarksBar.style.display = "none";
+         }
+      } else if (bookmarkBarDisplay === "never") {
+         bookmarksBar.style.display = "none";
+      }
+   } else {
+      // by default, show bookmarks bar on new tab'
+      // if they dont like it, they can change it :p
+      if (urlBar.textContent === "meow://new-tab") {
+         bookmarksBar.style.display = "block";
+      } else {
+         bookmarksBar.style.display = "none";
+      }
+   }
+}
+
+loadBookmarks();
+checkBookmarkDisplayPref();
+
+setInterval(() => {
+   loadBookmarks();
+}, 500);
+
+setInterval(() => {
+   checkBookmarkDisplayPref();
+}, 50);

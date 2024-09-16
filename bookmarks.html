@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Bookmarks</title>
+   </head>
+   
+   <body style="text-align: center;">
+      <br />
+      
+      <h2>Your Bookmarks</h2>
+      <p>The most important links you may need.</p>
+      <p>If you're looking to change the bookmark bar behavior, please do so in the <a href="settings.html">Settings</a>.</p>
+
+      <br />
+
+      <div id="bookmarks-container">
+         <p>Fetching your bookmarks... This should only take a second or less.</p>
+         <small>If it's stuck here, it's likely a bug. Please let us know. <a href="https://github.com/katniny/meowser/issues" target="_blank">GitHub Issues</a></small>
+      </div>
+
+      <dialog id="confirmBookmarkDeletion">
+         <h2>Delete Bookmark?</h2>
+         <p id="bookmark-url-deletion">Are you sure you want to delete the bookmark [url]?</p>
+
+         <button id="confirm-deletion" onclick="idk()">Confirm</button> <button onclick="document.getElementById('confirmBookmarkDeletion').close()">Nevermind</button>
+      </dialog>
+   </body>
+
+   <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+      * {
+         margin: 0;
+         padding: 0;
+         font-family: "Roboto", sans-serif;
+      }
+
+      body {
+         background: #1f1f1f;
+         color: #fff;
+      }
+
+      a {
+         color: cyan;
+      }
+
+      a:hover {
+         text-decoration: none;
+         color: #00bbbb;
+      }
+
+      small {
+         color: #bbb;
+      }
+
+      input {
+         background: #4f4f4f;
+         border: 3px solid #4f4f4f;
+         padding: 15px;
+         border-radius: 15px;
+         outline: none;
+         color: #fff;
+         font-size: 16px;
+         transition: all 0.15s ease;
+      }
+
+      input::placeholder {
+         color: #c0c0c0;
+      }
+
+      input:focus {
+         border: 3px solid cyan;
+      }
+
+      .bookmark {
+         margin-top: 5px;
+      }
+
+      .bookmark a {
+         color: #fff;
+         text-decoration: none;
+         cursor: auto;
+      }
+
+      dialog {
+         margin: 0 auto;
+         width: 600px;
+         padding: 10px;
+         border-radius: 10px;
+         background: #2f2f2f;
+         border: 1px solid #fff;
+         margin-top: 125px;
+         animation: openPopup 0.25s ease;
+         overflow-y: auto;
+         color: #fff;
+         outline: none;
+         max-height: 500px;
+      }
+   </style>
+
+   <script>
+      function removeBookmark(url) {
+         document.getElementById("confirmBookmarkDeletion").showModal();
+         document.getElementById("bookmark-url-deletion").textContent = `Are you sure you want to delete the bookmark ${url}?`;
+         document.getElementById("confirm-deletion").setAttribute("onclick", `confirmRemoveBookmark("${url}")`);
+      }
+
+      let bookmarks = localStorage.getItem("bookmarks");
+      if (bookmarks) {
+         bookmarks = JSON.parse(bookmarks);
+         document.getElementById("bookmarks-container").innerHTML = "";
+
+         bookmarks.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "bookmark";
+            div.innerHTML = `
+               <img src="https://www.google.com/s2/favicons?domain=${item.url}" draggable="false" />
+               <span>${item.name}</span>
+               <button onclick="removeBookmark('${item.url}')">Remove Bookmark</button>`;
+               document.getElementById("bookmarks-container").appendChild(div);
+         });
+      } else {
+         document.getElementById("bookmarks-container").innerHTML = "You have no bookmarks yet.";
+      }
+
+      function confirmRemoveBookmark(url) {
+         let bookmarks = localStorage.getItem("bookmarks");
+         if (bookmarks) {
+            bookmarks = JSON.parse(bookmarks);
+            bookmarks = bookmarks.filter(item => item.url !== url);
+            localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+
+            loadBookmarks(); // Reload the bookmarks display
+            document.getElementById("confirmBookmarkDeletion").close();
+         }
+      }
+
+      function loadBookmarks() {
+         let bookmarks = localStorage.getItem("bookmarks");
+         if (bookmarks) {
+            bookmarks = JSON.parse(bookmarks);
+            document.getElementById("bookmarks-container").innerHTML = "";
+
+            bookmarks.forEach(item => {
+               const div = document.createElement("div");
+               div.className = "bookmark";
+               div.innerHTML = `
+                  <img src="https://www.google.com/s2/favicons?domain=${item.url}" draggable="false" />
+                  <span>${item.name}</span>
+                  <button onclick="removeBookmark('${item.url}')">Remove Bookmark</button>`;
+                  document.getElementById("bookmarks-container").appendChild(div);
+            });
+         } else {
+            document.getElementById("bookmarks-container").innerHTML = "You have no bookmarks yet.";
+         }
+      }
+   </script>
+</html>

@@ -17,7 +17,9 @@
          <i class="fa-solid fa-arrow-right" id="forward-button" onclick="goForward()"></i>
          <i class="fa-solid fa-rotate-right active" onclick="reload()" id="reloadOrStop"></i>
          <i class="fa-solid fa-lock active" id="site-security" onclick="siteSecurityInfo()"></i><div type="text" spellcheck="false" contenteditable="true" id="url-bar" placeholder="Search or enter URL"></div>
+         <i class="fa-regular fa-star active" id="add-bookmark-btn" onclick="addBookmark()"></i>
       </div>
+      <div id="bookmarks-bar"></div>
       <div id="content">
          <!-- Please put !!!NOTHING!!! in here. If you do, you're fixing the tabs, I tried and it could be used as a torture method, thanks! -->
          <!-- If you add anything that isn't a webview, please put it in the div below. -->
@@ -26,6 +28,17 @@
          <div id="link-preview"></div>
          <div id="site-security-info">
             <h3 id="site-security-link"><i class="fa-solid fa-lock"></i> You are securely connected to [link]</h3>
+         </div>
+         <div id="add-bookmark-info">
+            <h2 id="addBookmarkLink"><i class="fa-solid fa-bookmark"></i> Add Bookmark</h2>
+
+            <label for="bookmark-name">Name</label>
+            <br/><input type="text" id="bookmark-name" placeholder="Name this bookmark" />
+
+            <br/><label for="bookmark-url">URL</label>
+            <br/><input type="text" id="bookmark-url" placeholder="Bookmark URL" />
+
+            <br/><button style="margin-top: 10px;" onclick="addBookmark_finalize(`${document.getElementById('bookmark-name').value}`, `${document.getElementById('bookmark-url').value}`)">Add Bookmark</button>
          </div>
       </div>
 
