@@ -70,6 +70,10 @@ function addTab(url) {
    title.textContent = "New Tab"; // default to hostname if no title
    title.className = "tab-title";
 
+   const audio = document.createElement("small");
+   audio.textContent = "PLAYING";
+   audio.className = "tab-audio";
+
    const closeButton = document.createElement("button");
    closeButton.textContent = "x";
    closeButton.className = "tab-close-button";
@@ -80,6 +84,8 @@ function addTab(url) {
 
    tab.appendChild(favicon);
    tab.appendChild(title);
+   tab.appendChild(document.createElement("br"));
+   tab.appendChild(audio);
    tab.appendChild(closeButton);
    tab.onclick = () => switchTab(tab);
 
@@ -103,6 +109,19 @@ function addTab(url) {
 
    webview.addEventListener("did-navigate", updateNavigationButtons);
    webview.addEventListener("did-navigate-in-page", updateNavigationButtons);
+
+   setInterval(() => {
+      if (webview.isCurrentlyAudible()) {
+         audio.style.opacity = "1";
+
+         title.style.transform = "translateY(-3px)";
+      } else {
+         audio.style.opacity = "0";
+
+         // styling
+         title.style.transform = "translateY(3px)";
+      }
+   }, 50);
 
    // update the tab title when the webview's title changes
    webview.addEventListener("page-title-updated", (event) => {

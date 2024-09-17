@@ -52,6 +52,8 @@ html {
    font-weight: 500;
    transition: background-color 0.3s ease, color 0.3s ease;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+   max-height: 40px;
+   height: 25px;
 }
 
 .tab:hover,
@@ -68,6 +70,7 @@ html {
    white-space: nowrap;
    transform: translateY(3px);
    font-size: 14px;
+   transition: transform 0.15s ease;
 }
 
 .tab-close-button {
@@ -85,6 +88,14 @@ html {
 
 .tab-close-button:hover {
    background: #444;
+}
+
+.tab-audio {
+   margin-left: 23px;
+   transform: translateY(-13px);
+   color: #b5b5b5;
+   transition: all 0.15s ease;
+   display: inline-block;
 }
 
 /* favicon */
