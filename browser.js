@@ -110,17 +110,19 @@ function addTab(url) {
    webview.addEventListener("did-navigate", updateNavigationButtons);
    webview.addEventListener("did-navigate-in-page", updateNavigationButtons);
 
-   setInterval(() => {
-      if (webview.isCurrentlyAudible()) {
-         audio.style.opacity = "1";
+   setTimeout(() => {
+      setInterval(() => {
+         if (webview.isCurrentlyAudible()) {
+            audio.style.opacity = "1";
 
-         title.style.transform = "translateY(-3px)";
-      } else {
-         audio.style.opacity = "0";
+            title.style.transform = "translateY(-3px)";
+         } else {
+            audio.style.opacity = "0";
 
-         // styling
-         title.style.transform = "translateY(3px)";
-      }
+            // styling
+            title.style.transform = "translateY(3px)";
+         }
+      }, 50);
    }, 50);
 
    // update the tab title when the webview's title changes
