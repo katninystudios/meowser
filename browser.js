@@ -26,16 +26,6 @@ if (userDefaultEngine === null) {
    addTab();
 } else {
    addTab();
-
-   if (userDefaultEngine === "https://www.startpage.com/") {
-      document.getElementById("search-engine").selectedIndex = 0;
-   } else if (userDefaultEngine === "https://www.qwant.com/") {
-      document.getElementById("search-engine").selectedIndex = 1;
-   } else if (userDefaultEngine === "https://www.google.com/") {
-      document.getElementById("search-engine").selectedIndex = 2;
-   } else if (userDefaultEngine === "https://www.bing.com/") {
-      document.getElementById("search-engine").selectedIndex = 3;
-   }
 }
 
 userSaveHistory = localStorage.getItem("saveHistory");
@@ -50,9 +40,6 @@ if (userSaveHistory === null) {
       document.getElementById("history-pref").selectedIndex = 1;
    }
 }
-
-// show version
-document.getElementById("browser-version").textContent = `Meowser ${browserVersion}`;
 
 // tabs
 function addTab(url) {
@@ -506,36 +493,6 @@ function handleDragEnd(event) {
    draggedTab = null;
 }
 
-// let users change their preferences
-const searchEnginePref = document.getElementById("search-engine");
-searchEnginePref.addEventListener("change", () => {
-   const selectedEngine = searchEnginePref.options[searchEnginePref.selectedIndex].text;
-   //console.log(selectedEngine);
-
-   switch (selectedEngine) {
-      case "Startpage":
-         localStorage.setItem("defaultEngine", "https://www.startpage.com/");
-         userDefaultEngine = "https://www.startpage.com/";
-         break;
-      case "Qwant":
-         localStorage.setItem("defaultEngine", "https://www.qwant.com/");
-         userDefaultEngine = "https://www.qwant.com/";
-         break;
-      case "Google":
-         localStorage.setItem("defaultEngine", "https://www.google.com/");
-         userDefaultEngine = "https://www.google.com/";
-         break;
-      case "Bing":
-         localStorage.setItem("defaultEngine", "https://www.bing.com/");
-         userDefaultEngine = "https://www.bing.com/";
-         break;
-      default:
-         localStorage.setItem("defaultEngine", "https://www.startpage.com/");
-         userDefaultEngine = "https://www.startpage.com/";
-         break;
-   }
-});
-
 // delete history
 function deleteHistory() {
    localStorage.removeItem("history"); // removes all the history
@@ -582,28 +539,6 @@ document.addEventListener("keydown", (event) => {
       addTab();
    }
 }, true);
-
-// allow users to edit whether their history is saved or not
-const historyPref = document.getElementById("history-pref");
-historyPref.addEventListener("change", () => {
-   const selectedPref = historyPref.options[historyPref.selectedIndex].text;
-   console.log(selectedPref);
-
-   switch (selectedPref) {
-      case "Remember history":
-         localStorage.setItem("saveHistory", "true");
-         historySave = true;
-         break;
-      case "Never remember history":
-         localStorage.setItem("saveHistory", "false");
-         historySave = false;
-         break;
-      default:
-         localStorage.setItem("saveHistory", "true");
-         historySave = true;
-         break;
-   }
-});
 
 // check site security
 function checkSiteSecurity(url) {

@@ -12,7 +12,7 @@ const whitelist = [ // we have to whitelist these, or youtube (for example) will
    "https://yt3.ggpht.com",
    "https://firebasestorage.googleapis.com/",
    "https://avatars.githubusercontent.com/",
-   "https://camo.githubusercontent.com/"
+   "https://camo.githubusercontent.com/",
 ];
 
 function createWindow() {
