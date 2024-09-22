@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, webContents, session } = require("electron");
+const { app, BrowserWindow, ipcMain, webContents, session, Menu } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const https = require("https");
@@ -6,10 +6,13 @@ const https = require("https");
 let mainWindow;
 
 const whitelist = [ // we have to whitelist these, or youtube (for example) will refuse to load pfps and stuff
+   // if you find another site that wont load certain elements that arent trackers, let us know!
    "googleusercontent.com",
    "gravatar.com",
    "https://yt3.ggpht.com",
-   "https://firebasestorage.googleapis.com/"
+   "https://firebasestorage.googleapis.com/",
+   "https://avatars.githubusercontent.com/",
+   "https://camo.githubusercontent.com/"
 ];
 
 function createWindow() {
@@ -27,6 +30,28 @@ function createWindow() {
    });
 
    mainWindow.loadFile("index.html");
+
+   // context menu
+   const contextMenu = Menu.buildFromTemplate([
+      {
+         label: "Open Link in New Tab",
+         click: (MenuItem, BrowserWindow, event) => {
+            const selectedText = event.sender.getSelectedText();
+
+            console.log("Opening:", selectedText);
+            
+            shell.openExternal(selectedText);
+         },
+      },
+      { type: "separator" },
+      { role: "copy" },
+      { role: "paste" },
+      { role: "selectAll" },
+   ]);
+
+   mainWindow.webContents.on("context-menu", (event) => {
+      contextMenu.popup({ window: mainWindow });
+   });
 
    // add adblocker logic
    fetchEasyList().then(domains => {
