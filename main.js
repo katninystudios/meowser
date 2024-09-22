@@ -2,6 +2,9 @@ const { app, BrowserWindow, ipcMain, webContents, session, Menu } = require("ele
 const path = require("path");
 const fs = require("fs");
 const https = require("https");
+const { updateElectronApp } = require("update-electron-app");
+
+updateElectronApp();
 
 let mainWindow;
 
