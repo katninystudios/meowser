@@ -49,79 +49,11 @@
           </ul>
       </div>
 
-      <!-- settings -->
-      <dialog id="settings">
-         <!-- info -->
-         <h1>Meowser Settings</h1>
-         <p class="info">Modify your Meowser settings to suit your preferences, such as changing your search engine.</p>
-
-         <br />
-
-         <!-- settings itself -->
-         <label for="search-engine">Default Search Engine: </label>
-         <select id="search-engine">
-            <option value="startpage">Startpage</option>
-            <option value="qwant">Qwant</option>
-            <option value="google">Google</option>
-            <option value="bing">Bing</option>
-         </select>
-
-         <br />
-
-         <label for="history-pref">Meowser will</label>
-         <select id="history-pref">
-            <option value="remember-history">Remember history</option>
-            <option value="never-remember-history">Never remember history</option>
-         </select>
-
-         <!-- version -->
-         <br />
-         <br />
-
-         <p><small><span id="browser-version">Meowser vVERSION_CYCLE</span> - Check for updates with meow://updates.
-               Meowser can automatically update.</small></p>
-         <p><small>Please note that Meowser is in alpha, and will be constantly improved with more features, settings, and
-               more.</small></p>
-      </dialog>
-
-      <!-- history -->
-      <dialog id="history">
-         <!-- info -->
-         <h1>History</h1>
-         <p class="info">The pages you've visited on Meowser.</p>
-         <a href="javascript:void(0);"></a>
-         <!-- this just ensures the user doesnt get prompted to delete their history immediately -->
-         <button onclick="document.getElementById('delete-history').showModal()">Delete History</button>
-
-         <br />
-         <br />
-
-         <!-- where history is displayed -->
-         <div id="display-history" style="display: flex; flex-direction: column-reverse;"></div>
-
-         <br />
-
-         <p><small>Please note that Meowser is in alpha, and will be constantly improved with more features, settings, and
-               more.</small></p>
-      </dialog>
-
-      <dialog id="delete-history">
-         <!-- info -->
-         <h1>Delete history?</h1>
-         <p class="info">Are you sure you want to delete your Meowser history?</p>
-
-         <br />
-
-         <button onclick="deleteHistory()">Yes, delete</button> <button
-            onclick="document.getElementById('delete-history').close()">Nevermind, don't delete</button>
-         <p><small>Please note that Meowser is in alpha, and will be constantly improved with more features, settings, and
-               more.</small></p>
-      </dialog>
-
       <!-- scripts -->
       <!-- <script>
                document.getElementById("settings").showModal();
          </script> -->
       <script src="browser.js"></script>
+      <script src="update.js"></script>
    </body>
 </html>
