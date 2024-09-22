@@ -16,8 +16,11 @@ const addBookmarkUrl = document.getElementById("bookmark-url");
 // user preferences
 let userDefaultEngine = "N/A";
 let historySave = null;
+let haveUsedBrowser = null;
 
 // get user preferences
+haveUsedBrowser = localStorage.getItem("browserUsed");
+
 userDefaultEngine = localStorage.getItem("defaultEngine");
 if (userDefaultEngine === null) {
    addTab();
@@ -36,7 +39,6 @@ if (userDefaultEngine === null) {
 }
 
 userSaveHistory = localStorage.getItem("saveHistory");
-console.log(userSaveHistory);
 if (userSaveHistory === null) {
    saveHistory = true;
 } else {
@@ -100,7 +102,13 @@ function addTab(url) {
 
    // create a new webview
    const webview = document.createElement("webview");
-   webview.src = url || `file:///${currentDir}/new-tab.html`;
+   if (haveUsedBrowser !== null) {
+      webview.src = url || `file:///${currentDir}/new-tab.html`;
+   } else {
+      webview.src = `file:///${currentDir}/welcome.html`;
+      localStorage.setItem("browserUsed", true);
+      haveUsedBrowser = true;
+   }
    webview.style.display = "none";
    webview.style.width = "100%";
    webview.style.height = "100%";

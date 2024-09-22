@@ -25,10 +25,13 @@
          <!-- If you add anything that isn't a webview, please put it in the div below. -->
       </div>
       <div id="non-div-content">
+         <!-- when user hovers a link -->
          <div id="link-preview"></div>
+         <!-- site security -->
          <div id="site-security-info">
             <h3 id="site-security-link"><i class="fa-solid fa-lock"></i> You are securely connected to [link]</h3>
          </div>
+         <!-- add bookmark -->
          <div id="add-bookmark-info">
             <h2 id="addBookmarkLink"><i class="fa-solid fa-bookmark"></i> Add Bookmark</h2>
 
@@ -40,6 +43,10 @@
 
             <br/><button style="margin-top: 10px;" onclick="addBookmark_finalize(`${document.getElementById('bookmark-name').value}`, `${document.getElementById('bookmark-url').value}`)">Add Bookmark</button>
          </div>
+         <!-- suggestions -->
+         <ul id="suggestionsDropdown" style="display: none; border: 1px solid #ccc; position: absolute; max-height: 200px; overflow-y: auto;">
+            <!-- suggestions will be added here dynamically -->
+          </ul>
       </div>
 
       <!-- settings -->
