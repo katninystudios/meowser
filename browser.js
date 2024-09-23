@@ -105,6 +105,14 @@ function addTab(url) {
    webview.addEventListener("did-navigate", updateNavigationButtons);
    webview.addEventListener("did-navigate-in-page", updateNavigationButtons);
 
+   webview.addEventListener("did-fail-load", (event) => {
+      webview.src = "errorloadingpage.html";
+   });
+
+   webview.addEventListener("did-fail-provisional-load", (event) => {
+      webview.src = "errorloadingpage.html";
+   });
+
    setTimeout(() => {
       setInterval(() => {
          if (webview.isCurrentlyAudible()) {

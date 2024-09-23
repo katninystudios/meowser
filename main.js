@@ -24,7 +24,7 @@ function createWindow() {
          contextIsolation: true,
          nodeIntegration: true,
          webviewTag: true,
-         //devTools: !app.isPackaged, // we no want users doing that during release builds :pensive:
+         devTools: !app.isPackaged, // we no want users doing that during release builds :pensive:
       },
       autoHideMenuBar: true
    });
