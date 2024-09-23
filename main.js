@@ -1,7 +1,15 @@
-const { app, BrowserWindow, ipcMain, webContents, session, Menu } = require("electron");
+const { app, BrowserWindow, ipcMain, webContents, session, Menu, dialog, Notification } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const https = require("https");
+const { autoUpdater } = require("electron-updater");
+const log = require("electron-log");
+
+log.transports.file.level = "info";
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = "info";
+
+autoUpdater.autoDownload = false;
 
 let mainWindow;
 
@@ -98,6 +106,7 @@ app.on("ready", () => {
    if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
    }
+   autoUpdater.checkForUpdatesAndNotify();
 });
 
 // handle url hovered from the webview's preload script
@@ -152,3 +161,50 @@ function addAdBlocker(session) {
       }
    });
 }
+
+// auto updater
+autoUpdater.on("checking-for-update", () => {
+   log.info("Checking for updates...");
+});
+
+autoUpdater.on("update-available", (info) => {
+   new Notification({
+      title: "Update Available",
+      body: "Meowser will auto update."
+   }).show();
+   autoUpdater.downloadUpdate();
+});
+
+autoUpdater.on("update-not-available", (info) => {
+   log.info("No update available.");
+   return;
+});
+
+autoUpdater.on("error", (err) => {
+   log.error("Error in auto-updater: ", err);
+   new Notification({
+      title: "An Error Occurred",
+      body: err
+   }).show();
+});
+
+autoUpdater.on("download-progress", (progressObj) => {
+   log.info(`Download speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.percent}% (${progressObj.transferred}/${progressObj.total})`);
+   return;
+});
+
+autoUpdater.on("update-downloaded", (info) => {
+   log.info("Update downloaded.");
+   const options = {
+      type: "info",
+      buttons: ["Restart Now", "Restart Later"],
+      title: "Successfully installed update",
+      message: "Meowser has installed a new version. Do you want to restart now or later? The latest update log is available at https://github.com/katniny/meowser/releases"
+   };
+
+   dialog.showMessageBox(null, options).then((result) => {
+      if (result.response === 0) {
+         autoUpdater.quitAndInstall();
+      }
+   });
+});
