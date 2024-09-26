@@ -163,7 +163,7 @@ webview {
    scrollbar-width: none;
    -ms-overflow-style: none;
    outline: none;
-   border-radius: 5px;
+   border-radius: 15px;
    transform: translateX(-35px);
    transition: all 0.1s ease;
 }

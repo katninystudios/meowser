@@ -1,6 +1,6 @@
 {
   "name": "meowser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A free, open-source browser made with Electron",
   "main": "main.js",
   "scripts": {

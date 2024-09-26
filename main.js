@@ -32,10 +32,13 @@ function createWindow() {
          contextIsolation: true,
          nodeIntegration: true,
          webviewTag: true,
-         devTools: !app.isPackaged, // we no want users doing that during release builds :pensive:
       },
-      autoHideMenuBar: true
+      autoHideMenuBar: true,
    });
+
+   if (app.isPackaged) {
+      Menu.setApplicationMenu(null);
+   }
 
    mainWindow.loadFile("index.html");
 

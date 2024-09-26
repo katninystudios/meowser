@@ -113,6 +113,25 @@ function addTab(url) {
       webview.src = "errorloadingpage.html";
    });
 
+   webview.addEventListener("page-favicon-updated", (event) => {
+      const favicons = event.favicons;
+      const faviconUrl = favicons[0];
+      const img = new Image();
+
+      img.onload = function() {
+         favicon.innerHTML = `<img src="${faviconUrl}" />`;
+      }
+
+      img.onerror = function() {
+         favicon.innerHTML = `<img src="https://www.google.com/s2/favicons?domain=${new URL(webview.src).hostname}" />`;
+      }
+
+      favicon.innerHTML = `<img src="${favicons[0]}" />`;
+      
+      reloadOrStop.className = `fa-solid fa-rotate-right active`;
+      reloadOrStop.setAttribute("onclick", "reload()");
+   });
+
    setTimeout(() => {
       setInterval(() => {
          if (webview.isCurrentlyAudible()) {
@@ -153,13 +172,7 @@ function addTab(url) {
    });
 
    webview.addEventListener("did-stop-loading", () => {
-      if (!webview.src.startsWith("file:///")) {
-         favicon.innerHTML = `<img src="https://www.google.com/s2/favicons?domain=${new URL(webview.src).hostname}" />`;
-      } else {
-         favicon.innerHTML = `<img src="https://www.google.com/s2/favicons?domain=https://example.com" />`;
-      }
-      reloadOrStop.className = `fa-solid fa-rotate-right active`;
-      reloadOrStop.setAttribute("onclick", "reload()");
+      
    });
 
    contentContainer.appendChild(webview);
