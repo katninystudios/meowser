@@ -118,16 +118,16 @@ function addTab(url) {
       const faviconUrl = favicons[0];
       const img = new Image();
 
-      img.onload = function() {
+      img.onload = function () {
          favicon.innerHTML = `<img src="${faviconUrl}" />`;
       }
 
-      img.onerror = function() {
+      img.onerror = function () {
          favicon.innerHTML = `<img src="https://www.google.com/s2/favicons?domain=${new URL(webview.src).hostname}" />`;
       }
 
       favicon.innerHTML = `<img src="${favicons[0]}" />`;
-      
+
       reloadOrStop.className = `fa-solid fa-rotate-right active`;
       reloadOrStop.setAttribute("onclick", "reload()");
    });
@@ -172,7 +172,7 @@ function addTab(url) {
    });
 
    webview.addEventListener("did-stop-loading", () => {
-      
+
    });
 
    contentContainer.appendChild(webview);
@@ -408,7 +408,7 @@ function formatURL(url) {
       const baseDomain = domainParts.join(".");
 
       if (!url.startsWith("file:///")) {
-         return `<span class="non-domain hidden">${protocol}//</span>` + (subdomain === "www" ? `<span class="non-domain hidden">www.</span>` : subdomain ? `<span class="domain">${subdomain}.</span>` : "") +  `<span class="domain">${baseDomain}</span><span class="non-domain">${path}</span>`;
+         return `<span class="non-domain hidden">${protocol}//</span>` + (subdomain === "www" ? `<span class="non-domain hidden">www.</span>` : subdomain ? `<span class="domain">${subdomain}.</span>` : "") + `<span class="domain">${baseDomain}</span><span class="non-domain">${path}</span>`;
       } else {
          const fileName = path.split("/").pop().split(".").slice(0, -1).join(".");
          return `<span class="non-domain">meow://</span><span>${fileName}</span>`;
@@ -688,4 +688,43 @@ setInterval(() => {
 
 setInterval(() => {
    checkBookmarkDisplayPref();
+}, 50);
+
+// allow users to set vertical/horizontal tabs
+let lastUrlBarPref = null;
+function checkUrlBarPref() {
+   let urlBarPref = localStorage.getItem("urlBarPref");
+
+   // Only proceed if the value has changed
+   if (urlBarPref !== lastUrlBarPref) {
+      lastUrlBarPref = urlBarPref; // Update the last known value
+
+      if (urlBarPref !== null) {
+         if (urlBarPref === "horizontal") {
+            const controls = document.getElementById("controls");
+            const tabs = document.getElementById("tabs");
+
+            tabs.classList.remove("vertical");
+            controls.parentNode.insertBefore(controls, tabs.nextSibling);
+         } else if (urlBarPref === "vertical") {
+            const controls = document.getElementById("controls");
+            const tabs = document.getElementById("tabs");
+
+            tabs.classList.add("vertical");
+            controls.parentNode.insertBefore(tabs, controls.nextSibling);
+         }
+      } else {
+         const controls = document.getElementById("controls");
+         const tabs = document.getElementById("tabs");
+
+         tabs.classList.remove("vertical");
+         controls.parentNode.insertBefore(controls, tabs.nextSibling);
+      }
+   }
+}
+
+checkUrlBarPref();
+
+setInterval(() => {
+   checkUrlBarPref();
 }, 50);

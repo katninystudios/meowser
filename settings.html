@@ -80,6 +80,24 @@
          </div>
       </div>
 
+      <!-- tab alignment
+      <div id="tabs-tab"></div>
+         <br />
+
+         <p style="margin-bottom: 3px;">Tab Alignment</p>
+         <div class="info">
+            <p>Tab Alignment</p>
+            <small>Should your tabs be horizontally or vertically aligned? (Horizontal/Vertical Tabs)</small>
+
+            <br />
+            
+            <select id="url-bar-pref" style="margin-top: 3px;">
+               <option value="horizontal">Horizontal Tabs</option>
+               <option value="vertical">Vertical Tabs</option>
+            </select>
+         </div>
+      </div>-->
+
       <br />
       <br />
 
@@ -237,6 +255,15 @@
          }
       }
 
+      let urlBarPref = localStorage.getItem("urlBarPref");
+      if (urlBarPref !== null) {
+         if (urlBarPref === "horizontal") {
+            document.getElementById("url-bar-pref").selectedIndex = 0;
+         } else if (urlBarPref === "vertical") {
+            document.getElementById("url-bar-pref").selectedIndex = 1;
+         }
+      }
+
       const searchEnginePref = document.getElementById("search-engine");
       searchEnginePref.addEventListener("change", () => {
          const selectedEngine = searchEnginePref.options[searchEnginePref.selectedIndex].text;
@@ -310,6 +337,25 @@
                break;
             default:
                localStorage.setItem("bookmarksDisplay", "home");
+               break;
+         }
+      });
+
+      // change url bar pref
+      const urlBarPref1 = document.getElementById("url-bar-pref");
+      urlBarPref1.addEventListener("change", () => {
+         const selectedEngine = urlBarPref1.options[urlBarPref1.selectedIndex].text;
+         //console.log(selectedEngine);
+
+         switch (selectedEngine) {
+            case "Horizontal Tabs":
+               localStorage.setItem("urlBarPref", "horizontal");
+               break;
+            case "Vertical Tabs":
+               localStorage.setItem("urlBarPref", "vertical");
+               break;
+            default:
+               localStorage.setItem("urlBarPref", "horizontal");
                break;
          }
       });
