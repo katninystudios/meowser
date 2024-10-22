@@ -2,20 +2,17 @@
   /ᐠ - ˕ -マ
   Meowser
 </h1>
-<div align="center">
-  A work-in-progress catified, privacy-focused browser made with Electron.
-</div>
 
-<br />
+> [!CAUTION]
+> Meowser was originally created with Electron, however this had major limitations and was basically reinventing the wheel when the wheel already exists. We're currently working on porting Meowser to the Gecko engine. You can still use the Electron version of Meowser to try it out but please note the Electron version (1.0) will not be updated anymore, even for security updates. Please wait for us to re-release the Gecko version of Meowser. Thank you! 
 
-<h2>How to Install (Windows)</h2>
-<p>Meowser is available as an .exe installed in the <a href="https://github.com/katniny/meowser/releases">releases tab</a>.</p>
+A work-in-progress privacy-focused browser made with Electron.
 
-<h2>How to Install (MacOS & Linux)</h2>
-<p>Meowser is not supported on these platforms yet. Linux will release soon though, as I have Linux hardware.</p>
+<h2>How to Install</h2>
+<p>Meowser is not yet available. Instructions not available. (1.0 can be downloaded in the <a href="https://github.com/katniny/meowser/releases/latest">Releases</a> tab <b>FOR WINDOWS ONLY</b>).</p>
 
 <h2>Website</h2>
-<p>THE MEOWSER WEBSITE IS CURRENTLY NOT AVAILABLE, IT WILL BE AVAILABLE ON OR BEFORE 9/30/24 (formatted MM/DD/YY)</p>
+<p>Currently not available. The site will be available soon!</p>
 
 <h2>License</h2>
-<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/katniny/meowser">Meowser</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://transs.social/u?id=katniny">Katniny Studios</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p> 
+<p>As per Mozilla Firefox's terms, Meowser (Gecko (2.0)) will be available under the <a href="https://www.mozilla.org/en-US/MPL/" target="_blank">Mozilla Public License</a>. Meowser (Electron (1.0)) is available under CC BY-NC-SA 4.0.</p>
