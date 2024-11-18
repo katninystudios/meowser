@@ -106,31 +106,52 @@ function addTab(url) {
    webview.addEventListener("did-navigate-in-page", updateNavigationButtons);
 
    webview.addEventListener("did-fail-load", (event) => {
-      document.getElementById("errorMayHaveOccurred").style.display = "block";
-      document.getElementById("reportBugError").setAttribute("onclick", `addTab("https://github.com/katniny/meowser/issues/new?title=Bug Report: (AUTOMATIC) An Error Occurred Loading ${webview.src}&body=The following error occurred: ${event.errorCode} with the error message: ${event.errorDescription}")`);
+      if (event.errorCode !== -3 && event.errorCode !== -2 && event.errorCode !== -27 && event.errorCode !== -137 && event.errorCode !== -21 && event.errorCode !== -30) {
+         document.getElementById("errorMayHaveOccurred").style.display = "block";
+         document.getElementById("reportBugError").setAttribute("onclick", `addTab("https://github.com/katniny/meowser/issues/new?title=Bug Report: (AUTOMATIC) An Error Occurred Loading ${webview.src}&body=The following error occurred: ${event.errorCode} with the error message: ${event.errorDescription}")`);
+      }
       //webview.src = "errorloadingpage.html";
    });
 
    webview.addEventListener("did-fail-provisional-load", (event) => {
-      document.getElementById("errorMayHaveOccurred").style.display = "block";
-      document.getElementById("reportBugError").setAttribute("onclick", `addTab("https://github.com/katniny/meowser/issues/new?title=Bug Report: (AUTOMATIC) An Error Occurred Loading ${webview.src}&body=The following error occurred: ${event.errorCode} with the error message: ${event.errorDescription}")`);
+      if (event.errorCode !== -3 && event.errorCode !== -2 && event.errorCode !== -27 && event.errorCode !== -137 && event.errorCode !== -21 && event.errorCode !== -30) {
+         document.getElementById("errorMayHaveOccurred").style.display = "block";
+         document.getElementById("reportBugError").setAttribute("onclick", `addTab("https://github.com/katniny/meowser/issues/new?title=Bug Report: (AUTOMATIC) An Error Occurred Loading ${webview.src}&body=The following error occurred: ${event.errorCode} with the error message: ${event.errorDescription}")`);
+      }
       //webview.src = "errorloadingpage.html";
    });
 
    webview.addEventListener("page-favicon-updated", (event) => {
       const favicons = event.favicons;
       const faviconUrl = favicons[0];
-      const img = new Image();
 
-      img.onload = function () {
-         favicon.innerHTML = `<img src="${faviconUrl}" />`;
+      if (!faviconUrl) {
+      favicon.style.display = "none";
+      return;
       }
 
-      img.onerror = function () {
-         favicon.innerHTML = `<img src="https://www.google.com/s2/favicons?domain=${new URL(webview.src).hostname}" />`;
-      }
+      fetch(faviconUrl, { method: 'HEAD' })
+      .then((response) => {
+         if (response.ok) {
+            const img = new Image();
+            img.src = faviconUrl;
 
-      favicon.innerHTML = `<img src="${favicons[0]}" />`;
+            img.onload = function () {
+            favicon.innerHTML = `<img src="${faviconUrl}" />`;
+            favicon.style.display = "inline-block";
+            };
+
+            img.onerror = function () {
+            favicon.style.display = "none";
+            };
+         } else {
+            favicon.style.display = "none";
+         }
+      })
+      .catch((error) => {
+         console.error("Error checking favicon:", error);
+         favicon.style.display = "none";
+      });
 
       reloadOrStop.className = `fa-solid fa-rotate-right active`;
       reloadOrStop.setAttribute("onclick", "reload()");
