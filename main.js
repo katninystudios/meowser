@@ -34,6 +34,12 @@ function createWindow() {
          webviewTag: true,
       },
       autoHideMenuBar: true,
+      titleBarStyle: "hidden",
+      titleBarOverlay: true,
+      titleBarOverlay: {
+         color: "#1f1f1f",
+         symbolColor: "#fff"
+      }
    });
 
    if (app.isPackaged) {
@@ -72,7 +78,7 @@ function createWindow() {
          "doubleclick.net",
          "googleads.g.doubleclick.net",
       ]);
-      addAdBlocker(session.defaultSession);
+      //addAdBlocker(session.defaultSession); // temp disabled due to several issues (e.g. blocking css files, rendering some sites unusable, etc.)
    }).catch(err => {
       console.error("Failed to load easylist:", err);
    });

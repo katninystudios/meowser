@@ -106,11 +106,15 @@ function addTab(url) {
    webview.addEventListener("did-navigate-in-page", updateNavigationButtons);
 
    webview.addEventListener("did-fail-load", (event) => {
-      webview.src = "errorloadingpage.html";
+      document.getElementById("errorMayHaveOccurred").style.display = "block";
+      document.getElementById("reportBugError").setAttribute("onclick", `addTab("https://github.com/katniny/meowser/issues/new?title=Bug Report: (AUTOMATIC) An Error Occurred Loading ${webview.src}&body=The following error occurred: ${event.errorCode} with the error message: ${event.errorDescription}")`);
+      //webview.src = "errorloadingpage.html";
    });
 
    webview.addEventListener("did-fail-provisional-load", (event) => {
-      webview.src = "errorloadingpage.html";
+      document.getElementById("errorMayHaveOccurred").style.display = "block";
+      document.getElementById("reportBugError").setAttribute("onclick", `addTab("https://github.com/katniny/meowser/issues/new?title=Bug Report: (AUTOMATIC) An Error Occurred Loading ${webview.src}&body=The following error occurred: ${event.errorCode} with the error message: ${event.errorDescription}")`);
+      //webview.src = "errorloadingpage.html";
    });
 
    webview.addEventListener("page-favicon-updated", (event) => {

@@ -17,8 +17,10 @@ html {
    display: flex;
    background-color: #1f1f1f;
    overflow-x: auto;
+   overflow-y: hidden;
    /* tab overflowing will just be scrolling */
    color: #e0e0e0;
+   -webkit-app-region: drag;
 }
 
 #tabs.vertical {
@@ -38,6 +40,7 @@ html {
    margin-left: 5px;
    text-align: center;
    transform: translateY(5px);
+   -webkit-app-region: no-drag;
 }
 
 .tab {
@@ -53,15 +56,16 @@ html {
    position: relative;
    overflow: hidden;
    white-space: nowrap;
-   border-top-left-radius: 10px;
-   border-top-right-radius: 10px;
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
    margin-left: 5px;
    color: #ddd;
    font-weight: 500;
    transition: background-color 0.3s ease, color 0.3s ease;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
    max-height: 40px;
-   height: 25px;
+   height: 15px;
+   -webkit-app-region: no-drag;
 }
 
 .tab:hover,
@@ -76,7 +80,7 @@ html {
    overflow: hidden;
    text-overflow: ellipsis;
    white-space: nowrap;
-   transform: translateY(3px);
+   transform: translateY(-15px);
    font-size: 14px;
    transition: transform 0.15s ease;
 }
@@ -167,7 +171,7 @@ webview {
    width: 50%;
    padding: 5px;
    padding-left: 35px;
-   font-size: 16px;
+   font-size: 15px;
    border: 1px solid #333;
    overflow-x: auto;
    overflow-y: hidden;
@@ -383,4 +387,29 @@ dialog::backdrop {
 
 .bookmark img {
    transform: translateY(3px);
+}
+
+/* An error may have occurred */
+#errorMayHaveOccurred {
+   position: fixed;
+   top: 80px;
+   left: 0;
+   background-color: #1f1f1f;
+   border: 1px solid #3f3f3f;
+   border-radius: 15px;
+   color: white;
+   padding: 5px 10px;
+   font-size: 12px;
+   width: auto;
+   max-width: 25%;
+   height: auto;
+   max-height: 150px;
+   display: none;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: wrap;
+   z-index: 999;
+   margin-left: 105px;
+   animation: openSecurity 0.1s ease;
+   transition: all 0.1s linear;
 }

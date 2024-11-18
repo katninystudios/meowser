@@ -46,7 +46,12 @@
          <!-- suggestions -->
          <ul id="suggestionsDropdown" style="display: none; border: 1px solid #ccc; position: absolute; max-height: 200px; overflow-y: auto;">
             <!-- suggestions will be added here dynamically -->
-          </ul>
+         </ul>
+         <!-- error may have occurred -->
+         <div id="errorMayHaveOccurred">
+            <p>An error loading this page may have occurred. If you're logged into GitHub, please report.</p>
+            <a href="#" id="reportBugError" onclick="addTab('https://example.com')"><button>Report</button></a> <button onclick="document.getElementById('errorMayHaveOccurred').style.display = 'none';">No thanks</button>
+         </div>
       </div>
 
       <!-- scripts -->
