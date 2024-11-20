@@ -103,6 +103,11 @@ function createWindow() {
       details.requestHeaders["User-Agent"] = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${process.versions.chrome} Meowser/${process.versions.electron} Safari/537.36`;
       callback({ requestHeaders: details.requestHeaders })
    })
+
+   // console.log() the node, electron, and chromium versions
+   console.log(process.versions.electron);
+   console.log(process.versions.chrome);
+   console.log(process.versions.node);
 }
 
 app.on("window-all-closed", () => {

@@ -10,19 +10,6 @@
    <!--  path !== "settings" &&  -->
    
    <body>
-      <!-- tabs -->
-      <div class="sidenav">
-         <div class="nav">
-            <a href="javascript:void(0);" onclick="switchTab('about')" id="about">About Meowser</a>
-            <a href="javascript:void(1);" onclick="switchTab('search')" id="search">Search Engine</a>
-            <a href="javascript:void(2);" onclick="switchTab('bookmark')" id="bookmark">Bookmarks</a>
-         </div>
-         
-         <br />
-         <br />
-         <small>Meowser is a work in progress. If you have suggestions for a new setting (that we don't have planned), please let us know on our <a href="https://github.com/katniny/meowser/issues" target="_blank">GitHub Issues</a> page.</small>
-      </div>
-
       <!-- about meowser tab -->
       <div id="about-meowser">
          <br />
@@ -37,6 +24,7 @@
 
             <div class="divider"></div>
 
+            <a class="button" href="https://katniny.github.io/meowser/support" target="_blank">Get Help with Meowser <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
             <a class="button" href="https://github.com/katniny/meowser" target="_blank">Report an issue <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
          </div>
       </div>
@@ -99,15 +87,22 @@
       </div>-->
 
       <br />
+
+      <p style="margin-bottom: 3px;">Additional Meowser Info</p>
+      <div class="info">
+         <p>Browser Info</p>
+         <small>Application Framework: v33.2.0</small>
+         <br/><small>Rendering Engine: v130.0.6723.118</small>
+         <br/><small>Backend Engine: v20.18.0</small>
+      </div>
+      
       <br />
 
       <div class="info">
          <p>Meowser</p>
          <small>Copyright 2024 Katniny Studios. All Rights Reserved. Code is licensed under CC BY-NC-SA 4.0</small>
 
-         <br />
-
-         <small>Meowser is only possible because of <a href="https://github.com/electron/electron" target="_blank">Electron</a> and other <a href="about.html">open source software</a></small>
+         <br/><small>Meowser is only possible because of <a href="https://github.com/electron/electron" target="_blank">Electron</a> and other <a href="about.html">open source software</a></small>
       </div>
    </body>
 
@@ -123,8 +118,8 @@
       body {
          background: #1f1f1f;
          color: #fff;
-         margin-left: 350px;
-         margin-right: 350px;
+         margin-left: 150px;
+         margin-right: 150px;
       }
 
       a {
@@ -222,6 +217,7 @@
          display: block;
          padding: 10px;
          border-radius: 15px;
+         font-size: smaller;
       }
 
       .info .button:hover {
