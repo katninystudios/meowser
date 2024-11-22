@@ -197,8 +197,8 @@ autoUpdater.on("update-not-available", (info) => {
 autoUpdater.on("error", (err) => {
    log.error("Error in auto-updater: ", err);
    new Notification({
-      title: "An Error Occurred",
-      body: err
+      title: "Meowser failed to update",
+      body: "Please ensure that you are connected to the internet and relaunch Meowser."
    }).show();
 });
 
