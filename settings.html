@@ -4,7 +4,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Settings</title>
-      <script src="https://kit.fontawesome.com/8c5204e75c.js" crossorigin="anonymous"></script>
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
    </head>
 
    <!--  path !== "settings" &&  -->
@@ -20,12 +20,12 @@
 
             <div class="divider"></div>
 
-            <p><i class="fa-solid fa-circle-notch fa-spin"></i> Checking for updates...</p>
+            <p><span class="material-symbols-outlined spin">progress_activity</span> Checking for updates...</p>
 
             <div class="divider"></div>
 
-            <a class="button" href="https://katniny.github.io/meowser/support" target="_blank">Get Help with Meowser <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-            <a class="button" href="https://github.com/katniny/meowser" target="_blank">Report an issue <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <a class="button" href="https://katniny.github.io/meowser/support" target="_blank">Get Help with Meowser <span style="font-size: large; transform: translateY(3px);" class="material-symbols-outlined">open_in_new</span></a>
+            <a class="button" href="https://github.com/katniny/meowser" target="_blank">Report an issue <span style="font-size: large; transform: translateY(3px);" class="material-symbols-outlined">open_in_new</span></a>
          </div>
       </div>
 
@@ -222,6 +222,21 @@
 
       .info .button:hover {
          background: #4f4f4f;
+      }
+
+      .spin {
+         animation: spin 0.5s ease infinite;
+         font-size: large; 
+         transform: translateY(10px);
+      }
+
+      @keyframes spin {
+         0% {
+            transform: rotate(0deg);
+         }
+         100% {
+            transform: rotate(360deg);
+         }
       }
    </style>
 

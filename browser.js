@@ -106,7 +106,7 @@ function addTab(url) {
    webview.addEventListener("did-navigate-in-page", updateNavigationButtons);
 
    webview.addEventListener("did-fail-load", (event) => {
-      if (event.errorCode !== -3 && event.errorCode !== -2 && event.errorCode !== -27 && event.errorCode !== -137 && event.errorCode !== -21 && event.errorCode !== -30) {
+      if (event.errorCode !== -3 && event.errorCode !== -2 && event.errorCode !== -27 && event.errorCode !== -137 && event.errorCode !== -21 && event.errorCode !== -30 && event.errorCode !== -356 && event.errorCode !== -107 && event.errorCode !== -101) {
          document.getElementById("errorMayHaveOccurred").style.display = "block";
          document.getElementById("reportBugError").setAttribute("onclick", `addTab("https://github.com/katniny/meowser/issues/new?title=Bug Report: (AUTOMATIC) An Error Occurred Loading ${webview.src}&body=The following error occurred: ${event.errorCode} with the error message: ${event.errorDescription}")`);
       }
@@ -114,7 +114,7 @@ function addTab(url) {
    });
 
    webview.addEventListener("did-fail-provisional-load", (event) => {
-      if (event.errorCode !== -3 && event.errorCode !== -2 && event.errorCode !== -27 && event.errorCode !== -137 && event.errorCode !== -21 && event.errorCode !== -30) {
+      if (event.errorCode !== -3 && event.errorCode !== -2 && event.errorCode !== -27 && event.errorCode !== -137 && event.errorCode !== -21 && event.errorCode !== -30 && event.errorCode !== -356 && event.errorCode !== -107 && event.errorCode !== -101) {
          document.getElementById("errorMayHaveOccurred").style.display = "block";
          document.getElementById("reportBugError").setAttribute("onclick", `addTab("https://github.com/katniny/meowser/issues/new?title=Bug Report: (AUTOMATIC) An Error Occurred Loading ${webview.src}&body=The following error occurred: ${event.errorCode} with the error message: ${event.errorDescription}")`);
       }
@@ -153,7 +153,7 @@ function addTab(url) {
          favicon.style.display = "none";
       });
 
-      reloadOrStop.className = `fa-solid fa-rotate-right active`;
+      reloadOrStop.innerHTML = `refresh`;
       reloadOrStop.setAttribute("onclick", "reload()");
    });
 
@@ -191,8 +191,8 @@ function addTab(url) {
 
    // check if the webview is currently loading
    webview.addEventListener("did-start-loading", () => {
-      favicon.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i>`;
-      reloadOrStop.className = `fa-solid fa-xmark fa-lg active`;
+      favicon.innerHTML = `<span class="material-symbols-outlined spin">progress_activity</span>`;
+      reloadOrStop.innerHTML = `close`;
       reloadOrStop.setAttribute("onclick", "cancelLoading()");
    });
 
@@ -589,14 +589,14 @@ document.addEventListener("keydown", (event) => {
 // check site security
 function checkSiteSecurity(url) {
    if (url.startsWith("https://")) {
-      siteSecurity.classList = "fa-solid fa-lock active";
+      siteSecurity.innerHTML = `lock`;
       siteSecurity.setAttribute("secure", "true");
    } else {
       if (!url.startsWith("file:///")) {
-         siteSecurity.classList = "fa-solid fa-lock-open active";
+         siteSecurity.innerHTML = `lock_open_right`;
          siteSecurity.setAttribute("secure", "false");
       } else {
-         siteSecurity.classList = "fa-solid fa-file active";
+         siteSecurity.innerHTML = `description`;
          siteSecurity.setAttribute("secure", "file");
       }
    }
@@ -605,13 +605,13 @@ function checkSiteSecurity(url) {
 function siteSecurityInfo() {
    if (siteSecurityInfo_container.style.display === "" || siteSecurityInfo_container.style.display === "none") { // for some reason the display can be "", which im assuming is because there's no style directly on it?
       if (siteSecurity.getAttribute("secure") === "true") {
-         siteSecurityInfoDesc.innerHTML = `<i class="fa-solid fa-lock"></i> You are securely connected to ${urlBar.innerHTML}`;
+         siteSecurityInfoDesc.innerHTML = `<span style="font-size: large; transform: translateY(3px);" class="material-symbols-outlined">lock</span> You are securely connected to ${urlBar.innerHTML}`;
          siteSecurityInfo_container.style.display = "block";
       } else if (siteSecurity.getAttribute("secure") === "false") {
-         siteSecurityInfoDesc.innerHTML = `<i class="fa-solid fa-lock-open"></i> Insecure connection to ${urlBar.innerHTML}<p style="font-size: smaller;">Your connection to this site is insecure. Information you submit could be viewed by others (passwords, messages, credit cards, etc.)</p>`;
+         siteSecurityInfoDesc.innerHTML = `<span style="font-size: large; transform: translateY(3px);" class="material-symbols-outlined">lock_open_right</span> Insecure connection to ${urlBar.innerHTML}<p style="font-size: smaller;">Your connection to this site is insecure. Information you submit could be viewed by others (passwords, messages, credit cards, etc.)</p>`;
          siteSecurityInfo_container.style.display = "block";
       } else if (siteSecurity.getAttribute("secure") === "file") {
-         siteSecurityInfoDesc.innerHTML = `<i class="fa-solid fa-file"></i> This page is stored on your computer.`;
+         siteSecurityInfoDesc.innerHTML = `<span style="font-size: large; transform: translateY(3px);" class="material-symbols-outlined">description</span> This page is stored on your computer.`;
          siteSecurityInfo_container.style.display = "block";
       }
    } else {
