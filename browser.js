@@ -219,8 +219,8 @@ function switchTab(tab) {
    document.querySelectorAll("webview").forEach((wv) => (wv.style.display = "none"));
 
    // highlight the selected tab
-   document.querySelectorAll(".tab").forEach((t) => (t.style.backgroundColor = "#1f1f1f"));
-   tab.style.backgroundColor = "#333";
+   document.querySelectorAll(".tab").forEach((t) => (t.style.backgroundColor = "var(--tab-background-unselected)"));
+   tab.style.backgroundColor = "var(--tab-background)";
 
    // show the webview corresponding to the clicked tab using the data-index
    const index = tab.dataset.index;
@@ -574,9 +574,9 @@ function test() {
 document.addEventListener("keydown", (event) => {
    // open dev tools
    if (event.ctrlKey && event.shiftKey && event.key === "I") {
-      event.preventDefault();
-      event.stopPropagation();
-      const currentWebview = Array.from(contentContainer.children).find((wv) => wv.style.display === "flex");
+      // event.preventDefault();
+      // event.stopPropagation();
+      // const currentWebview = Array.from(contentContainer.children).find((wv) => wv.style.display === "flex");
 
       if (currentWebview) {
          currentWebview.openDevTools();
@@ -753,3 +753,43 @@ checkUrlBarPref();
 setInterval(() => {
    checkUrlBarPref();
 }, 50);
+
+// get the user's theme
+async function getTheme() {
+   try {
+      const theme = await window.theme.getTheme();
+      
+      if (theme === "light") {
+         // edit css properies
+         document.documentElement.style.setProperty("--tab-container-background", "#fff");
+         document.documentElement.style.setProperty("--tab-container-text-color", "#000");
+         document.documentElement.style.setProperty("--vertical-tabs-color", "#fff");
+         document.documentElement.style.setProperty("--tab-background", "#f5f5f5");
+         document.documentElement.style.setProperty("--tab-color", "#000");
+         document.documentElement.style.setProperty("--tab-close-color", "#000");
+         document.documentElement.style.setProperty("--tab-playing-audio", "#888");
+         document.documentElement.style.setProperty("--controls", "#f5f5f5");
+         document.documentElement.style.setProperty("--controls-icon-hover", "#aaa");
+         document.documentElement.style.setProperty("--urlbar-border", "#ccc");
+         document.documentElement.style.setProperty("--urlbar-background", "#fff");
+         document.documentElement.style.setProperty("--urlbar-border-active", "#000");
+         document.documentElement.style.setProperty("--url-non-domain", "#7a7a7a");
+         document.documentElement.style.setProperty("--url-non-domain-active", "#000");
+         document.documentElement.style.setProperty("--site-security-text", "#000");
+         document.documentElement.style.setProperty("--popover-background", "#fff");
+         document.documentElement.style.setProperty("--popover-border", "#ccc");
+         document.documentElement.style.setProperty("--add-bookmark-input-background", "#f0f0f0");
+         document.documentElement.style.setProperty("--add-bookmark-input-border", "#ddd");
+         document.documentElement.style.setProperty("--add-bookmark-input-placeholder", "#888");
+         document.documentElement.style.setProperty("--add-bookmark-input-border-focused", "#00aaff");
+         document.documentElement.style.setProperty("--bookmark-hover", "#e6e6e6");
+         document.documentElement.style.setProperty("--bookmark-a", "#222");
+         document.documentElement.style.setProperty("--text", "#000");
+         document.documentElement.style.setProperty("--tab-close-color-hover", "#808080");
+      }
+   } catch (error) {
+      console.error("Failed to get theme: ", error);
+   }
+}
+
+getTheme(); // run immediately lol...

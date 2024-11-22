@@ -30,4 +30,8 @@ contextBridge.exposeInMainWorld("versions", {
    electron: () => process.versions.electron
 });
 
+contextBridge.exposeInMainWorld("theme", {
+   getTheme: () => ipcRenderer.invoke("get-theme")
+});
+
 console.log(`Platform: ${process.platform} - Arch: ${process.arch}`);

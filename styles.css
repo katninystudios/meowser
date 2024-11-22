@@ -1,6 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
+/* coloring */
+:root {
+   --tab-container-background: #1f1f1f;
+   --tab-container-text-color: #e0e0e0;
+   --vertical-tabs-color: #2f2f2f;
+   --tab-background: #2f2f2f;
+   --tab-color: #ddd;
+   --tab-close-color: #888;
+   --tab-playing-audio: #b5b5b5;
+   --controls: #2f2f2f;
+   --controls-icon-hover: #444;
+   --urlbar-border: #333;
+   --urlbar-background: #1f1f1f;
+   --urlbar-border-active: #888;
+   --url-non-domain: #757575;
+   --url-non-domain-active: #fff;
+   --site-security-text: #fff;
+   --popover-background: #1f1f1f;
+   --popover-border: #3f3f3f;
+   --add-bookmark-input-background: #4f4f4f;
+   --add-bookmark-input-border: #4f4f4f;
+   --add-bookmark-input-placeholder: #c0c0c0;
+   --add-bookmark-input-border-focused: cyan;
+   --bookmark-hover: #3f3f3f;
+   --bookmark-a: #d4d4d4;
+   --text: #fff;
+   --tab-close-color-hover: #888;
+}
+
+/* body styling */
 body,
 html {
    margin: 0;
@@ -10,17 +40,17 @@ html {
    flex-direction: column;
    font-family: "Roboto", sans-serif;
    /*background-color: #121212;*/
-   color: #e0e0e0;
+   color: var(--text);
 }
 
 /* tabs */
 #tabs {
    display: flex;
-   background-color: #1f1f1f;
+   background-color: var(--tab-container-background);
    overflow-x: auto;
    overflow-y: hidden;
    /* tab overflowing will just be scrolling */
-   color: #e0e0e0;
+   color: var(--tab-container-text-color);
    -webkit-app-region: drag;
 }
 
@@ -28,7 +58,7 @@ html {
    height: calc(100% - 40px);
    max-width: 250px;
    position: fixed;
-   background-color: #2f2f2f;
+   background-color: var(--vertical-tabs-color);
    transform: translateY(40px);
 }
 
@@ -50,8 +80,8 @@ html {
    max-width: 175px;
    padding: 7px;
    margin: 0;
-   background-color: #2b2b2b;
-   border: 1px solid #444;
+   background-color: var(--tab-background);
+   /*border: 1px solid #444;*/
    border: 1px solid transparent;
    cursor: pointer;
    position: relative;
@@ -60,7 +90,7 @@ html {
    border-top-left-radius: 5px;
    border-top-right-radius: 5px;
    margin-left: 5px;
-   color: #ddd;
+   color: var(--tab-color);
    font-weight: 500;
    transition: background-color 0.3s ease, color 0.3s ease;
    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);*/
@@ -89,7 +119,7 @@ html {
 .tab-close-button {
    background: none;
    border: none;
-   color: #888;
+   color: var(--tab-close-color);
    cursor: pointer;
    font-weight: bold;
    font-size: 14px;
@@ -100,13 +130,13 @@ html {
 }
 
 .tab-close-button:hover {
-   background: #444;
+   background: var(--tab-close-color-hover);
 }
 
 .tab-audio {
    margin-left: 23px;
    transform: translateY(-13px);
-   color: #b5b5b5;
+   color: var(--tab-playing-audio);
    transition: all 0.15s ease;
    display: inline-block;
 }
@@ -162,7 +192,7 @@ webview {
    display: flex;
    align-items: center;
    padding: 5px;
-   background: #2f2f2f;
+   background: var(--controls);
 }
 
 #controls i {
@@ -178,7 +208,7 @@ webview {
 }
 
 #controls i.active:hover {
-   background: #444;
+   background: var(--controls-icon-hover);
 }
 
 #controls span.material-symbols-outlined {
@@ -190,7 +220,7 @@ webview {
 }
 
 #controls span:hover {
-   background: #444;
+   background: var(--controls-icon-hover);
 }
 
 #controls #back-button {
@@ -221,13 +251,13 @@ webview {
    padding: 5px;
    padding-left: 35px;
    font-size: 15px;
-   border: 1px solid #333;
+   border: 1px solid var(--urlbar-border);
    overflow-x: auto;
    overflow-y: hidden;
    white-space: nowrap;
    cursor: text;
    max-height: 20px;
-   background-color: #1f1f1f;
+   background-color: var(--urlbar-background);
    scrollbar-width: none;
    -ms-overflow-style: none;
    outline: none;
@@ -238,15 +268,15 @@ webview {
 }
 
 #url-bar:focus {
-   border: 1px solid #888;
+   border: 1px solid var(--urlbar-border-active);
 }
 
 #url-bar .non-domain {
-   color: #757575;
+   color: var(--url-non-domain);
 }
 
 #url-bar:focus .non-domain {
-   color: #fff;
+   color: var(--url-non-domain-active);
 }
 
 #url-bar .non-domain.hidden {
@@ -259,6 +289,10 @@ webview {
 
 .url-container::-webkit-scrollbar {
    display: none;
+}
+
+#url-bar span:hover {
+   background: transparent;
 }
 
 /* dialogs */
@@ -311,7 +345,7 @@ dialog::backdrop {
    bottom: 0;
    left: 0;
    background-color: rgba(0, 0, 0, 0.8);
-   color: white;
+   color: var(--text);
    padding: 5px 10px;
    font-size: 12px;
    display: none;
@@ -321,7 +355,7 @@ dialog::backdrop {
 #site-security {
    transform: translateX(18px);
    z-index: 1;
-   color: #fff;
+   color: var(--site-security-text);
    font-size: larger;
    cursor: pointer;
 }
@@ -331,10 +365,10 @@ dialog::backdrop {
    position: fixed;
    top: 80px;
    left: 0;
-   background-color: #1f1f1f;
-   border: 1px solid #3f3f3f;
+   background-color: var(--popover-background);
+   border: 1px solid var(--popover-border);
    border-radius: 15px;
-   color: white;
+   color: var(--text);
    padding: 5px 10px;
    font-size: 12px;
    width: auto;
@@ -371,7 +405,7 @@ dialog::backdrop {
 #bookmarks-bar {
    width: 100%;
    height: 25px;
-   background: #2f2f2f;
+   background: var(--controls);
 }
 
 /* add bookmark inputs */
@@ -379,10 +413,10 @@ dialog::backdrop {
    position: fixed;
    top: 80px;
    right: 0;
-   background-color: #1f1f1f;
-   border: 1px solid #3f3f3f;
+   background-color: var(--popover-background);
+   border: 1px solid var(--popover-border);
    border-radius: 15px;
-   color: white;
+   color: var(--text);
    padding: 5px 10px;
    font-size: 12px;
    width: auto;
@@ -400,22 +434,22 @@ dialog::backdrop {
 }
 
 #add-bookmark-info input {
-   background: #4f4f4f;
-   border: 1px solid #4f4f4f;
+   background: var(--add-bookmark-input-background);
+   border: 1px solid var(--add-bookmark-input-border);
    padding: 5px;
    border-radius: 10px;
    outline: none;
-   color: #fff;
+   color: var(--text);
    font-size: 16px;
    transition: all 0.15s ease;
 }
 
 #add-bookmark-info input::placeholder {
-   color: #c0c0c0;
+   color: var(--add-bookmark-input-placeholder);
 }
 
 #add-bookmark-info input:focus {
-   border: 1px solid cyan;
+   border: 1px solid var(--add-bookmark-input-border-focused);
 }
 
 .bookmark {
@@ -430,12 +464,12 @@ dialog::backdrop {
 }
 
 .bookmark:hover {
-   background: #3f3f3f;
+   background: var(--bookmark-hover);
 }
 
 .bookmark a {
    text-decoration: none;
-   color: #d4d4d4;
+   color: var(--bookmark-a);
 }
 
 .bookmark img {
@@ -447,10 +481,10 @@ dialog::backdrop {
    position: fixed;
    top: 80px;
    left: 0;
-   background-color: #1f1f1f;
-   border: 1px solid #3f3f3f;
+   background-color: var(--popover-background);
+   border: 1px solid var(--popover-border);
    border-radius: 15px;
-   color: white;
+   color: var(--text);
    padding: 5px 10px;
    font-size: 12px;
    width: auto;

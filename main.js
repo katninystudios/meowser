@@ -23,6 +23,30 @@ const whitelist = [ // we have to whitelist these, or youtube (for example) will
    "https://camo.githubusercontent.com/",
 ];
 
+// get user theme
+const fileContent = fs.readFileSync(path.join(__dirname, "usersettings.txt"), "utf8");
+let userTheme = fileContent.split("\n")[0].trim().substring(11);
+
+let color = null;
+let symbolColor = "#fff";
+
+switch (userTheme) {
+   case "auto":
+      color = "#1f1f1f";
+      symbolColor = "#fff";
+      break;
+   case "dark":
+      color = "#1f1f1f";
+      symbolColor = "#fff";
+      break;
+   case "light":
+      color = "#fff";
+      symbolColor = "#000";
+      break;
+   default:
+      break;
+}
+
 function createWindow() {
    const mainWindow = new BrowserWindow({
       width: 1280,
@@ -37,8 +61,8 @@ function createWindow() {
       titleBarStyle: "hidden",
       titleBarOverlay: true,
       titleBarOverlay: {
-         color: "#1f1f1f",
-         symbolColor: "#fff"
+         color: color,
+         symbolColor: symbolColor
       }
    });
 
@@ -220,5 +244,21 @@ autoUpdater.on("update-downloaded", (info) => {
       if (result.response === 0) {
          autoUpdater.quitAndInstall();
       }
+   });
+});
+
+// when we request the users theme
+ipcMain.handle("get-theme", () => {
+   const filePath = path.join(__dirname, 'usersettings.txt'); // Adjust the path as needed
+
+   return new Promise((resolve, reject) => {
+      fs.readFile(filePath, 'utf8', (err, data) => {
+         if (err) {
+            reject("Error reading theme");
+         } else {
+            const theme = data.split("\n")[0].trim().substring(11); // Get the first line
+            resolve(theme);
+         }
+      });
    });
 });
