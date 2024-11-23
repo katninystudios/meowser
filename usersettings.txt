@@ -1,1 +1,1 @@
-USER_THEME=dark
+USER_THEME=auto
