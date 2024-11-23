@@ -761,7 +761,6 @@ async function getTheme() {
    try {
       const theme = await window.theme.getTheme();
 
-      console.log(localStorage.getItem("shareTheme"));
       if (localStorage.getItem("shareTheme") !== appliedTheme) {
          writeTheme(localStorage.getItem("shareTheme"));
       }
