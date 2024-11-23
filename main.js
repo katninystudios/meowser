@@ -258,6 +258,22 @@ ipcMain.handle("get-theme", () => {
          } else {
             const theme = data.split("\n")[0].trim().substring(11); // Get the first line
             resolve(theme);
+
+            // get main window based on theme and change titlebar interaction colors
+            const mainWindow = BrowserWindow.getFocusedWindow();
+            if (mainWindow) {
+               if (theme === "dark" || theme === "auto") {
+                  mainWindow.setTitleBarOverlay({
+                     color: "#1f1f1f",
+                     symbolColor: "#fff"
+                  });
+               } else if (theme === "light") {
+                  mainWindow.setTitleBarOverlay({
+                     color: "#fff",
+                     symbolColor: "#000"
+                  });
+               }
+            }
          }
       });
    });

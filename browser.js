@@ -786,6 +786,32 @@ async function getTheme() {
          document.documentElement.style.setProperty("--bookmark-a", "#222");
          document.documentElement.style.setProperty("--text", "#000");
          document.documentElement.style.setProperty("--tab-close-color-hover", "#808080");
+      } else if (theme === "dark" || theme === "auto") {
+         document.documentElement.style.setProperty("--tab-container-background", "#1f1f1f");
+         document.documentElement.style.setProperty("--tab-container-text-color", "#e0e0e0");
+         document.documentElement.style.setProperty("--vertical-tabs-color", "#2f2f2f");
+         document.documentElement.style.setProperty("--tab-background", "#2f2f2f");
+         document.documentElement.style.setProperty("--tab-color", "#ddd");
+         document.documentElement.style.setProperty("--tab-close-color", "#888");
+         document.documentElement.style.setProperty("--tab-playing-audio", "#b5b5b5");
+         document.documentElement.style.setProperty("--controls", "#2f2f2f");
+         document.documentElement.style.setProperty("--controls-icon-hover", "#444");
+         document.documentElement.style.setProperty("--urlbar-border", "#333");
+         document.documentElement.style.setProperty("--urlbar-background", "#1f1f1f");
+         document.documentElement.style.setProperty("--urlbar-border-active", "#888");
+         document.documentElement.style.setProperty("--url-non-domain", "#757575");
+         document.documentElement.style.setProperty("--url-non-domain-active", "#fff");
+         document.documentElement.style.setProperty("--site-security-text", "#fff");
+         document.documentElement.style.setProperty("--popover-background", "#1f1f1f");
+         document.documentElement.style.setProperty("--popover-border", "#3f3f3f");
+         document.documentElement.style.setProperty("--add-bookmark-input-background", "#4f4f4f");
+         document.documentElement.style.setProperty("--add-bookmark-input-border", "#4f4f4f");
+         document.documentElement.style.setProperty("--add-bookmark-input-placeholder", "#c0c0c0");
+         document.documentElement.style.setProperty("--add-bookmark-input-border-focused", "cyan");
+         document.documentElement.style.setProperty("--bookmark-hover", "#3f3f3f");
+         document.documentElement.style.setProperty("--bookmark-a", "#d4d4d4");
+         document.documentElement.style.setProperty("--text", "#fff");
+         document.documentElement.style.setProperty("--tab-close-color-hover", "#888");
       }
    } catch (error) {
       console.error("Failed to get theme: ", error);
@@ -793,3 +819,6 @@ async function getTheme() {
 }
 
 getTheme(); // run immediately lol...
+setInterval(() => {
+   getTheme();
+}, 200);

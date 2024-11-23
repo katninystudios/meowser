@@ -76,8 +76,8 @@ html {
 
 .tab {
    display: inline-block;
-   width: 240px;
-   max-width: 175px;
+   width: 200px;
+   /*max-width: 240px;*/
    padding: 7px;
    margin: 0;
    background-color: var(--tab-background);
@@ -97,6 +97,20 @@ html {
    max-height: 48px;
    height: 20px;
    -webkit-app-region: no-drag;
+   animation: openTab 0.25s ease;
+}
+
+@keyframes openTab {
+   0% {
+      opacity: 0;
+      transform: translateX(-105px);
+      width: 5px;
+   }
+   100% {
+      opacity: 1;
+      transform: translateX(0px);
+      width: 240px;
+   }
 }
 
 .tab:hover,
