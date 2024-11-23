@@ -31,7 +31,8 @@ contextBridge.exposeInMainWorld("versions", {
 });
 
 contextBridge.exposeInMainWorld("theme", {
-   getTheme: () => ipcRenderer.invoke("get-theme")
+   getTheme: () => ipcRenderer.invoke("get-theme"),
+   setTheme: (channel, data) => ipcRenderer.invoke(channel, data)
 });
 
 console.log(`Platform: ${process.platform} - Arch: ${process.arch}`);

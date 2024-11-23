@@ -70,6 +70,10 @@ function createWindow() {
       Menu.setApplicationMenu(null);
    }
 
+   if (!app.isPackaged) {
+      mainWindow.webContents.openDevTools();
+   }
+
    mainWindow.loadFile("index.html");
 
    // context menu
@@ -277,4 +281,29 @@ ipcMain.handle("get-theme", () => {
          }
       });
    });
+});
+
+// when the user changes their theme
+ipcMain.handle("set-theme", async (event, theme) => {
+   console.log("Received theme: ", theme);
+
+   const filePath = path.join(__dirname, "usersettings.txt");
+   try {
+      // read file
+      const fileContent = fs.existsSync(filePath) ? fs.readFileSync(filePath, "utf8") : "";
+
+      // split file into lines
+      const lines = fileContent.split("\n");
+
+      // overwrite the first line with the new theme
+      lines[0] = `USER_THEME=${theme}`;
+
+      // write the updated content back to the file
+      fs.writeFileSync(filePath, lines.join("\n"), "utf8");
+
+      return "Theme successfully updated";
+   } catch (error) {
+      console.error("Error writing theme: ", error);
+      throw new Error("Failed to save theme");
+   }
 });

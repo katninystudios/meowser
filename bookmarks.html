@@ -28,6 +28,36 @@
       </dialog>
    </body>
 
+   <script>
+      setInterval(() => {
+         let theme = localStorage.getItem("shareTheme");
+
+         if (theme === "auto" || theme === "dark") {
+            document.documentElement.style.setProperty("--body-bg", "#1f1f1f");
+            document.documentElement.style.setProperty("--body-color", "#fff");
+            document.documentElement.style.setProperty("--link-color", "cyan");
+            document.documentElement.style.setProperty("--link-color-hover", "#00bbbb");
+            document.documentElement.style.setProperty("--small-text", "#bbb");
+            document.documentElement.style.setProperty("--input-background", "#4f4f4f");
+            document.documentElement.style.setProperty("--input-border", "#4f4f4f");
+            document.documentElement.style.setProperty("--input-placeholder", "#c0c0c0");
+            document.documentElement.style.setProperty("--input-border-focused", "cyan");
+            document.documentElement.style.setProperty("--dialog-background", "#2f2f2f2");
+         } else if (theme === "light") {
+            document.documentElement.style.setProperty("--body-bg", "#fff");
+            document.documentElement.style.setProperty("--body-color", "#000");
+            document.documentElement.style.setProperty("--link-color", "#00aaff");
+            document.documentElement.style.setProperty("--link-color-hover", "#00aaff");
+            document.documentElement.style.setProperty("--small-text", "#2e2e2e");
+            document.documentElement.style.setProperty("--input-background", "#f5f5f5");
+            document.documentElement.style.setProperty("--input-border", "#f5f5f5");
+            document.documentElement.style.setProperty("--input-placeholder", "#888");
+            document.documentElement.style.setProperty("--input-border-focused", "#00aaff");
+            document.documentElement.style.setProperty("--dialog-background", "#f4f4f4");
+         }
+      }, 50);
+   </script>
+
    <style>
       @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
@@ -37,41 +67,54 @@
          font-family: "Roboto", sans-serif;
       }
 
+      :root {
+         --body-bg: #1f1f1f;
+         --body-color: #fff;
+         --link-color: cyan;
+         --link-color-hover: #00bbbb;
+         --small-text: #bbb;
+         --input-background: #4f4f4f;
+         --input-border: #4f4f4f;
+         --input-placeholder: #c0c0c0;
+         --input-border-focused: cyan;
+         --dialog-background: #2f2f2f;
+      }
+
       body {
-         background: #1f1f1f;
-         color: #fff;
+         background: var(--body-bg);
+         color: var(--body-color);
       }
 
       a {
-         color: cyan;
+         color: var(--link-color);
       }
 
       a:hover {
          text-decoration: none;
-         color: #00bbbb;
+         color: var(--link-color-hover);
       }
 
       small {
-         color: #bbb;
+         color: var(--small-text);
       }
 
       input {
-         background: #4f4f4f;
-         border: 3px solid #4f4f4f;
+         background: var(--input-background);
+         border: 3px solid var(--input-border);
          padding: 15px;
          border-radius: 15px;
          outline: none;
-         color: #fff;
+         color: var(--body-color);
          font-size: 16px;
          transition: all 0.15s ease;
       }
 
       input::placeholder {
-         color: #c0c0c0;
+         color: var(--input-placeholder);
       }
 
       input:focus {
-         border: 3px solid cyan;
+         border: 3px solid var(--input-border-focused);
       }
 
       .bookmark {
@@ -79,7 +122,7 @@
       }
 
       .bookmark a {
-         color: #fff;
+         color: var(--body-color);
          text-decoration: none;
          cursor: auto;
       }
@@ -89,12 +132,12 @@
          width: 600px;
          padding: 10px;
          border-radius: 10px;
-         background: #2f2f2f;
-         border: 1px solid #fff;
+         background: var(--dialog-background);
+         border: 1px solid var(--body-color);
          margin-top: 125px;
          animation: openPopup 0.25s ease;
          overflow-y: auto;
-         color: #fff;
+         color: var(--body-color);
          outline: none;
          max-height: 500px;
       }

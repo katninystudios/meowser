@@ -574,9 +574,9 @@ function test() {
 document.addEventListener("keydown", (event) => {
    // open dev tools
    if (event.ctrlKey && event.shiftKey && event.key === "I") {
-      // event.preventDefault();
-      // event.stopPropagation();
-      // const currentWebview = Array.from(contentContainer.children).find((wv) => wv.style.display === "flex");
+      event.preventDefault();
+      event.stopPropagation();
+      const currentWebview = Array.from(contentContainer.children).find((wv) => wv.style.display === "flex");
 
       if (currentWebview) {
          currentWebview.openDevTools();
@@ -755,11 +755,19 @@ setInterval(() => {
 }, 50);
 
 // get the user's theme
+let appliedTheme = null;
+
 async function getTheme() {
    try {
       const theme = await window.theme.getTheme();
-      
-      if (theme === "light") {
+
+      console.log(localStorage.getItem("shareTheme"));
+      if (localStorage.getItem("shareTheme") !== appliedTheme) {
+         writeTheme(localStorage.getItem("shareTheme"));
+      }
+      appliedTheme = localStorage.getItem("shareTheme");
+
+      if (localStorage.getItem("shareTheme") === "light") {
          // edit css properies
          document.documentElement.style.setProperty("--tab-container-background", "#fff");
          document.documentElement.style.setProperty("--tab-container-text-color", "#000");
@@ -786,7 +794,7 @@ async function getTheme() {
          document.documentElement.style.setProperty("--bookmark-a", "#222");
          document.documentElement.style.setProperty("--text", "#000");
          document.documentElement.style.setProperty("--tab-close-color-hover", "#808080");
-      } else if (theme === "dark" || theme === "auto") {
+      } else if (localStorage.getItem("shareTheme") === "dark" || localStorage.getItem("shareTheme") === "auto") {
          document.documentElement.style.setProperty("--tab-container-background", "#1f1f1f");
          document.documentElement.style.setProperty("--tab-container-text-color", "#e0e0e0");
          document.documentElement.style.setProperty("--vertical-tabs-color", "#2f2f2f");
@@ -821,4 +829,14 @@ async function getTheme() {
 getTheme(); // run immediately lol...
 setInterval(() => {
    getTheme();
-}, 200);
+}, 50);
+
+// write theme
+async function writeTheme(theme) {
+   try {
+      const response = await window.theme.setTheme("set-theme", theme);
+      console.log("Backend response:", response);
+   } catch (error) {
+      console.error("Error setting theme: ", error);
+   }
+}

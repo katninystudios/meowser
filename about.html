@@ -73,6 +73,26 @@
       <br/><small>See more products that Katniny Studios has released.</small>
    </body>
 
+   <script>
+      setInterval(() => {
+         let theme = localStorage.getItem("shareTheme");
+
+         if (theme === "auto" || theme === "dark") {
+            document.documentElement.style.setProperty("--body-bg", "#1f1f1f");
+            document.documentElement.style.setProperty("--body-color", "#fff");
+            document.documentElement.style.setProperty("--link-color", "cyan");
+            document.documentElement.style.setProperty("--link-color-hover", "#00bbbb");
+            document.documentElement.style.setProperty("--small-text", "#bbb");
+         } else if (theme === "light") {
+            document.documentElement.style.setProperty("--body-bg", "#fff");
+            document.documentElement.style.setProperty("--body-color", "#000");
+            document.documentElement.style.setProperty("--link-color", "#00aaff");
+            document.documentElement.style.setProperty("--link-color-hover", "#00aaff");
+            document.documentElement.style.setProperty("--small-text", "#2e2e2e");
+         }
+      }, 50);
+   </script>
+
    <style>
       @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
@@ -82,22 +102,30 @@
          font-family: "Roboto", sans-serif;
       }
 
+      :root {
+         --body-bg: #1f1f1f;
+         --body-color: #fff;
+         --link-color: cyan;
+         --link-color-hover: #00bbbb;
+         --small-text: #bbb;
+      }
+
       body {
-         background: #1f1f1f;
-         color: #fff;
+         background: var(--body-bg);
+         color: var(--body-color);
       }
 
       a {
-         color: cyan;
+         color: var(--link-color);
       }
 
       a:hover {
          text-decoration: none;
-         color: #00bbbb;
+         color: var(--link-color-hover);
       }
 
       small {
-         color: #bbb;
+         color: var(--snall-text);
       }
    </style>
 </html>

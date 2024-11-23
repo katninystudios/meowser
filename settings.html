@@ -16,7 +16,7 @@
 
          <p style="margin-bottom: 3px;">About Meowser</p>
          <div class="info">
-            <img src="meowser_white.png" alt="Meowser White logo" draggable="false" />
+            <img src="meowser_white.png" alt="Meowser White logo" draggable="false" id="meowserBranding" />
 
             <div class="divider"></div>
 
@@ -24,8 +24,8 @@
 
             <div class="divider"></div>
 
-            <a class="button" href="https://katniny.github.io/meowser/support" target="_blank">Get Help with Meowser <span style="font-size: large; transform: translateY(3px);" class="material-symbols-outlined">open_in_new</span></a>
-            <a class="button" href="https://github.com/katniny/meowser" target="_blank">Report an issue <span style="font-size: large; transform: translateY(3px);" class="material-symbols-outlined">open_in_new</span></a>
+            <a class="button" href="https://katniny.github.io/meowser/support" target="_blank" style="transform: translateY(-15px);">Get Help with Meowser <span style="font-size: large; transform: translateY(3px);" class="material-symbols-outlined">open_in_new</span></a>
+            <a class="button" href="https://github.com/katniny/meowser" target="_blank" style="transform: translateY(-5px);">Report an issue <span style="font-size: large; transform: translateY(3px);" class="material-symbols-outlined">open_in_new</span></a>
          </div>
       </div>
 
@@ -68,6 +68,26 @@
          </div>
       </div>
 
+      <!-- themes -->
+      <div id="themes-tab"></div>
+         <br />
+
+         <p style="margin-bottom: 3px;">Themes</p>
+         <div class="info">
+            <p>Themes</p>
+            <small>Customize your Meowser experience by choosing a theme!</small>
+            <small>Custom themes for Meowser are not yet available, but will be available soon.</small>
+
+            <br />
+            
+            <select id="theme-select" style="margin-top: 3px;">
+               <option value="dark">Dark</option>
+               <option value="light">Light</option>
+               <option value="auto">Automatic</option>
+            </select>
+         </div>
+      </div>
+
       <!-- tab alignment
       <div id="tabs-tab"></div>
          <br />
@@ -106,6 +126,34 @@
       </div>
    </body>
 
+   <script>
+      setInterval(() => {
+         let theme = localStorage.getItem("shareTheme");
+
+         if (theme === "auto" || theme === "dark") {
+            document.documentElement.style.setProperty("--body-bg", "#1f1f1f");
+            document.documentElement.style.setProperty("--body-color", "#fff");
+            document.documentElement.style.setProperty("--link-color", "cyan");
+            document.documentElement.style.setProperty("--link-color-hover", "#00bbbb");
+            document.documentElement.style.setProperty("--small-text", "#bbb");
+            document.documentElement.style.setProperty("--info-bg", "#4f4f4f");
+            document.documentElement.style.setProperty("--divider-color", "#4f4f4f");
+            document.documentElement.style.setProperty("--info-button-hover-bg", "#666666");
+            document.getElementById("meowserBranding").src = "meowser_white.png";
+         } else if (theme === "light") {
+            document.documentElement.style.setProperty("--body-bg", "#fff");
+            document.documentElement.style.setProperty("--body-color", "#000");
+            document.documentElement.style.setProperty("--link-color", "#00aaff");
+            document.documentElement.style.setProperty("--link-color-hover", "#00aaff");
+            document.documentElement.style.setProperty("--small-text", "#2e2e2e");
+            document.documentElement.style.setProperty("--info-bg", "#f5f5f5");
+            document.documentElement.style.setProperty("--divider-color", "#ccc");
+            document.documentElement.style.setProperty("--info-button-hover-bg", "#ddd");
+            document.getElementById("meowserBranding").src = "meowser_logo.png";
+         }
+      }, 50);
+   </script>
+
    <style>
       @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
@@ -115,27 +163,38 @@
          font-family: "Roboto", sans-serif;
       }
 
+      :root {
+         --body-bg: #1f1f1f;
+         --body-color: #fff;
+         --link-color: cyan;
+         --link-color-hover: #00bbbb;
+         --small-text: #bbb;
+         --info-bg: #4f4f4f;
+         --divider-color: #4f4f4f;
+         --info-button-hover-bg: #4f4f4f;
+      }
+
       body {
-         background: #1f1f1f;
-         color: #fff;
+         background: var(--body-bg);
+         color: var(--body-color);
          margin-left: 150px;
          margin-right: 150px;
       }
 
       a {
-         color: cyan;
+         color: var(--link-color);
       }
 
       a:hover {
          text-decoration: none;
-         color: #00bbbb;
+         color: var(--link-color-hover);
       }
 
       small {
-         color: #bbb;
+         color: var(--small-text);
       }
 
-      input {
+      /* input {
          background: #4f4f4f;
          border: 3px solid #4f4f4f;
          padding: 15px;
@@ -144,9 +203,9 @@
          color: #fff;
          font-size: 16px;
          transition: all 0.15s ease;
-      }
+      } */
 
-      input::placeholder {
+      /* input::placeholder {
          color: #c0c0c0;
       }
 
@@ -185,10 +244,10 @@
       .sidenav .nav a.active {
          background: cyan;
          color: #000;
-      }
+      } */
 
       .info {
-         background: #2f2f2f;
+         background: var(--info-bg);
          margin: auto 0;
          width: 100%;
          padding: 10px;
@@ -201,7 +260,7 @@
       }
 
       .divider {
-         background: #4f4f4f;
+         background: var(--divider-color);
          width: 100%;
          margin-top: 20px;
          margin-bottom: 10px;
@@ -212,7 +271,7 @@
          width: 100%;
          padding: 5px;
          background: transparent;
-         color: #fff;
+         color: var(--body-color);
          text-decoration: none;
          display: block;
          padding: 10px;
@@ -221,7 +280,7 @@
       }
 
       .info .button:hover {
-         background: #4f4f4f;
+         background: var(--info-button-hover-bg);
       }
 
       .spin {
@@ -263,6 +322,17 @@
             document.getElementById("bookmark-show").selectedIndex = 1;
          } else if (userBookmarks === "never") {
             document.getElementById("bookmark-show").selectedIndex = 2;
+         }
+      }
+
+      let userTheme = localStorage.getItem("shareTheme");
+      if (userTheme !== null) {
+         if (userTheme === "dark") {
+            document.getElementById("theme-select").selectedIndex = 0;
+         } else if (userTheme === "light") {
+            document.getElementById("theme-select").selectedIndex = 1;
+         } else if (userTheme === "auto") {
+            document.getElementById("theme-select").selectedIndex = 2;
          }
       }
 
@@ -348,6 +418,28 @@
                break;
             default:
                localStorage.setItem("bookmarksDisplay", "home");
+               break;
+         }
+      });
+
+      // change bookmarks
+      const themesPref = document.getElementById("theme-select");
+      themesPref.addEventListener("change", () => {
+         const selectedEngine = themesPref.options[themesPref.selectedIndex].text;
+         //console.log(selectedEngine);
+
+         switch (selectedEngine) {
+            case "Dark":
+               localStorage.setItem("shareTheme", "dark");
+               break;
+            case "Light":
+               localStorage.setItem("shareTheme", "light");
+               break;
+            case "Automatic":
+               localStorage.setItem("shareTheme", "auto");
+               break;
+            default:
+               localStorage.setItem("shareTheme", "auto");
                break;
          }
       });
