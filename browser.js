@@ -121,13 +121,23 @@ function addTab(url) {
       //webview.src = "errorloadingpage.html";
    });
 
+   let faviconSet = false;
    webview.addEventListener("page-favicon-updated", (event) => {
       const favicons = event.favicons;
+
+      if (!favicons || favicons.length === 0) {
+         console.log("No favicon found.");
+         favicon.innerHTML = `<span class="material-symbols-outlined no-spin">public</span>`;
+         setTimeout(() => {
+            console.log(favicons);
+         }, 500);
+         return;
+      }
+
       const faviconUrl = favicons[0];
 
-      if (!faviconUrl) {
-      favicon.style.display = "none";
-      return;
+      if (faviconSet) {
+         return;
       }
 
       fetch(faviconUrl, { method: 'HEAD' })
@@ -137,20 +147,23 @@ function addTab(url) {
             img.src = faviconUrl;
 
             img.onload = function () {
-            favicon.innerHTML = `<img src="${faviconUrl}" />`;
-            favicon.style.display = "inline-block";
+               favicon.innerHTML = `<img src="${faviconUrl}" />`;
+               favicon.style.display = "inline-block";
+               faviconSet = true;
             };
 
             img.onerror = function () {
-            favicon.style.display = "none";
+               console.log("Favicon failed");
+               favicon.innerHTML = `<span class="material-symbols-outlined">public</span>`;
             };
          } else {
-            favicon.style.display = "none";
+            console.log("Favicon response was not OK");
+            favicon.innerHTML = `<span class="material-symbols-outlined">public</span>`;
          }
       })
       .catch((error) => {
          console.error("Error checking favicon:", error);
-         favicon.style.display = "none";
+         favicon.innerHTML = `<span class="material-symbols-outlined">public</span>`;
       });
 
       reloadOrStop.innerHTML = `refresh`;
@@ -171,6 +184,11 @@ function addTab(url) {
          }
       }, 50);
    }, 50);
+
+   // check when the webview starts navigating
+   webview.addEventListener("did-start-navigation", () => {
+      faviconSet = false;
+   });
 
    // update the tab title when the webview's title changes
    webview.addEventListener("page-title-updated", (event) => {
@@ -196,8 +214,9 @@ function addTab(url) {
       reloadOrStop.setAttribute("onclick", "cancelLoading()");
    });
 
+   var faviconUpdated = new CustomEvent("page-favicon-updated", { "detail": "When the page updates the favicon" });
    webview.addEventListener("did-stop-loading", () => {
-
+      webview.dispatchEvent(faviconUpdated);
    });
 
    contentContainer.appendChild(webview);

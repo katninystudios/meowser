@@ -172,6 +172,10 @@ html {
    font-size: larger;
 }
 
+.tab-favicon span.no-spin {
+   animation: none;  
+}
+
 @keyframes spinFavicon {
    0% {
       transform: rotate(0deg);
