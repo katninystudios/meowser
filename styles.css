@@ -518,3 +518,20 @@ dialog::backdrop {
    animation: openSecurity 0.1s ease;
    transition: all 0.1s linear;
 }
+
+/* when link is hovered */
+#link-status {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   background: var(--controls);
+   padding: 3px;
+   font-size: small;
+   display: inline-block;
+   white-space: nowrap;
+   max-width: 100%;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   opacity: 0;
+   transition: all 0.2s ease;
+}

@@ -101,6 +101,25 @@ function addTab(url) {
    webview.style.height = "100%";
    webview.setAttribute("webpreferences", "nativeWindowOpen=true");
    webview.setAttribute("allowpopups", "");
+   webview.setAttribute("preload", "webviewpreload.js");
+
+   // detect when a link is hovered in a webview
+   let clearTextTimeout; 
+
+   webview.addEventListener("ipc-message", (event) => {
+      const linkStatus = document.getElementById("link-status");
+   
+      if (event.channel === "link-hover" && linkStatus) {
+         clearTimeout(clearTextTimeout);
+         linkStatus.textContent = event.args[0];
+         linkStatus.style.opacity = "1";
+      } else if (event.channel === "link-unhover" && linkStatus) {
+         linkStatus.style.opacity = "0";
+         clearTextTimeout = setTimeout(() => {
+            linkStatus.textContent = "";
+         }, 200);
+      }
+   });
 
    webview.addEventListener("did-navigate", updateNavigationButtons);
    webview.addEventListener("did-navigate-in-page", updateNavigationButtons);
@@ -858,3 +877,20 @@ async function writeTheme(theme) {
       console.error("Error setting theme: ", error);
    }
 }
+
+// listen to link hovers
+window.link.on("update-hovered-link", (href) => {
+   const linkStatus = document.getElementById("link-status");
+   if (linkStatus) {
+      linkStatus.textContent = href;
+      linkStatus.style.opacity = "1";
+   }
+});
+
+window.link.on("clear-hovered-link", () => {
+   const linkStatus = document.getElementById("link-status");
+   if (linkStatus) {
+      linkStatus.textContent = "";
+      linkStatus.style.opacity = "0";
+   }
+});

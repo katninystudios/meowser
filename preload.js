@@ -35,4 +35,27 @@ contextBridge.exposeInMainWorld("theme", {
    setTheme: (channel, data) => ipcRenderer.invoke(channel, data)
 });
 
+// detect when a link is hovered
+contextBridge.exposeInMainWorld("link", {
+   sendLinkHover: (href) => ipcRenderer.send("link-hover", href),
+   sendLinkUnhover: () => ipcRenderer.send("link-unhover"),
+   on: (channel, callback) => {
+      ipcRenderer.on(channel, (event, ...args) => callback(...args));
+   },
+});
+
+// window.addEventListener("DOMContentLoaded", () => {
+//    document.addEventListener("mouseover", (event) => {
+//       if (event.target.tagName === "A" && event.target.href) {
+//          window.link.sendLinkHover(event.target.href);
+//       }
+//    });
+
+//    document.addEventListener("mouseout", (event) => {
+//       if (event.target.tagName === "A") {
+//          window.link.sendLinkUnhover();
+//       }
+//    });
+// });
+
 console.log(`Platform: ${process.platform} - Arch: ${process.arch}`);

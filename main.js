@@ -307,3 +307,14 @@ ipcMain.handle("set-theme", async (event, theme) => {
       throw new Error("Failed to save theme");
    }
 });
+
+// link hover
+ipcMain.on("link-hover", (event, href) => {
+   console.log("Hovered over link: ", href);
+   event.sender.send("update-hovered-link", href);
+});
+
+ipcMain.on("link-unhover", (event) => {
+   console.log("Link hover ended");
+   event.sender.send("clear-hovered-link");
+});
