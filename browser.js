@@ -117,7 +117,7 @@ function addTab(url) {
          linkStatus.style.opacity = "0";
          clearTextTimeout = setTimeout(() => {
             linkStatus.textContent = "";
-         }, 200);
+         }, 500);
       }
    });
 
@@ -125,7 +125,7 @@ function addTab(url) {
    webview.addEventListener("did-navigate-in-page", updateNavigationButtons);
 
    webview.addEventListener("did-fail-load", (event) => {
-      if (event.errorCode !== -3 && event.errorCode !== -2 && event.errorCode !== -27 && event.errorCode !== -137 && event.errorCode !== -21 && event.errorCode !== -30 && event.errorCode !== -356 && event.errorCode !== -107 && event.errorCode !== -101) {
+      if (event.errorCode !== -3 && event.errorCode !== -2 && event.errorCode !== -27 && event.errorCode !== -137 && event.errorCode !== -21 && event.errorCode !== -30 && event.errorCode !== -356 && event.errorCode !== -107 && event.errorCode !== -101 && event.errorCode !== -105) {
          document.getElementById("errorMayHaveOccurred").style.display = "block";
          document.getElementById("reportBugError").setAttribute("onclick", `addTab("https://github.com/katniny/meowser/issues/new?title=Bug Report: (AUTOMATIC) An Error Occurred Loading ${webview.src}&body=The following error occurred: ${event.errorCode} with the error message: ${event.errorDescription}")`);
       }
@@ -133,7 +133,7 @@ function addTab(url) {
    });
 
    webview.addEventListener("did-fail-provisional-load", (event) => {
-      if (event.errorCode !== -3 && event.errorCode !== -2 && event.errorCode !== -27 && event.errorCode !== -137 && event.errorCode !== -21 && event.errorCode !== -30 && event.errorCode !== -356 && event.errorCode !== -107 && event.errorCode !== -101) {
+      if (event.errorCode !== -3 && event.errorCode !== -2 && event.errorCode !== -27 && event.errorCode !== -137 && event.errorCode !== -21 && event.errorCode !== -30 && event.errorCode !== -356 && event.errorCode !== -107 && event.errorCode !== -101 && event.errorCode !== -105) {
          document.getElementById("errorMayHaveOccurred").style.display = "block";
          document.getElementById("reportBugError").setAttribute("onclick", `addTab("https://github.com/katniny/meowser/issues/new?title=Bug Report: (AUTOMATIC) An Error Occurred Loading ${webview.src}&body=The following error occurred: ${event.errorCode} with the error message: ${event.errorDescription}")`);
       }
@@ -893,4 +893,29 @@ window.link.on("clear-hovered-link", () => {
       linkStatus.textContent = "";
       linkStatus.style.opacity = "0";
    }
+});
+
+// check for updates
+ipcRenderer.on("checking-for-update", () => {
+   localStorage.setItem("updateAvailable", "checking");
+});
+
+ipcRenderer.on("update-found", () => {
+   localStorage.setItem("updateAvailable", "found");
+});
+
+ipcRenderer.on("no-update-found", () => {
+   localStorage.setItem("updateAvailable", "false");
+});
+
+ipcRenderer.on("error-ending-update", () => {
+   localStorage.setItem("updateAvailable", "error");
+});
+
+ipcRenderer.on("downloading-update", () => {
+   localStorage.setItem("updateAvailable", "downloading");
+});
+
+ipcRenderer.on("downloaded-update", () => {
+   localStorage.setItem("updateAvailable", "downloaded");
 });

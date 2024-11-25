@@ -20,7 +20,7 @@
 
             <div class="divider"></div>
 
-            <p><span class="material-symbols-outlined spin">progress_activity</span> Checking for updates...</p>
+            <p id="updateStatus"><span class="material-symbols-outlined spin">progress_activity</span> Checking for updates...</p>
 
             <div class="divider"></div>
 
@@ -154,6 +154,36 @@
       }, 50);
    </script>
 
+   <script>
+      let updateStatus = "test"; 
+      let previousStatus = 1;
+      const updateStatusSpan = document.getElementById("updateStatus");
+
+      setInterval(() => { 
+         updateStatus = localStorage.getItem("updateStatus");
+         
+         if (updateStatus === null && previousStatus !== updateStatus) {
+            updateStatusSpan.innerHTML = `<span class="material-symbols-outlined">question_mark</span> Meowser is unsure about update status. You are likely running in a developer environment. If you are not, please <a href="https://github.com/katniny/meowser/issues/new" target="_blank">let us know</a>.`;
+            previousStatus = updateStatus;
+         } else if (updateStatus === "found" && previousStatus !== updateStatus) {
+            updateStatusSpan.innerHTML = `<span class="material-symbols-outlined">download</span> Meowser found an update! We'll begin downloading it shortly.`;
+            previousStatus = updateStatus;
+         } else if (updateStatus === "false" && previousStatus !== updateStatus) {
+            updateStatusSpan.innerHTML = `<span class="material-symbols-outlined">check</span> Meowser is update to date!`;
+            previousStatus = updateStatus;
+         } else if (updateStatus === "error" && previousStatus !== updateStatus) {
+            updateStatusSpan.innerHTML = `<span class="material-symbols-outlined">error</span> Meowser was unable to install the update. Please try restarting Meowser, checking your internet connection, or <a href="https://github.com/katniny/meowser/releases/latest">reinstalling Meowser to the latest version</a> (don't worry - everything will be stay).`;
+            previousStatus = updateStatus;
+         } else if (updateStatus === "downloading" && previousStatus !== updateStatus) {
+            updateStatusSpan.innerHTML = `<span class="material-symbols-outlined">downloading</span> Meowser is installing the update, this may take a moment...`;
+            previousStatus = updateStatus;
+         } else if (updateStatus === "downloaded" && previousStatus !== updateStatus) {
+            updateStatusSpan.innerHTML = `<span class="material-symbols-outlined">download_done</span> Meowser has finished installing the update! Please restart Meowser for the changes to take effect.`;
+            previousStatus = updateStatus;
+         }
+      }, 100);
+   </script>
+
    <style>
       @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
@@ -283,10 +313,13 @@
          background: var(--info-button-hover-bg);
       }
 
+      .material-symbols-outlined {
+         font-size: large; 
+         transform: translateY(3px);
+      }
+
       .spin {
          animation: spin 0.5s ease infinite;
-         font-size: large; 
-         transform: translateY(10px);
       }
 
       @keyframes spin {

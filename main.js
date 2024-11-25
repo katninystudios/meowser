@@ -207,6 +207,11 @@ function addAdBlocker(session) {
 // auto updater
 autoUpdater.on("checking-for-update", () => {
    log.info("Checking for updates...");
+   
+   const windows = BrowserWindow.getAllWindows();
+   windows.forEach((window) => {
+      window.webContents.send("checking-for-update");
+   });
 });
 
 autoUpdater.on("update-available", (info) => {
@@ -215,10 +220,20 @@ autoUpdater.on("update-available", (info) => {
       body: "Meowser will auto update."
    }).show();
    autoUpdater.downloadUpdate();
+
+   const windows = BrowserWindow.getAllWindows();
+   windows.forEach((window) => {
+      window.webContents.send("update-found");
+   });
 });
 
 autoUpdater.on("update-not-available", (info) => {
    log.info("No update available.");
+   
+   const windows = BrowserWindow.getAllWindows();
+   windows.forEach((window) => {
+      window.webContents.send("no-update-found");
+   });
    return;
 });
 
@@ -228,10 +243,20 @@ autoUpdater.on("error", (err) => {
       title: "Meowser failed to update",
       body: "Please ensure that you are connected to the internet and relaunch Meowser."
    }).show();
+
+   const windows = BrowserWindow.getAllWindows();
+   windows.forEach((window) => {
+      window.webContents.send("error-ending-update");
+   });
 });
 
 autoUpdater.on("download-progress", (progressObj) => {
    log.info(`Download speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.percent}% (${progressObj.transferred}/${progressObj.total})`);
+
+   const windows = BrowserWindow.getAllWindows();
+   windows.forEach((window) => {
+      window.webContents.send("downloading-update");
+   });
    return;
 });
 
@@ -248,6 +273,11 @@ autoUpdater.on("update-downloaded", (info) => {
       if (result.response === 0) {
          autoUpdater.quitAndInstall();
       }
+   });
+
+   const windows = BrowserWindow.getAllWindows();
+   windows.forEach((window) => {
+      window.webContents.send("downloaded-update");
    });
 });
 

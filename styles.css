@@ -265,6 +265,7 @@ webview {
 
 /* url bar */
 #url-bar {
+   flex: 1;
    width: 50%;
    padding: 5px;
    padding-left: 35px;
@@ -446,7 +447,7 @@ dialog::backdrop {
    text-overflow: ellipsis;
    white-space: wrap;
    z-index: 999;
-   margin-right: 750px;
+   margin-right: 50px;
    animation: openSecurity 0.1s ease;
    transition: all 0.1s linear;
 }
@@ -475,6 +476,11 @@ dialog::backdrop {
    float: left;
    margin-right: 10px;
    margin-left: 5px;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   padding: 3px;
+   border-radius: 15px;
 }
 
 #tabs.vertical .bookmark {
@@ -534,4 +540,10 @@ dialog::backdrop {
    text-overflow: ellipsis;
    opacity: 0;
    transition: all 0.2s ease;
+}
+
+/* more */
+#more-btn {
+   margin-left: 15px;
+   font-size: larger;
 }
