@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Meowser - The Purr-fect Browser</title>
+      <link rel="shortcut icon" href="../assets/imgs/meowser_white.png" type="image/png">
+      <link rel="stylesheet" href="../assets/css/styles.css">
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+   </head>
+   
+   <body>
+      <header style="transform: translateY(0px)">
+         <div class="headerContent">
+            <h1>Meowser</h1>
+            <div class="headerButtons">
+               <a href="https://github.com/katniny/meowser/releases/latest" target="_blank"><button class="leftBtn">Meowser Browsers</button></a>
+               <a href="../support/"><button class="leftBtn">Support</button></a>
+            </div>
+            <a href="https://github.com/katniny/meowser/releases/latest" target="_blank"><div class="ctaBtn">Download Meowser</div></a>
+         </div>
+      </header>
+
+      <br />
+      <div class="body leftAlign">
+         <img src="../assets/imgs/meowser_logo.png" alt="Meowser Black Logo" draggable="false" width="100" />
+         <h1 class="altFont">How to Build Meowser</h1>
+         <p>Learn how to build Meowser from source.</p>
+         <a href="https://github.com/katniny/meowser/discussions/categories/question" target="_blank">Questions? Don't be afraid to ask on our GitHub!</a>
+         <div class="divider" style="margin-top: 10px; margin-bottom: 10px;"></div>
+
+         <p>This will teach you how to compile Meowser yourself, whether to contribute or try Meowser on an unsupported platform.</p>
+
+         <br />
+
+         <h2 class="altFont">Prerequisites</h2>
+         <p>We try to keep the amount of prerequisites low to make Meowser's source accessible to as many people as possible.</p>
+            <li style="margin-left: 15px;"><a href="https://nodejs.org/en/download/prebuilt-installer" target="_blank">NodeJS</a> - please ensure you have 20.18.0 or later installed.</li>
+            <li style="margin-left: 15px;">Access to a terminal</li>
+            <li style="margin-left: 15px;">(OPTIONAL) A code editor (required to edit code, but if you're just trying Meowser, it's not required)</li>
+
+         <br />
+
+         <h2 class="altFont">Getting the Code</h2>
+         <h3 class="altFont">If you have Git Installed:</h3>
+            <li style="margin-left: 15px;">Find a directory (preferably empty) to install Meowser to</li>
+            <li style="margin-left: 15px;">Run `git clone https://github.com/katniny/meowser`</li>
+            <li style="margin-left: 15px;">When finished, run `cd meowser`</li>
+         <h3 class="altFont">If you do not have Git:</h3>
+            <li style="margin-left: 15px;">Go to our <a href="https://github.com/katniny/meowser" target="_blank">GitHub</a></li>
+            <li style="margin-left: 15px;">Click "Code" then "Download ZIP"</li>
+            <li style="margin-left: 15px;">Once installed, unzip the ZIP file</li>
+         
+         <br />
+
+         <h2 class="altFont">Installing Dependencies</h2>
+         <p>This part is extremely simple AS LONG AS YOU HAVE NODEJS!</p>
+            <li style="margin-left: 15px;">Open your terminal</li>
+            <li style="margin-left: 15px;">Navigate to where you installed Meowser (e.g. F:\meowser\)</li>
+            <li style="margin-left: 15px;">Run `npm install`</li>
+            <li style="margin-left: 35px;">This will automatically install everything for you.</li>
+         
+         <br />
+
+         <h2 class="altFont">Running Meowser</h2>
+            <li style="margin-left: 15px;">Running Meowser is easier than walking. All you have to do is run `npm start` after all the steps above are complete</li>
+         <p>Meowser should now be running natively!</p>
+
+         <br />
+
+         <h2 class="altFont">Compiling Meowser</h2>
+         <p>To make Meowser easy to run, all you have to do is:</p>
+            <li style="margin-left: 15px;">Run `npm run dist`. This will start compiling Meowser. Your first time may take a few moments.</li>
+            <li style="margin-left: 15px;">Once done, open your Meowser directory then the "dist" folder (e.g. F:\meowser\dist)</li>
+            <li style="margin-left: 15px;">You can run the installer OR go into `PLATFORM-unpacked` and run it directly from there</li>
+
+         <br />
+
+         <p>Now Meowser is compiled! If you encounter any issue during this process, please let us know on <a href="https://github.com/katniny/meowser/issues/new" target="_blank">GitHub Issues and we'll help you out</a>.</p>
+
+         <br />
+
+         <footer>
+            <div class="footerContainer">
+               <div class="footerColumn">
+                  <h3>Meowser</h3>
+                  <p>The purr-fect browser.</p>
+                  <p>&copy; 2024 Katniny Studios. All Rights Reserved. Code licensed under KOSL.</p>
+               </div>
+         
+               <div class="footerColumn">
+                  <h3>About Meowser</h3>
+                  <ul>
+                     <li><a href="support/">Support</a></li>
+                     <li><a href="https://github.com/katniny/meowser" target="_blank">GitHub</a></li>
+                     <li><a href="LICENSE.txt">KOSL License</a></li>
+                  </ul>
+               </div>
+         
+               <div class="footerColumn">
+                  <h3>Socials</h3>
+                  <ul>
+                     <li><a href="https://discord.gg/fUCseSyXE4" target="_blank">Discord</a></li>
+                  </ul>
+               </div>
+            </div>
+         </footer>
+      </div>
+   </body>
+</html>

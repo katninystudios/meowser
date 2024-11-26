@@ -1,74 +1,277 @@
 @import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400..700&display=swap');
 
 /* remove default styling */
 * {
    margin: 0;
    padding: 0;
    font-family: "Gabarito", sans-serif;
-   color: #fff;
 }
 
-/* body styling */
+/* body */
 body {
-   background: #1f1f1f;
-   margin-left: 15px; 
-   margin-right: 15px;
+   text-align: center;
+   overflow-x: hidden;
+   background: #f4f4f4;
 }
 
-/* thick divider */
-.thickDivider {
-   margin-top: 20px;
-   height: 15px;
-   background-color: pink;
-   width: 45px;
+/* alt font */
+.altFont {
+   font-family: "Domine", sans-serif;
 }
 
-/* default buttons */
+/* cta */
+.cta {
+   margin-top: 15px;
+}
+
+.cta h1.resize {
+   font-size: 2.3rem;
+}
+
+.cta h1 {
+   font-size: 1.2rem;
+   font-weight: 100;
+   max-width: 40%;
+   margin: 0 auto;
+   text-align: center;
+}
+
+@media (max-width: 1049px) {
+   .cta h1 {
+      max-width: 90%;
+   }
+}
+
+/* quote */
+.quote {
+   margin-top: 35px;
+   font-size: 1.2rem;
+   background: linear-gradient(pink, #ff9cad);
+   padding: 10px;
+}
+
+.quote span {
+   font-size: 1.1rem;
+}
+
+/* container */
+.container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 20px;
+}
+
+.container .text {
+   max-width: 45%;
+   text-align: left;
+   z-index: 1;
+}
+
+.container .image {
+   width: 45%;
+   height: 150px;
+   object-fit: contain;
+}
+
+.container .text h2 {
+   font-size: 2.3rem;
+}
+
+@media (max-width: 801px) {
+   .container {
+      flex-direction: column-reverse;
+      text-align: center;
+   }
+
+   .container .right {
+      flex-direction: column;
+   }
+
+   .container .text,
+   .container .image {
+      max-width: 90%;
+      width: 90%;
+   }
+
+   .container .image {
+      height: auto;
+      max-height: 150px;
+   }
+}
+
+/* a links */
+a {
+   color: #ff002b;
+}
+
+a:hover {
+   text-decoration: none;
+   color: #900018;
+}
+
+/* buttons */
 button {
-   padding: 7px;
-   border-radius: 50px;
+   padding: 8px;
    cursor: pointer;
    background: transparent;
-   border: 1px solid #fff;
-   font-size: medium;
-   transition: all 0.15s ease;
+   border-radius: 50px;
    margin-top: 5px;
+   margin-left: 5px;
+   transition: all 0.15s ease;
 }
 
 button:hover,
 button:focus {
    background: pink;
-   color: #000;
    transform: translateY(-3px);
-   border: 1px solid pink;
 }
 
-/* inverted button */
-button.inverted {
-   color: #000;
-   border: 1px solid #000;
-}
-
-button:hover.inverted {
+/* footer */
+footer {
+   background-color: #333;
    color: #fff;
-   background: #000;
+   padding: 20px;
 }
 
-/* coming soon badge */
-.comingSoon {
-   background: pink;
-   padding: 5px;
-   border-radius: 50px;
-   font-size: small;
+.footerContainer {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 20px;
+}
+
+.footerColumn h3 {
+   margin-bottom: 10px;
+}
+
+.footerColumn ul {
+   list-style: none;
+   padding: 0;
+}
+
+.footerColumn ul li {
+   margin: 5px 0;
+}
+
+.footerColumn a {
+   color: #fff;
+   text-decoration: none;
+}
+
+.footerColumn a:hover {
+   text-decoration: underline;
+}
+
+/* header */
+header {
+   background-color: #dedede;
+   border-bottom: 2px solid #555;
+   padding: 20px;
+   position: fixed;
+   z-index: 99;
+   width: 100%;
+   transform: translateY(-25px);
+}
+
+.headerContent {
+   display: flex;
+   justify-content: space-between;
+   align-items: center
+}
+
+.headerContent h1 {
+   margin: 0;
+}
+
+.headerContent .headerButtons {
+   display: flex;
+   gap: 10px;
+}
+
+.headerContent .leftBtn, .headerContent .ctaBtn {
+   padding: 10px 20px;
+   background: #555;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.leftBtn:hover, .ctaBtn:hover {
+   background-color: #777;
+}
+
+.ctaBtn {
+   background-color: pink;
+   margin-right: 25px;
+}
+
+.ctaBtn:hover {
+   background-color: pink;
    color: #000;
 }
 
-/* default a styling */
-a {
-   color: pink;
+@media (max-width: 768px) {
+   .headerContent {
+      justify-content: space-between;
+      padding: 10px 20px;
+   }
+
+   .headerButtons {
+      gap: 8px;
+   }
+
+   .headerContent .leftBtn, .headerContent .ctaBtn {
+      padding: 8px 16px;
+      font-size: 14px;
+   }
+
+   h1 {
+      font-size: 24px;
+   }
 }
 
-a:hover {
-   color: #ff8196;
-   text-decoration: none;
+@media (max-width: 480px) {
+   .headerContent {
+      padding: 10px 15px;
+   }
+
+   .headerContent .leftBtn, .headerContent .ctaBtn {
+      padding: 8px 12px;
+      font-size: 13px;
+   }
+
+   h1 {
+      font-size: 20px;
+   }
+
+   .ctaBtn {
+      margin-right: 15px;
+   }
+}
+
+/* fake body */
+.body {
+   transform: translateY(90px);
+}
+
+.body.leftAlign {
+   text-align: left;
+   margin-right: 15px;
+   margin-left: 15px;
+}
+
+/* topic */
+.topic {
+   max-width: 500px;
+   margin-bottom: 45px;
+}
+
+/* divider */
+.divider {
+   background: #333;
+   height: 2px;
+   width: 100%;
 }

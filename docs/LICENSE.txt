@@ -1,0 +1,16 @@
+# Kat's Open Source License
+Copyright (c) 2024 Katniny Studios
+
+Permissions:
+- You are free to use, modify, and distribute the code, under the following conditions:
+
+Conditions:
+1. Non-Commercial Use: You may not use the software or its derivatives for commercial purposes. This means you cannot sell, sublicense, or otherwise profit from the software, whether directly or indirectly.
+2. Open Source Distribution: If you distribute the software or any derivative works, you must make the source code available under this same license. The software must remain open source, and any modifications must be shared under the same terms.
+3. Attribution: You must credit "Katniny Studios" or "Katniny" in a location that is easy to find within the project. This can be in the README file, within documentation, or in any other prominent location within the project.
+
+No Warranty:
+- This software is provided "as-is", without any express or implied warranty. Katniny Studios is not liable for any damages or issues that arise from using the software.
+
+License Compatibility:
+- This license is not compatible with any other license that contradicts the non-commercial and open-source terms set forth here.
