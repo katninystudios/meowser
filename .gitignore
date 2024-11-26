@@ -1,2 +1,4 @@
 # idk why we'd want this to save...
 node_modules
+
+dist

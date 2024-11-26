@@ -58,4 +58,22 @@ contextBridge.exposeInMainWorld("link", {
 //    });
 // });
 
+// detect updates
+contextBridge.exposeInMainWorld("updates", {
+   onUpdateStatus: (channel, callback) => {
+      const validChannels = [
+         "checking-for-update",
+         "update-found",
+         "no-update-found",
+         "error-ending-update",
+         "downloading-update",
+         "downloaded-update",
+      ];
+
+      if (validChannels.includes(channel)) {
+         ipcRenderer.on(channel, (event, ...args) => callback(...args));
+      }
+   }
+});
+
 console.log(`Platform: ${process.platform} - Arch: ${process.arch}`);

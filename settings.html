@@ -169,7 +169,7 @@
             updateStatusSpan.innerHTML = `<span class="material-symbols-outlined">download</span> Meowser found an update! We'll begin downloading it shortly.`;
             previousStatus = updateStatus;
          } else if (updateStatus === "false" && previousStatus !== updateStatus) {
-            updateStatusSpan.innerHTML = `<span class="material-symbols-outlined">check</span> Meowser is update to date!`;
+            updateStatusSpan.innerHTML = `<span class="material-symbols-outlined">check</span> Meowser is up to date!`;
             previousStatus = updateStatus;
          } else if (updateStatus === "error" && previousStatus !== updateStatus) {
             updateStatusSpan.innerHTML = `<span class="material-symbols-outlined">error</span> Meowser was unable to install the update. Please try restarting Meowser, checking your internet connection, or <a href="https://github.com/katniny/meowser/releases/latest">reinstalling Meowser to the latest version</a> (don't worry - everything will be stay).`;

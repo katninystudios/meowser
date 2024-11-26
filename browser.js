@@ -896,26 +896,18 @@ window.link.on("clear-hovered-link", () => {
 });
 
 // check for updates
-ipcRenderer.on("checking-for-update", () => {
-   localStorage.setItem("updateAvailable", "checking");
-});
+const updateStatuses = {
+   "checking-for-update": "checking",
+   "update-found": "found",
+   "no-update-found": "false",
+   "error-ending-update": "error",
+   "downloading-update": "downloading",
+   "downloaded-update": "downloaded",
+};
 
-ipcRenderer.on("update-found", () => {
-   localStorage.setItem("updateAvailable", "found");
-});
-
-ipcRenderer.on("no-update-found", () => {
-   localStorage.setItem("updateAvailable", "false");
-});
-
-ipcRenderer.on("error-ending-update", () => {
-   localStorage.setItem("updateAvailable", "error");
-});
-
-ipcRenderer.on("downloading-update", () => {
-   localStorage.setItem("updateAvailable", "downloading");
-});
-
-ipcRenderer.on("downloaded-update", () => {
-   localStorage.setItem("updateAvailable", "downloaded");
+Object.keys(updateStatuses).forEach((event) => {
+   window.updates.onUpdateStatus(event, () => {
+      localStorage.setItem("updateStatus", updateStatuses[event]);
+      console.log(localStorage.getItem("updateStatus"));
+   });
 });
