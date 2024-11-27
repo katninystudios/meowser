@@ -348,3 +348,8 @@ ipcMain.on("link-unhover", (event) => {
    console.log("Link hover ended");
    event.sender.send("clear-hovered-link");
 });
+
+// when renderer requests, open a new window
+ipcMain.on("open-new-window", (event, url) => {
+   createWindow();
+});

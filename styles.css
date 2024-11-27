@@ -547,3 +547,58 @@ dialog::backdrop {
    margin-left: 15px;
    font-size: larger;
 }
+
+/* show more options menu */
+#show-more-info {
+   position: fixed;
+   top: 80px;
+   right: 0;
+   background-color: var(--popover-background);
+   border: 1px solid var(--popover-border);
+   border-radius: 15px;
+   color: var(--text);
+   padding: 5px 10px;
+   font-size: 12px;
+   width: auto;
+   max-width: 25%;
+   height: auto;
+   max-height: 250px;
+   display: none;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: wrap;
+   z-index: 999;
+   margin-right: 5px;
+   animation: openSecurity 0.1s ease;
+   transition: all 0.1s linear;
+}
+
+#show-more-info .material-symbols-outlined {
+   font-size: larger;
+   transform: translateY(3px);
+}
+
+#show-more-info button {
+   background-color: transparent;
+   color: var(--tab-container-text-color);
+   border: 1px solid transparent;
+   cursor: pointer;
+   font-size: 15px;
+   padding: 5px;
+   text-align: left;
+   width: 250px;
+   border-radius: 15px;
+}
+
+#show-more-info button:hover {
+   background-color: var(--controls);
+   color: var(--tab-container-text-color);
+   border: 1px solid transparent;
+   cursor: pointer;
+   font-size: 15px;
+}
+
+#show-more-info button.inactive {
+   cursor: not-allowed;
+   opacity: 0.5;
+}

@@ -18,7 +18,7 @@
          <span class="material-symbols-outlined" onclick="reload()" id="reloadOrStop"></span>
          <span class="material-symbols-outlined" id="site-security" onclick="siteSecurityInfo()"></span><div type="text" spellcheck="false" contenteditable="true" id="url-bar" placeholder="Search or enter URL"></div>
          <span class="material-symbols-outlined" id="add-bookmark-btn" onclick="addBookmark()">star</span>
-         <span class="material-symbols-outlined" id="more-btn" onclick="addBookmark()">more_horiz</span>
+         <span class="material-symbols-outlined" id="more-btn" onclick="showMoreMenu()">more_horiz</span>
       </div>
       <div id="bookmarks-bar"></div>
       <div id="content">
@@ -45,6 +45,16 @@
             <br/><input type="text" id="bookmark-url" placeholder="Bookmark URL" />
 
             <br/><button style="margin-top: 10px;" onclick="addBookmark_finalize(`${document.getElementById('bookmark-name').value}`, `${document.getElementById('bookmark-url').value}`)">Add Bookmark</button>
+         </div>
+         <!-- add bookmark -->
+         <div id="show-more-info">
+            <button onclick="addTab(); showMoreMenu();"><span class="material-symbols-outlined" id="more-btn">open_in_new</span> New Tab</button>
+            <br/><button onclick="openNewWindow(); showMoreMenu();"><span class="material-symbols-outlined" id="more-btn">open_in_new</span> New Window</button>
+            <br/><button class="inactive"><span class="material-symbols-outlined" id="more-btn">hide</span> New Catnap Window</button>
+            <br/><button onclick="addTab('settings.html'); showMoreMenu();"><span class="material-symbols-outlined" id="more-btn">settings</span> Settings</button>
+            <br/><button onclick="addTab('https://katniny.github.io/meowser/release-notes'); showMoreMenu();"><span class="material-symbols-outlined" id="more-btn">new_releases</span> Release Notes</button>
+            <br/><button onclick="addTab('https://katniny.github.io/meowser/support/'); showMoreMenu();"><span class="material-symbols-outlined" id="more-btn">help</span> Support</button>
+            <br/><button onclick="addTab('https://github.com/katniny/meowser/issues/new'); showMoreMenu();"><span class="material-symbols-outlined" id="more-btn">bug_report</span> Report an Issue</button>
          </div>
          <!-- suggestions -->
          <ul id="suggestionsDropdown" style="display: none; border: 1px solid #ccc; position: absolute; max-height: 200px; overflow-y: auto;">

@@ -76,4 +76,9 @@ contextBridge.exposeInMainWorld("updates", {
    }
 });
 
+// ask to open a new window
+contextBridge.exposeInMainWorld("new", {
+   openNewWindow: (url) => ipcRenderer.send("open-new-window")
+});
+
 console.log(`Platform: ${process.platform} - Arch: ${process.arch}`);
