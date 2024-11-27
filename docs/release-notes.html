@@ -10,7 +10,7 @@
    </head>
    
    <body>
-      <div id="meowserUpdated" style="background: #00d600; position: fixed; top: 15px; left: 44%; width: 230px; height: 50px; display: flex; justify-content: center; align-items: center; z-index: 9999; border-radius: 35px;">
+      <div id="meowserUpdated" style="background: #00d600; position: fixed; top: 15px; left: 44%; width: 230px; height: 50px; display: flex; justify-content: center; align-items: center; z-index: 9999; border-radius: 35px; display: none;">
          <span class="material-symbols-outlined" style="font-size: larger; transform: translateY(3px);">check</span> Meowser has been updated!
       </div>
 
@@ -98,7 +98,7 @@
       const meowserUpdated = url.searchParams.get("meowserUpdated");
 
       if (meowserUpdated) {
-         
+         document.getElementById("meowserUpdated").style.display = "flex";
       }
    </script>
 </html>
