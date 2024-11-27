@@ -4,18 +4,22 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Meowser - The Purr-fect Browser</title>
-      <link rel="shortcut icon" href="../assets/imgs/meowser_white.png" type="image/png">
-      <link rel="stylesheet" href="../assets/css/styles.css">
+      <link rel="shortcut icon" href="assets/imgs/meowser_white.png" type="image/png">
+      <link rel="stylesheet" href="assets/css/styles.css">
       <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
    </head>
    
    <body>
+      <div id="meowserUpdated" style="background: #00d600; position: fixed; top: 15px; left: 44%; width: 230px; height: 50px; display: flex; justify-content: center; align-items: center; z-index: 9999; border-radius: 35px;">
+         <span class="material-symbols-outlined" style="font-size: larger; transform: translateY(3px);">check</span> Meowser has been updated!
+      </div>
+
       <header style="transform: translateY(0px)">
          <div class="headerContent">
             <h1>Meowser</h1>
             <div class="headerButtons">
                <a href="https://github.com/katniny/meowser/releases/latest" target="_blank"><button class="leftBtn">Meowser Browsers</button></a>
-               <a href="../support/"><button class="leftBtn">Support</button></a>
+               <a href="support/"><button class="leftBtn">Support</button></a>
             </div>
             <a href="https://github.com/katniny/meowser/releases/latest" target="_blank"><div class="ctaBtn">Download Meowser</div></a>
          </div>
@@ -23,7 +27,7 @@
 
       <br />
       <div class="body leftAlign">
-         <img src="../assets/imgs/meowser_logo.png" alt="Meowser Black Logo" draggable="false" width="100" />
+         <img src="assets/imgs/meowser_logo.png" alt="Meowser Black Logo" draggable="false" width="100" />
          <h1 class="altFont">Release Notes</h1>
          <div class="divider" style="margin-top: 10px; margin-bottom: 10px;"></div>
 
@@ -88,4 +92,13 @@
          </footer>
       </div>
    </body>
+
+   <script>
+      const url = new URL(window.location.href);
+      const meowserUpdated = url.searchParams.get("meowserUpdated");
+
+      if (meowserUpdated) {
+         
+      }
+   </script>
 </html>
