@@ -144,12 +144,45 @@ app.on("window-all-closed", () => {
    }
 });
 
+function handleURL(url) {
+   if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+      if (app.isReady()) {
+         mainWindow.webContents.once("did-finish-load", () => {
+            mainWindow.webContents.send("open-url", url);
+         });
+      } else {
+         app.once("ready", () => {
+            mainWindow.webContents.once("did-finish-load", () => {
+               mainWindow.webContents.send("open-url", url);
+            });
+         });
+      }
+   } else {
+      mainWindow.webContents.send("open-url", url);
+   }
+}
+
 app.on("ready", () => {
    if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
    }
    autoUpdater.checkForUpdatesAndNotify();
+
+   // handle url if passed during launch
+   const url = process.argv[1];
+   if (url) handleURL(url);
 });
+
+app.on("second-instance", (event, argv) => {
+   const url = argv[1];
+   if (url) handleURL(url);
+});
+
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+   app.quit();
+}
 
 // handle url hovered from the webview's preload script
 ipcMain.on("url-hovered", (event, url) => {
