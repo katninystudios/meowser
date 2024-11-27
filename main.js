@@ -144,24 +144,24 @@ app.on("window-all-closed", () => {
    }
 });
 
-function handleURL(url) {
-   if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-      if (app.isReady()) {
-         mainWindow.webContents.once("did-finish-load", () => {
-            mainWindow.webContents.send("open-url", url);
-         });
-      } else {
-         app.once("ready", () => {
-            mainWindow.webContents.once("did-finish-load", () => {
-               mainWindow.webContents.send("open-url", url);
-            });
-         });
-      }
-   } else {
-      mainWindow.webContents.send("open-url", url);
-   }
-}
+// function handleURL(url) {
+//    if (BrowserWindow.getAllWindows().length === 0) {
+//       createWindow();
+//       if (app.isReady()) {
+//          mainWindow.webContents.once("did-finish-load", () => {
+//             mainWindow.webContents.send("open-url", url);
+//          });
+//       } else {
+//          app.once("ready", () => {
+//             mainWindow.webContents.once("did-finish-load", () => {
+//                mainWindow.webContents.send("open-url", url);
+//             });
+//          });
+//       }
+//    } else {
+//       mainWindow.webContents.send("open-url", url);
+//    }
+// }
 
 app.on("ready", () => {
    if (BrowserWindow.getAllWindows().length === 0) {
@@ -170,13 +170,13 @@ app.on("ready", () => {
    autoUpdater.checkForUpdatesAndNotify();
 
    // handle url if passed during launch
-   const url = process.argv[1];
-   if (url) handleURL(url);
+   //const url = process.argv[1];
+   //if (url) handleURL(url);
 });
 
 app.on("second-instance", (event, argv) => {
-   const url = argv[1];
-   if (url) handleURL(url);
+   //const url = argv[1];
+   //if (url) handleURL(url);
 });
 
 const gotTheLock = app.requestSingleInstanceLock();
