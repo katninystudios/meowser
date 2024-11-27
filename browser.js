@@ -5,7 +5,7 @@ const urlBar = document.getElementById("url-bar");
 const reloadOrStop = document.getElementById("reloadOrStop");
 let draggedTab = null; // store
 const currentDir = window.api.dirname();
-const browserVersion = "v0.1_alpha";
+const browserVersion = "v0.2.0_alpha";
 const linkPreview = document.getElementById("link-preview");
 const siteSecurity = document.getElementById("site-security");
 const siteSecurityInfo_container = document.getElementById("site-security-info");
@@ -17,9 +17,11 @@ const addBookmarkUrl = document.getElementById("bookmark-url");
 let userDefaultEngine = "N/A";
 let historySave = null;
 let haveUsedBrowser = null;
+let hasSeenNewUpdate = null;
 
 // get user preferences
 haveUsedBrowser = localStorage.getItem("browserUsed");
+hasSeenNewUpdate = localStorage.getItem(`hasSeen${browserVersion}Logs`);
 
 userDefaultEngine = localStorage.getItem("defaultEngine");
 if (userDefaultEngine === null) {
@@ -96,6 +98,16 @@ function addTab(url) {
       localStorage.setItem("browserUsed", true);
       haveUsedBrowser = true;
    }
+
+   if (hasSeenNewUpdate === null && haveUsedBrowser !== null) {
+      webview.src = "https://katniny.github.io/meowser/release-notes?meowserUpdated=1";
+      hasSeenNewUpdate = true;
+      localStorage.setItem(`hasSeen${browserVersion}Logs`, true);
+   } else if (hasSeenNewUpdate === null  && haveUsedBrowser === null) {
+      hasSeenNewUpdate = true;
+      localStorage.setItem(`hasSeen${browserVersion}Logs`, true); // no need. they're new anyways lol
+   }
+
    webview.style.display = "none";
    webview.style.width = "100%";
    webview.style.height = "100%";
@@ -366,6 +378,8 @@ urlBar.addEventListener("keydown", (event) => {
                changeCurrentTabUrl(`https://www.google.com/search?q=${encodeURIComponent(input)}`);
             } else if (userDefaultEngine === "https://www.bing.com/") {
                changeCurrentTabUrl(`https://www.bing.com/search?q=${encodeURIComponent(input)}`);
+            } else if (userDefaultEngine === null) {
+               changeCurrentTabUrl(`https://www.startpage.com/sp/search?q=${encodeURIComponent(input)}`);
             }
          } else {
             const path = formattedInput.replace("meow://", "");
