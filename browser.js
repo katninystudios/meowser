@@ -184,6 +184,17 @@ function addTab(url) {
                   console.error("failed to copy text: ", err);
                });
             });
+         } else if (tagName === "VIDEO" && attributes.src) {
+            const fullHref = resolveUrl(webview.src, attributes.src);
+            addMenuOption("Open Video in New Tab", () => addTab(fullHref));
+            addMenuOption("Save Video As...", () => console.log(`Save: ${fullHref}`));
+            addMenuOption("Copy Video Address", () => {
+               navigator.clipboard.writeText(fullHref).then(() => {
+                  console.log(`Copied to clipboard: ${fullHref}`);
+               }).catch(err => {
+                  console.error("failed to copy text: ", err);
+               });
+            });
          } else {
             addMenuOption("Copy Text", () => console.log(`Copy: ${textContent}`));
          }
