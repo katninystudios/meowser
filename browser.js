@@ -576,7 +576,7 @@ function formatURL(url) {
       const path = parsedURL.pathname + parsedURL.search + parsedURL.hash;
 
       // if the url ends with .txt or .xml, make the background dark so the text is visible
-      if (url.endsWith(".txt") || url.endsWith(".xml")) {
+      if (url.endsWith(".txt") || url.endsWith(".xml") || url.endsWith(".json")) {
          document.body.style.backgroundColor = "black";
       } else {
          document.body.style.backgroundColor = "transparent";
