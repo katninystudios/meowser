@@ -13,6 +13,20 @@ const siteSecurityInfoDesc = document.getElementById("site-security-link");
 const bookmarksBar = document.getElementById("bookmarks-bar");
 const addBookmarkUrl = document.getElementById("bookmark-url");
 
+// create context menu
+const contextMenu = document.createElement("div");
+contextMenu.style = `
+   position: absolute;
+   display: none;
+   background: var(--controls);
+   border: 1px solid transparent;
+   z-index: 1000;
+   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+   padding: 8px 0;
+   border-radius: 15px;
+`
+document.body.appendChild(contextMenu);
+
 // user preferences
 let userDefaultEngine = "N/A";
 let historySave = null;
@@ -131,6 +145,95 @@ function addTab(url) {
             linkStatus.textContent = "";
          }, 500);
       }
+
+      // context menu
+      function resolveUrl(base, relative) {
+         try {
+            return new URL(relative, base).href;
+         } catch {
+            return relative; // return as-is if it cant be resolved for some reason
+         }
+      }
+
+      if (event.channel === "custom-contextmenu") {
+         const { tagName, textContent, attributes, x, y } = event.args[0];
+
+         contextMenu.innerHTML = "";
+
+         // add menu options based on the element type
+         if (tagName === "A" && attributes.href) {
+            const fullHref = resolveUrl(webview.src, attributes.href);
+            addMenuOption("Open Link in New Tab", () => addTab(fullHref));
+
+            addMenuOption("Copy Link Address", () => {
+               navigator.clipboard.writeText(fullHref).then(() => {
+                  console.log(`Copied to clipboard: ${fullHref}`);
+               }).catch(err => {
+                  console.error("failed to copy text: ", err);
+               });
+            });
+
+         } else if (tagName === "IMG" && attributes.src) {
+            const fullHref = resolveUrl(webview.src, attributes.src);
+            addMenuOption("Open Image in New Tab", () => addTab(fullHref));
+            addMenuOption("Save Image As...", () => console.log(`Save: ${fullHref}`));
+            addMenuOption("Copy Image Address", () => {
+               navigator.clipboard.writeText(fullHref).then(() => {
+                  console.log(`Copied to clipboard: ${fullHref}`);
+               }).catch(err => {
+                  console.error("failed to copy text: ", err);
+               });
+            });
+         } else {
+            addMenuOption("Copy Text", () => console.log(`Copy: ${textContent}`));
+         }
+
+         addMenuOption("Inspect Element", () => webview.openDevTools());
+
+         // show context menu at cursor position
+         contextMenu.style.left = `${x}px`;
+         contextMenu.style.top = `${y}px`;
+         contextMenu.style.display = "block";
+      }
+   });
+   
+   // add a menu item
+   function addMenuOption(label, callback) {
+      const item = document.createElement("div");
+      item.textContent = label;
+      item.style = `
+         padding: 8px 16px;
+         cursor: pointer;
+         font-size: 14px;
+         white-space: nowrap;
+      `;
+      item.addEventListener("click", () => {
+         callback();
+         contextMenu.style.display = "none";
+      });
+      item.addEventListener("mouseenter", () => {
+         item.style.backgroundColor = "var(--controls-icon-hover)";
+      });
+      item.addEventListener("mouseleave", () => {
+         item.style.backgroundColor = "transparent";
+      });
+      contextMenu.appendChild(item);
+   }
+
+   // hide when clicking elsewhere
+   document.addEventListener("mousedown", (event) => {
+      if (!contextMenu.contains(event.target)) {
+         contextMenu.style.display = "none";
+      }
+   });
+   
+   webview.addEventListener("ipc-message", (event) => {
+      if (event.channel === "hide-contextmenu") {
+         contextMenu.style.display = "none";
+      }
+   });
+   webview.addEventListener("mousedown", () => {
+      webview.send("forward-mousedown");
    });
 
    webview.addEventListener("did-navigate", updateNavigationButtons);

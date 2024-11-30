@@ -82,8 +82,8 @@ contextBridge.exposeInMainWorld("new", {
 });
 
 // if a url is passed
-ipcRenderer.on("open-url", (event, url) => {
-   addTab(url);
-});
+// ipcRenderer.on("open-url", (event, url) => {
+//    addTab(url);
+// });
 
 console.log(`Platform: ${process.platform} - Arch: ${process.arch}`);

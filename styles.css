@@ -87,8 +87,11 @@ html {
    position: relative;
    overflow: hidden;
    white-space: nowrap;
-   border-top-left-radius: 5px;
-   border-top-right-radius: 5px;
+   /* border-top-left-radius: 5px;
+   border-top-right-radius: 5px; */
+   border-radius: 10px;
+   margin-bottom: 5px;
+   margin-top: 5px;
    margin-left: 5px;
    color: var(--tab-color);
    font-weight: 500;

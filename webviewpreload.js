@@ -21,3 +21,25 @@ document.addEventListener("mouseout", (event) => {
       ipcRenderer.sendToHost("link-unhover");
    }
 });
+
+// context menus
+document.addEventListener("contextmenu", (event) => {
+   event.preventDefault();
+
+   // send stuff about the element to the main process
+   const elementDetails = {
+      tagName: event.target.tagName,
+      textContent: event.target.textContent.trim(),
+      attributes: Array.from(event.target.attributes).reduce((attrs, attr) => {
+         attrs[attr.name] = attr.value;
+         return attrs;
+      }, {}),
+      x: event.clientX,
+      y: event.clientY,
+   };
+   ipcRenderer.sendToHost("custom-contextmenu", elementDetails);
+});
+
+document.addEventListener("mousedown", () => {
+   ipcRenderer.sendToHost("hide-contextmenu");
+});
