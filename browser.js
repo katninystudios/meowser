@@ -176,7 +176,37 @@ function addTab(url) {
          } else if (tagName === "IMG" && attributes.src) {
             const fullHref = resolveUrl(webview.src, attributes.src);
             addMenuOption("Open Image in New Tab", () => addTab(fullHref));
-            addMenuOption("Save Image As...", () => console.log(`Save: ${fullHref}`));
+            addMenuOption("Save Image As...", () => {
+               downloadFile(fullHref, getFilenameFromUrl(fullHref), (progress, received, total) => {
+                  // if visible, hide the "no downloaded items"
+                  document.getElementById("noDownloads").style.display = "none";
+
+                  // create a div and show content there
+                  document.getElementById("downloads").style.display = "block";
+                  if (document.getElementById(`downloading-${getFilenameFromUrl(fullHref)}`)) {
+                     document.getElementById(`downloading-${getFilenameFromUrl(fullHref)}`).innerHTML = `
+                        <h3>${getFilenameFromUrl(fullHref)}</h3>
+                        <p>${Math.round(progress)}% downloaded (${received}bytes / ${total}bytes)</p>
+                     `;
+                  } else {
+                     const item = document.createElement("div");
+                     //${Math.round(progress)}% (${received} / ${total} bytes)
+                     item.innerHTML = `
+                        <h3>${getFilenameFromUrl(fullHref)}</h3>
+                        <p>${Math.round(progress)}% downloaded (${received}bytes / ${total}bytes)</p>
+                     `;
+                     item.setAttribute("id", `downloading-${getFilenameFromUrl(fullHref)}`);
+                     item.className = "downloadingItem";
+                     document.getElementById("downloads").prepend(item);
+                  }
+
+                  if (document.getElementById("downloads-info").style.display === "" || document.getElementById("downloads-info").style.display === "none") {
+                     showDownloads();
+                  }
+               }).catch(err => {
+                  console.error("Failed to download: ", err);
+               });
+            });
             addMenuOption("Copy Image Address", () => {
                navigator.clipboard.writeText(fullHref).then(() => {
                   console.log(`Copied to clipboard: ${fullHref}`);
@@ -187,7 +217,37 @@ function addTab(url) {
          } else if (tagName === "VIDEO" && attributes.src) {
             const fullHref = resolveUrl(webview.src, attributes.src);
             addMenuOption("Open Video in New Tab", () => addTab(fullHref));
-            addMenuOption("Save Video As...", () => console.log(`Save: ${fullHref}`));
+            addMenuOption("Save Video As...", () => {
+               downloadFile(fullHref, getFilenameFromUrl(fullHref), (progress, received, total) => {
+                  // if visible, hide the "no downloaded items"
+                  document.getElementById("noDownloads").style.display = "none";
+
+                  // create a div and show content there
+                  document.getElementById("downloads").style.display = "block";
+                  if (document.getElementById(`downloading-${getFilenameFromUrl(fullHref)}`)) {
+                     document.getElementById(`downloading-${getFilenameFromUrl(fullHref)}`).innerHTML = `
+                        <h3>${getFilenameFromUrl(fullHref)}</h3>
+                        <p>${Math.round(progress)}% downloaded (${received}bytes / ${total}bytes)</p>
+                     `;
+                  } else {
+                     const item = document.createElement("div");
+                     //${Math.round(progress)}% (${received} / ${total} bytes)
+                     item.innerHTML = `
+                        <h3>${getFilenameFromUrl(fullHref)}</h3>
+                        <p>${Math.round(progress)}% downloaded (${received}bytes / ${total}bytes)</p>
+                     `;
+                     item.setAttribute("id", `downloading-${getFilenameFromUrl(fullHref)}`);
+                     item.className = "downloadingItem";
+                     document.getElementById("downloads").prepend(item);
+                  }
+
+                  if (document.getElementById("downloads-info").style.display === "" || document.getElementById("downloads-info").style.display === "none") {
+                     showDownloads();
+                  }
+               }).catch(err => {
+                  console.error("Failed to download: ", err);
+               });
+            });
             addMenuOption("Copy Video Address", () => {
                navigator.clipboard.writeText(fullHref).then(() => {
                   console.log(`Copied to clipboard: ${fullHref}`);

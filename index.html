@@ -17,6 +17,7 @@
          <span class="material-symbols-outlined" id="forward-button" onclick="goForward()">arrow_forward</span>
          <span class="material-symbols-outlined" onclick="reload()" id="reloadOrStop"></span>
          <span class="material-symbols-outlined" id="site-security" onclick="siteSecurityInfo()"></span><div type="text" spellcheck="false" contenteditable="true" id="url-bar" placeholder="Search or enter URL"></div>
+         <span class="material-symbols-outlined" id="download-btn" onclick="showDownloads()">download</span>
          <span class="material-symbols-outlined" id="add-bookmark-btn" onclick="addBookmark()">star</span>
          <span class="material-symbols-outlined" id="more-btn" onclick="showMoreMenu()">more_horiz</span>
       </div>
@@ -55,6 +56,16 @@
             <br/><button onclick="addTab('https://katniny.github.io/meowser/release-notes'); showMoreMenu();"><span class="material-symbols-outlined" id="more-btn">new_releases</span> Release Notes</button>
             <br/><button onclick="addTab('https://katniny.github.io/meowser/support/'); showMoreMenu();"><span class="material-symbols-outlined" id="more-btn">help</span> Support</button>
             <br/><button onclick="addTab('https://github.com/katniny/meowser/issues/new'); showMoreMenu();"><span class="material-symbols-outlined" id="more-btn">bug_report</span> Report an Issue</button>
+         </div>
+         <!-- site security -->
+         <div id="downloads-info">
+            <div id="noDownloads">
+               <h3><span class="material-symbols-outlined" id="more-btn" onclick="showMoreMenu()">file_download_off</span> You have not downloaded anything on Meowser in this browsing session yet.</h3>
+            </div>
+
+            <div id="downloads" style="display: none;">
+
+            </div>
          </div>
          <!-- suggestions -->
          <ul id="suggestionsDropdown" style="display: none; border: 1px solid #ccc; position: absolute; max-height: 200px; overflow-y: auto;">
