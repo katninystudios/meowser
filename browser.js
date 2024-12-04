@@ -256,7 +256,11 @@ function addTab(url) {
                });
             });
          } else {
-            addMenuOption("Copy Text", () => console.log(`Copy: ${textContent}`));
+            addMenuOption("Unknown or Unsupported. Click to learn more.", () => {
+               if (tagName !== "A" && tagName !== "IMG" && tagName !== "VIDEO") {
+                  alert(`The element you clicked on (${tagName}) is not supported yet. \n\nWhat does that mean?\n- Meowser's context menu, which is the menu that appears after right clicking, is a work in progress.`)
+               }
+            });
          }
 
          addMenuOption("Inspect Element", () => webview.openDevTools());
@@ -465,6 +469,10 @@ function closeTab(tab) {
    if (tab.classList.contains("new-tab")) return;
 
    const index = tab.dataset.index;
+   if (tabs.children.length - 1 === 1) { // if there's only one tab left, close the window
+      window.close();
+   }
+
    if (index !== undefined) {
       tabsContainer.removeChild(tab);
 
