@@ -258,7 +258,7 @@ function addTab(url) {
          } else {
             addMenuOption("Unknown or Unsupported. Click to learn more.", () => {
                if (tagName !== "A" && tagName !== "IMG" && tagName !== "VIDEO") {
-                  alert(`The element you clicked on (${tagName}) is not supported yet. \n\nWhat does that mean?\n- Meowser's context menu, which is the menu that appears after right clicking, is a work in progress.`)
+                  addTab("context-menu.html");
                }
             });
          }
