@@ -26,20 +26,20 @@
       }
     ],
     "win": {
-      "icon": "meowser_white.ico",
+      "icon": "branding/meowser_white.ico",
       "target": [
         "nsis"
       ]
     },
     "mac": {
-      "icon": "meowser_white.icns",
+      "icon": "branding/meowser_white.icns",
       "category": "public.app-category.utilities"
     },
     "linux": {
       "target": [
         "AppImage"
       ],
-      "icon": "meowser_white.png"
+      "icon": "branding/meowser_white.png"
     },
     "protocols": [
       {
