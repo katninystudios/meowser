@@ -41,7 +41,7 @@ jobs:
               mv dist/*.exe renamed-artifacts/Meowser-Setup-${{ env.new_version }}.exe || true
 
          - name: Upload artifact
-           uses: actions/upload-artifact@v3
+           uses: actions/upload-artifact@v4
            with:
               name: Meowser-Setup-${{ env.new_version }}.exe
               path: renamed-artifacts/Meowser-Setup-${{ env.new_version }}.exe
@@ -71,7 +71,7 @@ jobs:
               mv dist/*.AppImage renamed-artifacts/Meowser-${{ env.new_version }}.AppImage || true
 
          - name: Upload artifact
-           uses: actions/upload-artifact@v3
+           uses: actions/upload-artifact@v4
            with:
               name: Meowser-${{ env.new_version }}.AppImage
               path: renamed-artifacts/Meowser-${{ env.new_version }}.AppImage
@@ -101,7 +101,7 @@ jobs:
               mv dist/*.dmg renamed-artifacts/Meowser-${{ env.new_version }}.dmg || true
 
          - name: Upload artifact
-           uses: actions/upload-artifact@v3
+           uses: actions/upload-artifact@v4
            with:
               name: Meowser-${{ env.new_version }}.dmg
               path: renamed-artifacts/Meowser-${{ env.new_version }}.dmg
@@ -126,7 +126,7 @@ jobs:
                  $(git log --pretty=format:"* %s (%an)" ${GITHUB_SHA}..HEAD)
 
          - name: Download Windows artifact
-           uses: actions/download-artifact@v3
+           uses: actions/download-artifact@v4
            with:
               name: Meowser-Setup-${{ env.new_version }}.exe
 
@@ -139,7 +139,7 @@ jobs:
               label: Meowser Setup for Windows
 
          - name: Download Linux artifact
-           uses: actions/download-artifact@v3
+           uses: actions/download-artifact@v4
            with:
               name: Meowser-${{ env.new_version }}.AppImage
 
@@ -152,7 +152,7 @@ jobs:
               label: Meowser AppImage for Linux
 
          - name: Download macOS artifact
-           uses: actions/download-artifact@v3
+           uses: actions/download-artifact@v4
            with:
               name: Meowser-${{ env.new_version }}.dmg
 
