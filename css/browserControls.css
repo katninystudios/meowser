@@ -1,0 +1,56 @@
+#controls {
+   display: flex;
+   align-items: center;
+   padding: 5px;
+   background: var(--controls);
+}
+
+#controls i {
+   opacity: 0.5;
+   margin-right: 10px;
+   padding: 5px;
+   border-radius: 15px;
+}
+
+#controls i.active {
+   opacity: 1;
+   cursor: pointer;
+}
+
+#controls i.active:hover {
+   background: var(--controls-icon-hover);
+}
+
+#controls span.material-symbols-outlined {
+   font-size: larger;
+   cursor: pointer;
+   user-select: none;
+   padding: 3px;
+   border-radius: 50%;
+}
+
+#controls span:hover {
+   background: var(--controls-icon-hover);
+}
+
+#controls #back-button {
+   opacity: 0.5;
+   cursor: auto;
+}
+
+#controls #forward-button {
+   margin-left: 10px;
+   margin-right: 10px;
+   opacity: 0.5;
+   cursor: auto;
+}
+
+#controls #back-button.active {
+   opacity: 1;
+   cursor: pointer;
+}
+
+#controls #forward-button.active {
+   opacity: 1;
+   cursor: pointer;
+}

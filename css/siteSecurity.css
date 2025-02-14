@@ -1,0 +1,44 @@
+/* site security */
+#site-security {
+   transform: translateX(18px);
+   z-index: 1;
+   color: var(--site-security-text);
+   font-size: larger;
+   cursor: pointer;
+}
+
+/* see site security info */
+#site-security-info {
+   position: fixed;
+   top: 80px;
+   left: 0;
+   background-color: var(--popover-background);
+   border: 1px solid var(--popover-border);
+   border-radius: 15px;
+   color: var(--text);
+   padding: 5px 10px;
+   font-size: 12px;
+   width: auto;
+   max-width: 25%;
+   height: auto;
+   max-height: 150px;
+   display: none;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: wrap;
+   z-index: 999;
+   margin-left: 105px;
+   animation: openSecurity 0.1s ease;
+   transition: all 0.1s linear;
+}
+
+@keyframes openSecurity {
+   0% {
+      transform: translateY(-15px);
+      opacity: 0;
+   }
+   100% {
+      transform: translateY(0px);
+      opacity: 1;
+   }
+}

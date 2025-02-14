@@ -1,0 +1,50 @@
+/* downloads */
+#downloads-info {
+   position: fixed;
+   top: 80px;
+   right: 75px;
+   background-color: var(--popover-background);
+   border: 1px solid var(--popover-border);
+   border-radius: 15px;
+   color: var(--text);
+   padding: 5px 10px;
+   font-size: 12px;
+   width: auto;
+   max-width: 25%;
+   height: auto;
+   max-height: 250px;
+   display: none;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: wrap;
+   z-index: 999;
+   margin-right: 5px;
+   animation: openSecurity 0.1s ease;
+   transition: all 0.1s linear;
+}
+
+#downloads-info .material-symbols-outlined {
+   font-size: larger;
+   transform: translateY(3px);
+}
+
+#downloads-info #downloads .downloadingItem {
+   background: transparent;
+   cursor: pointer;
+   padding: 10px;
+   border-radius: 10px;
+}
+
+#downloads-info #downloads .downloadingItem:hover {
+   background: var(--controls-icon-hover);
+}
+
+#downloads-info #downloads h3 {
+   margin: 0;
+   padding: 0;
+}
+
+#downloads-info #downloads p {
+   margin: 0;
+   padding: 0;
+}

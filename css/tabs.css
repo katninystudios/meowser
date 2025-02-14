@@ -1,0 +1,144 @@
+/* tabs */
+#tabs {
+   display: flex;
+   background-color: var(--tab-container-background);
+   overflow-x: auto;
+   overflow-y: hidden;
+   /* tab overflowing will just be scrolling */
+   color: var(--tab-container-text-color);
+   -webkit-app-region: drag;
+}
+
+#tabs.vertical {
+   height: calc(100% - 40px);
+   max-width: 250px;
+   position: fixed;
+   background-color: var(--vertical-tabs-color);
+   transform: translateY(40px);
+}
+
+#new-tab {
+   border-radius: 50%;
+   height: 15px;
+   max-width: 9px;
+   padding-top: 3px;
+   margin: 0;
+   margin-left: 5px;
+   text-align: center;
+   transform: translateY(5px);
+   -webkit-app-region: no-drag;
+}
+
+.tab {
+   display: inline-block;
+   width: 200px;
+   /*max-width: 240px;*/
+   padding: 7px;
+   margin: 0;
+   background-color: var(--tab-background);
+   /*border: 1px solid #444;*/
+   border: 1px solid transparent;
+   cursor: pointer;
+   position: relative;
+   overflow: hidden;
+   white-space: nowrap;
+   /* border-top-left-radius: 5px;
+   border-top-right-radius: 5px; */
+   border-radius: 10px;
+   margin-bottom: 5px;
+   margin-top: 5px;
+   margin-left: 5px;
+   color: var(--tab-color);
+   font-weight: 500;
+   transition: background-color 0.3s ease, color 0.3s ease;
+   /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);*/
+   max-height: 48px;
+   height: 20px;
+   -webkit-app-region: no-drag;
+   animation: openTab 0.25s ease;
+}
+
+@keyframes openTab {
+   0% {
+      opacity: 0;
+      transform: translateX(-105px);
+      width: 5px;
+   }
+   100% {
+      opacity: 1;
+      transform: translateX(0px);
+      width: 240px;
+   }
+}
+
+.tab:hover,
+.tab-close-button {
+   opacity: 1;
+}
+
+.tab-title {
+   display: inline-block;
+   margin-right: 10px;
+   max-width: 80%;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   transform: translateY(-15px);
+   font-size: 14px;
+   transition: transform 0.15s ease;
+}
+
+.tab-close-button {
+   background: none;
+   border: none;
+   color: var(--tab-close-color);
+   cursor: pointer;
+   font-weight: bold;
+   font-size: 14px;
+   position: absolute;
+   right: 5px;
+   top: 5px;
+   border-radius: 15px;
+}
+
+.tab-close-button:hover {
+   background: var(--tab-close-color-hover);
+}
+
+.tab-audio {
+   margin-left: 23px;
+   transform: translateY(-13px);
+   color: var(--tab-playing-audio);
+   transition: all 0.15s ease;
+   display: inline-block;
+}
+
+/* favicon */
+.tab-favicon {
+   margin-right: 5px;
+   vertical-align: middle;
+}
+
+.tab-favicon img {
+   width: 18px;
+   height: 18px;
+   transform: translateY(1.5px);
+}
+
+.tab-favicon span {
+   animation: spinFavicon 0.5s ease infinite;
+   font-size: larger;
+}
+
+.tab-favicon span.no-spin {
+   animation: none;  
+}
+
+@keyframes spinFavicon {
+   0% {
+      transform: rotate(0deg);
+   }
+   100% {
+      transform: rotate(360deg);
+   }
+}

@@ -1,0 +1,50 @@
+/* url bar */
+#url-bar {
+   flex: 1;
+   width: 50%;
+   padding: 5px;
+   padding-left: 35px;
+   font-size: 15px;
+   border: 1px solid var(--urlbar-border);
+   overflow-x: auto;
+   overflow-y: hidden;
+   white-space: nowrap;
+   cursor: text;
+   max-height: 20px;
+   background-color: var(--urlbar-background);
+   scrollbar-width: none;
+   -ms-overflow-style: none;
+   outline: none;
+   border-radius: 15px;
+   transform: translateX(-35px);
+   transition: all 0.1s ease;
+   margin-left: 20px;
+}
+
+#url-bar:focus {
+   border: 1px solid var(--urlbar-border-active);
+}
+
+#url-bar .non-domain {
+   color: var(--url-non-domain);
+}
+
+#url-bar:focus .non-domain {
+   color: var(--url-non-domain-active);
+}
+
+#url-bar .non-domain.hidden {
+   display: none;
+}
+
+#url-bar:focus .non-domain.hidden {
+   display: inline;
+}
+
+.url-container::-webkit-scrollbar {
+   display: none;
+}
+
+#url-bar span:hover {
+   background: transparent;
+}

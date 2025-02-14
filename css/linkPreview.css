@@ -1,0 +1,11 @@
+/* link preview */
+#link-preview {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   background-color: rgba(0, 0, 0, 0.8);
+   color: var(--text);
+   padding: 5px 10px;
+   font-size: 12px;
+   display: none;
+}

@@ -1,0 +1,24 @@
+/* An error may have occurred */
+#errorMayHaveOccurred {
+   position: fixed;
+   top: 80px;
+   left: 0;
+   background-color: var(--popover-background);
+   border: 1px solid var(--popover-border);
+   border-radius: 15px;
+   color: var(--text);
+   padding: 5px 10px;
+   font-size: 12px;
+   width: auto;
+   max-width: 25%;
+   height: auto;
+   max-height: 150px;
+   display: none;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: wrap;
+   z-index: 999;
+   margin-left: 105px;
+   animation: openSecurity 0.1s ease;
+   transition: all 0.1s linear;
+}
