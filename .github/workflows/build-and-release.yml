@@ -1,0 +1,112 @@
+name: Build and Release Meowser
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    env:
+      TIME_ZONE: MST
+
+    steps:
+      # check out the repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # install Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      # check for new commits since the last run
+      - name: Check for new commits
+        id: check-commits
+        run: |
+          last_commit=$(git log -1 --format=%ct)
+          now=$(date +%s)
+          # If last commit is older than 24 hours, skip build
+          if (( now - last_commit > 86400 )); then
+             echo "No recent commits. Skipping build."
+             exit 0
+          fi
+
+      # auto-increment version
+      - name: Auto-increment version
+        id: bump-version
+        run: |
+          # Extract the current version from package.json
+          current_version=$(node -p "require('./package.json').version")
+          IFS='.' read -r major minor patch <<< "${current_version#v}"
+
+          # Increment the patch version
+          new_version="v$major.$minor.$((patch + 1))"
+
+          # Update the version in package.json
+          jq ".version = \"${new_version}\"" package.json > temp.json && mv temp.json package.json
+
+          # Expose the new version for other steps
+          echo "new_version=${new_version}" >> $GITHUB_ENV
+
+      # install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # install electron-nightly@latest
+      - name: Install electron-nightly
+        run: npm install electron-nightly@latest
+
+      # build the app
+      - name: Build the app
+        run: npm run dist
+
+      # rename build artifacts
+      - name: Rename build artifacts
+        run: |
+          mkdir renamed-artifacts
+          mv dist/*.exe renamed-artifacts/Meowser-Setup-${{ env.new_version }}.exe || true
+          mv dist/*.AppImage renamed-artifacts/Meowser-${{ env.new_version }}.AppImage || true
+          mv dist/*.dmg renamed-artifacts/Meowser-${{ env.new_version }}.dmg || true
+
+      # create github release
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.new_version }}
+          release_name: "Version ${{ env.new_version }}"
+          body: |
+            Commits included in this release:
+            $(git log --pretty=format:"* %s (%an)" ${GITHUB_SHA}..HEAD)
+
+      # upload artifacts to the release
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: renamed-artifacts/Meowser-Setup-${{ env.new_version }}.exe
+          asset_name: Meowser-Setup-${{ env.new_version }}.exe
+          label: Meowser Setup for Windows
+
+      - name: Upload Linux artifact
+        if: always()
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: renamed-artifacts/Meowser-${{ env.new_version }}.AppImage
+          asset_name: Meowser-${{ env.new_version }}.AppImage
+          label: Meowser AppImage for Linux
+
+      - name: Upload macOS artifact
+        if: always()
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: renamed-artifacts/Meowser-${{ env.new_version }}.dmg
+          asset_name: Meowser-${{ env.new_version }}.dmg
+          label: Meowser Installer for macOS
