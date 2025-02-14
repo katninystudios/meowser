@@ -128,7 +128,7 @@ function createWindow() {
    session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
       // originally wanted it to be "Meowser", but so many websites broke when i did
       // so now we're just chrome (silently sobs in corner)
-      details.requestHeaders["User-Agent"] = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${process.versions.chrome} Meowser/${process.versions.electron} Safari/537.36`;
+      details.requestHeaders["User-Agent"] = `Mozilla/5.0 (${process.platform}) AppleWebKit/537.36 (KHTML, like Gecko) Meowser/${process.versions.electron} Chrome/${process.versions.chrome} Safari/537.36 Node/${process.versions.node}`;
       callback({ requestHeaders: details.requestHeaders })
    })
 
