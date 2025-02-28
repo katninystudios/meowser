@@ -1,3 +1,8 @@
+> [!CAUTION]
+> Effective immediately (2/28/25 at 1:18am MST), Meowser is no longer supported and is being rewritten/rebranded as Kairo.
+> 
+> Learn more: https://studios.katniny.lol/blogs/meowser-rebranding-rebuilt
+
 <h1 align="center">
   /ᐠ - ˕ -マ
   Meowser
